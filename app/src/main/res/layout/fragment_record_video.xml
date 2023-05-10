@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnCancelRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/space_8"
+            android:gravity="center"
+            android:text="@string/cancel"
+            app:drawableStartCompat="@drawable/ic_cancel" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/cameraViewRecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            app:cameraAudio="on"
+            app:cameraEngine="camera2"
+            app:cameraFacing="back"
+            app:cameraGestureLongTap="none"
+            app:cameraGesturePinch="zoom"
+            app:cameraGestureTap="none"
+            app:cameraGrid="off"
+            app:cameraMode="video"
+            app:cameraPlaySounds="true"
+            app:cameraPreview="glSurface" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/showWarningExerciseRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="@dimen/space_8"
+            android:alpha="0.3"
+            android:background="@color/black"
+            android:padding="@dimen/space_8"
+            android:text="Lưu ý:\nTạo bài tập không vượt quá 30 đòn đánh" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:paddingStart="@dimen/space_12"
+        android:paddingTop="@dimen/space_4"
+        android:paddingEnd="@dimen/space_12"
+        android:paddingBottom="@dimen/space_4">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtDurationRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="00:00s"
+            android:textSize="@dimen/text_10" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/btnActionRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:button="@drawable/checkbox_record" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnCameraRotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/space_4"
+            app:srcCompat="@drawable/ic_camera_repeat"
+            tools:visibility="visible" />
+    </RelativeLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

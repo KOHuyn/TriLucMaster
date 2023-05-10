@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_theme"
+    android:clickable="true"
+    android:focusable="true"
+    tools:ignore="MissingPrefix">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#992A2E43" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/space_12">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/labelChooseGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_32"
+            android:gravity="center"
+            android:text="@string/label_select_gender"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_20" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageGenderIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_20"
+            android:src="@drawable/ic_gender" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RadioGroup
+            android:id="@+id/rgGenderStep2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbMaleStep2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_gender_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/gender_male"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbFemaleStep2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:background="@drawable/state_gender_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/gender_female"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbOtherStep2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:background="@drawable/state_gender_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/gender_other"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtNextStep2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_primary"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8"
+            android:text="@string/label_continue"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontAnTon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtBackStep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/space_8"
+            android:gravity="center"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8"
+            android:text="@string/label_back"
+            app:drawableStartCompat="@drawable/ic_back" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

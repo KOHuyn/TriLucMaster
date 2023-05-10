@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleLevelPractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/FontAnTon"
+            tools:text="Chúc mừng" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/contentLevelPractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/space_8"
+            android:textSize="@dimen/text_12"
+            tools:text="Bạn đã vượt qua level 2" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/humanConfirmTest"
+                layout="@layout/layout_human"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_8"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/viewPointRewardPractice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginBottom="@dimen/space_4"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/reward_points"
+                        android:textAppearance="@style/FontAnTon"
+                        android:textSize="@dimen/text_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtPointRewardPractice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="200" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginBottom="@dimen/space_4"
+                    android:text="@string/label_index"
+                    android:textAppearance="@style/FontAnTon"
+                    android:textSize="@dimen/text_12" />
+
+                <TableLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow android:id="@+id/viewPunchPracticeTest">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:alpha="0.6"
+                            android:text="@string/number_of_punches"
+                            android:textSize="@dimen/text_12" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValuePunchesPracticeTest"
+                            android:layout_height="match_parent"
+                            android:gravity="end"
+                            android:textSize="@dimen/text_12"
+                            tools:text="650" />
+                    </TableRow>
+
+                    <TableRow android:id="@+id/viewPowerPracticeTest">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:alpha="0.6"
+                            android:text="@string/power"
+                            android:textSize="@dimen/text_12" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValuePowerPracticeTest"
+                            android:gravity="end"
+                            android:textSize="@dimen/text_12"
+                            tools:text="650" />
+                    </TableRow>
+
+                    <TableRow android:id="@+id/viewTimePracticeTest">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:alpha="0.6"
+                            android:text="@string/time_practice"
+                            android:textSize="@dimen/text_12" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValueTimePracticeTest"
+                            android:gravity="end"
+                            android:textSize="@dimen/text_12"
+                            tools:text="650" />
+                    </TableRow>
+                </TableLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginBottom="@dimen/space_4"
+                    android:text="@string/power"
+                    android:textAppearance="@style/FontAnTon"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvPowerPracticeTest"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/item_description_chart_power" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/layoutLoadingConfirmPracticeInformation"
+        layout="@layout/layout_loading_dialog_default"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

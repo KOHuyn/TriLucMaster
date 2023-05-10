@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootChallengeDetail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackChallengeDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_16"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/event_challenge"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true"
+            tools:fontFamily="@font/anton_regular" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnShareChallenge"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/space_16"
+            android:src="@drawable/ic_share" />
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshChallengeDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgCoverChallengeDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:maxHeight="@dimen/_200sdp"
+                    android:minHeight="@dimen/_100sdp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_default_image_rectangle"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_12"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iconHeaderChallengeDetail"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/background_frame"
+                        android:paddingStart="@dimen/space_12"
+                        android:paddingTop="@dimen/space_8"
+                        android:paddingEnd="@dimen/space_12"
+                        android:paddingBottom="@dimen/space_12"
+                        android:visibility="gone"
+                        tools:srcCompat="@drawable/ic_punch"
+                        tools:visibility="visible" />
+
+                    <Space
+                        android:layout_width="@dimen/space_8"
+                        android:layout_height="0dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/nameHeaderChallengeDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="---------------------"
+                        android:textAppearance="@style/FontAnTon"
+                        android:textSize="@dimen/text_18"
+                        tools:fontFamily="@font/anton_regular"
+                        tools:ignore="HardcodedText" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtContentDetailChallenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginEnd="@dimen/space_12"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/text_12"
+                    tools:text="Vào 9 giờ sáng nay (giờ Việt Nam) sẽ diễn ra sự kiện được mong chờ bậc nhất trong giới quyền Anh trong nhiều năm trở lại đây...Vào 9 giờ sáng nay (giờ Việt Nam) sẽ diễn ra sự kiện được mong chờ bậc nhất trong giới quyền Anh trong nhiều năm trở lại đây..." />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cbViewMoreContentChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableEnd="@drawable/ic_arrow_state"
+                    android:drawablePadding="@dimen/space_4"
+                    android:gravity="center"
+                    android:minHeight="0dp"
+                    android:text="@string/more"
+                    android:textColor="#0085FF"
+                    app:drawableTint="#0085FF"
+                    app:drawableTintMode="multiply" />
+
+                <FrameLayout
+                    android:id="@+id/frameVideoChallenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <com.google.android.exoplayer2.ui.PlayerView
+                        android:id="@+id/videoViewChallengeDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        app:show_timeout="2000"
+                        android:focusable="true"
+                        app:controller_layout_id="@layout/exo_playback_control_view"
+                        app:use_controller="true" />
+
+                    <ProgressBar
+                        android:id="@+id/loadingVideoChallengeDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnPlayVideoInfoPractice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_big_play"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_12"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_8">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:flexDirection="row"
+                            app:flexWrap="wrap">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/space_4"
+                                android:fontFamily="@font/anton_regular"
+                                android:gravity="bottom"
+                                android:includeFontPadding="false"
+                                android:paddingBottom="@dimen/space_4"
+                                android:text="@string/reward_points"
+                                android:textAppearance="@style/FontAnTon"
+                                android:textColor="@color/clr_tab"
+                                app:layout_alignSelf="stretch" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtRewardPoints"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/anton_regular"
+                                android:includeFontPadding="false"
+                                android:text="0"
+                                android:textAppearance="@style/FontAnTon"
+                                android:textColor="@color/clr_primary"
+                                android:textSize="@dimen/text_24" />
+                        </com.google.android.flexbox.FlexboxLayout>
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/space_8" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/anton_regular"
+                            android:text="@string/type_challenge"
+                            android:textAppearance="@style/FontAnTon"
+                            android:textColor="@color/clr_tab" />
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:flexDirection="row"
+                            app:flexWrap="wrap">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtTypeChallenge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/space_4"
+                                android:gravity="bottom"
+                                android:textColor="@color/clr_tab"
+                                android:textSize="@dimen/text_12"
+                                app:layout_alignSelf="stretch"
+                                tools:text="Thử thách tốc độ" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtDataTypeChallenge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/clr_tab"
+                                android:textSize="@dimen/text_14"
+                                tools:text="90(giây)" />
+                        </com.google.android.flexbox.FlexboxLayout>
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/space_8" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/anton_regular"
+                            android:text="@string/hit_position"
+                            android:textAppearance="@style/FontAnTon"
+                            android:textColor="@color/clr_tab" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtTypeHitText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/clr_tab"
+                            android:visibility="visible"
+                            tools:text="Đánh tự do" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcvPositionHit"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:visibility="gone"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:spanCount="2"
+                            tools:itemCount="6"
+                            tools:listitem="@layout/item_position_hit"
+                            tools:visibility="visible" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnActionJoinChallenge"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/background_circle_button"
+                        android:gravity="center"
+                        android:padding="@dimen/space_8"
+                        android:text="@string/join"
+                        android:textAppearance="@style/FontAnTon"
+                        tools:fontFamily="@font/anton_regular" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutProfileJoinedChallenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/space_8"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/space_4"
+                        android:fontFamily="@font/anton_regular"
+                        android:paddingStart="@dimen/space_12"
+                        android:paddingEnd="@dimen/space_12"
+                        android:text="@string/result"
+                        android:textAppearance="@style/FontAnTon"
+                        app:textAllCaps="true" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:background="@color/clr_blue_light"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtProfileRankCurrentChallenge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_blue"
+                            android:fontFamily="@font/anton_regular"
+                            android:gravity="center"
+                            android:minWidth="@dimen/_35sdp"
+                            android:minHeight="@dimen/_35sdp"
+                            android:textAppearance="@style/FontAnTon"
+                            tools:text="#25" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgProfileAvatarChallenge"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/space_8"
+                            android:src="@drawable/ic_default_image_circle" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtProfileNameChallenge"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_4"
+                            android:layout_weight="1"
+                            android:ellipsize="middle"
+                            android:fontFamily="@font/anton_regular"
+                            android:singleLine="true"
+                            android:textAppearance="@style/FontAnTon"
+                            android:textColor="@color/clr_tab"
+                            tools:text="NGUYỄN TRẦN DUY NHẤT" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtProfileRankUpChallenge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/space_8"
+                            android:drawableStart="@drawable/ic_rank_up"
+                            android:drawablePadding="@dimen/space_4"
+                            android:fontFamily="@font/anton_regular"
+                            android:textAppearance="@style/FontAnTon"
+                            android:textColor="#FF7A00"
+                            android:textSize="@dimen/text_8"
+                            tools:text="1" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TableRow>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/power"
+                                    android:textColor="@color/clr_tab" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/time"
+                                    android:textColor="@color/clr_tab" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/review"
+                                    android:textColor="@color/clr_tab" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtPowerChallenge"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:textColor="@color/clr_tab"
+                                    android:textSize="@dimen/text_24"
+                                    tools:text="6789" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtProfileTimeAchievedChallenge"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:textColor="@color/clr_tab"
+                                    android:textSize="@dimen/text_24"
+                                    tools:text="10:30" />
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/btnReplayPractice"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/space_4"
+                                    app:srcCompat="@drawable/ic_play_red" />
+                            </TableRow>
+                        </TableLayout>
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/cbShowDetailPowerChallenge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="true"
+                            android:drawableEnd="@drawable/ic_arrow_state"
+                            android:drawablePadding="@dimen/space_4"
+                            android:drawableTint="@color/clr_tab"
+                            android:gravity="center"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:text="@string/see_detail"
+                            android:textColor="@color/clr_tab"
+                            app:drawableTint="@color/clr_tab" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcvChallengeDetailProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_12"
+                            android:layout_marginEnd="@dimen/space_12"
+                            android:overScrollMode="never"
+                            android:visibility="gone"
+                            tools:itemCount="6"
+                            tools:listitem="@layout/item_progress_power" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtTitleJustJoinedChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:fontFamily="@font/anton_regular"
+                    android:text="@string/just_joined"
+                    android:textAppearance="@style/FontAnTon" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvJustJoinedChallenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/space_4"
+                    android:paddingEnd="@dimen/space_12"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_new_join_challenge" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:fontFamily="@font/anton_regular"
+                    android:text="@string/ranking_of_results"
+                    android:textAppearance="@style/FontAnTon" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtNumberPeopleJoinChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:textSize="@dimen/text_10" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvRankingChallenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginEnd="@dimen/space_12"
+                    android:overScrollMode="never"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_ranking_challenge" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

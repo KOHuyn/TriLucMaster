@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_6sdp"
+    android:background="@color/clr_light_grey"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_4">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtGroupNameDisciple"
+        style="@style/FontAnTon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/clr_tab"
+        tools:text="Võ đường 1" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbAddGroupDisciple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:buttonTint="@color/clr_tab"
+        android:minWidth="0dp"
+        android:minHeight="0dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

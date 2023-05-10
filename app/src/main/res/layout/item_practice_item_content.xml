@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_120sdp"
+    android:layout_height="wrap_content"
+    android:background="@color/clr_tab"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_84sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgPracticeThumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_default_image_rectangle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtNameSubjectPractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/clr_primary"
+            android:paddingStart="@dimen/space_4"
+            android:paddingEnd="@dimen/space_4"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_8"
+            tools:text="Boxing" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitleItemPractice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="2"
+        android:padding="@dimen/space_4"
+        android:textSize="@dimen/text_12"
+        tools:text="Bài 1:  UpperCut UpperCut" />
+</LinearLayout>

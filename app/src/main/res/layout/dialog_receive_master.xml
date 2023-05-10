@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_16"
+        android:background="@color/clr_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_tab">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/space_8"
+                android:text="@string/receive_master"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgCancelReceiveMaster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/space_4"
+                android:src="@drawable/ic_cancel" />
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtHeaderReceiveMaster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="@dimen/space_8"
+            tools:text="Hãy nói gì đó với Back Lee" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtMessageReceiveMaster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_8"
+            android:background="@drawable/background_white_radius_8"
+            android:gravity="start|top"
+            android:hint="Aa"
+            android:lines="5"
+            android:padding="@dimen/space_8" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sendReceiveMaster"
+            style="@style/ButtonGradientOrange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:paddingTop="@dimen/space_4"
+            android:paddingBottom="@dimen/space_4"
+            android:text="@string/send" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

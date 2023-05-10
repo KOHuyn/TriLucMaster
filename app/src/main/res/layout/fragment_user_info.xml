@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_dark_bg"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/label_profile"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_32"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/header_theme" />
+
+                <FrameLayout
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginTop="@dimen/space_8">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgAvatarUserProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_default_image_circle"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="@dimen/_2sdp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnEditAvatarInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:padding="@dimen/space_8"
+                        android:src="@drawable/ic_camera_change_avatar" />
+
+                </FrameLayout>
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUserNameInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_8"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_18"
+                tools:text="BÁCH LEE" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRankingUserInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_8"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_18"
+                tools:text="Võ sư" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/lnViewGuestAddFriend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <FrameLayout
+                    android:id="@+id/btnAddFriendUser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:layout_weight="1"
+                    android:background="@color/clr_tab"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtLabelAddFriendUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_add_user"
+                        android:drawablePadding="@dimen/space_4"
+                        android:padding="@dimen/space_4"
+                        android:text="@string/add_friend"
+                        android:textAllCaps="false" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/btnReceiveUser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/gradient_orange">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtReceiveUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_belt"
+                        android:drawablePadding="@dimen/space_4"
+                        android:padding="@dimen/space_4"
+                        android:text="@string/receive_master"
+                        android:textAllCaps="false" />
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <FrameLayout
+                android:id="@+id/lnSubjectUserInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageSubjectInfoMaster"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:maxHeight="@dimen/_250sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_button_challenge_lesson" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.5"
+                    android:background="@color/clr_tab" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtSubjectInfoMaster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAppearance="@style/FontAnTon"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_18"
+                    tools:text="Muay Thai" />
+            </FrameLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/lnDiscipleGenerateMasterUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtLabelInformationGeneral"
+                    style="@style/FontAnTon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/clr_bg_title_dark"
+                    android:drawablePadding="@dimen/space_4"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/information_generate"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_14"
+                    app:drawableStartCompat="@drawable/ic_info" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/clr_tab"
+                    android:paddingStart="@dimen/space_4"
+                    android:paddingEnd="@dimen/space_4">
+
+                    <TableRow android:padding="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDiscipleCount"
+                            style="@style/FontAnTon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="@dimen/_50sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_24"
+                            tools:text="60" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTitleDiscipleCount"
+                            style="@style/FontAnTon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_disciple"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_14" />
+                    </TableRow>
+
+                    <TableRow android:padding="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLessonCount"
+                            style="@style/FontAnTon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="@dimen/_50sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_24"
+                            tools:text="99+" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTitleLessonCount"
+                            style="@style/FontAnTon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="@dimen/_50sdp"
+                            android:text="@string/lesson"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_14" />
+                    </TableRow>
+
+                    <TableRow android:padding="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvParticipants"
+                            style="@style/FontAnTon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_24"
+                            tools:text="60" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTitleParticipants"
+                            style="@style/FontAnTon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/participants_practice"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_14" />
+                    </TableRow>
+                </TableLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/lnDetailIndex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12"
+                android:background="@color/clr_tab"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/clr_bg_title_dark"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_4">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_8"
+                        app:srcCompat="@drawable/ic_lighting" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtLabelIndex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:layout_marginEnd="@dimen/space_4"
+                        android:text="@string/label_index"
+                        android:textAppearance="@style/FontAnTon" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_4"
+                    android:background="@drawable/background_tab_selected" />
+
+                <com.github.mikephil.charting.charts.RadarChart
+                    android:id="@+id/chartIndex"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_130sdp"
+                    tools:ignore="NestedWeights" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llDocument"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12"
+                android:background="@color/clr_tab"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/clr_bg_title_dark"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_4">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_8"
+                        app:srcCompat="@drawable/ic_user_document" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtLabelInformationForm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:text="@string/file"
+                        android:textAppearance="@style/FontAnTon" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cbUpdateUserInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:button="@drawable/state_update_user_info"
+                        android:checked="false"
+                        android:minWidth="0dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_4"
+                    android:background="@drawable/background_tab_selected" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space_8">
+
+                    <TableRow>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtLabelProfileName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:alpha="0.6"
+                            android:text="@string/name" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/edtUserNameInfo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:enabled="false"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/space_8"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingEnd="@dimen/space_8"
+                            android:paddingBottom="@dimen/space_4"
+                            android:textColor="@color/white"
+                            tools:text="Bách Lee" />
+
+                    </TableRow>
+
+                    <TableRow android:layout_marginTop="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtLabelProfileDateOfBirth"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:alpha="0.6"
+                            android:text="@string/date_of_birth" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvEditBirthdayUserInfo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:enabled="false"
+                            android:paddingStart="@dimen/space_8"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingEnd="@dimen/space_8"
+                            android:paddingBottom="@dimen/space_4"
+                            tools:text="30/08/2996" />
+                    </TableRow>
+
+                    <TableRow android:layout_marginTop="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtLabelProfileGender"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:alpha="0.6"
+                            android:text="@string/gender" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvEditGenderUserInfo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:enabled="false"
+                            android:paddingStart="@dimen/space_8"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingEnd="@dimen/space_8"
+                            android:paddingBottom="@dimen/space_4"
+                            tools:text="Nam" />
+                    </TableRow>
+
+                    <TableRow android:layout_marginTop="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtLabelProfileHeight"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:alpha="0.6"
+                            android:text="@string/height" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvEditHeightUserInfo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:enabled="false"
+                            android:paddingStart="@dimen/space_8"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingEnd="@dimen/space_8"
+                            android:paddingBottom="@dimen/space_4"
+                            tools:text="175 cm" />
+                    </TableRow>
+
+                    <TableRow android:layout_marginTop="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtLabelProfileWeight"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:alpha="0.6"
+                            android:text="@string/weight" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvEditWeightUserInfo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:enabled="false"
+                            android:paddingStart="@dimen/space_8"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingEnd="@dimen/space_8"
+                            android:paddingBottom="@dimen/space_4"
+                            tools:text="75.8 Kg" />
+                    </TableRow>
+                </TableLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/viewRewardUserInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12"
+                android:background="@color/clr_tab"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/clr_bg_title_dark"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_4">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_8"
+                        app:srcCompat="@drawable/ic_trophy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtLabelAppellation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:layout_marginEnd="@dimen/space_8"
+                        android:text="@string/appellation"
+                        android:textAppearance="@style/FontAnTon" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvRewardUserInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:itemCount="3" />
+
+                <include
+                    android:id="@+id/noDataMyRewardProfile"
+                    layout="@layout/no_data" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layoutHeaderExerciseMaster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_12"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMyPractices"
+                    style="@style/FontAnTon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exercise"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_14" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvShowMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTrainerExerciseMasterInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                app:layout_constraintTop_toBottomOf="@id/tvShowMore"
+                tools:itemCount="1" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_8" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

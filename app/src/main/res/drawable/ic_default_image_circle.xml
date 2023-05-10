@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <size
+                android:width="@dimen/_100sdp"
+                android:height="@dimen/_100sdp" />
+            <solid android:color="#44475A" />
+            <corners android:radius="@dimen/_50sdp" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/logo_slogan_transparent_small"
+        android:gravity="center" />
+</layer-list>

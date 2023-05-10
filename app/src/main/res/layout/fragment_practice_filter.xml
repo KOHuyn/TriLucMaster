@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackPracticeFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtHeaderPracticeFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/practice"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginTop="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtSearchPracticeFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingStart="@dimen/space_8"
+            android:paddingTop="@dimen/space_4"
+            android:paddingEnd="@dimen/space_8"
+            android:paddingBottom="@dimen/space_4" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnSearchPracticeFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@color/clr_primary"
+            android:padding="@dimen/space_4"
+            app:srcCompat="@drawable/ic_search" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnFilterPracticeFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="@dimen/space_12"
+            android:background="@color/clr_background"
+            app:srcCompat="@drawable/ic_filter" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewGroupFilterFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginTop="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_4"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/spSectFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/clr_tab"
+            android:ellipsize="middle"
+            android:padding="@dimen/space_4"
+            android:singleLine="true"
+            android:text="@string/sect"
+            app:drawableEndCompat="@drawable/ic_arrow_down"
+            app:drawableTint="@color/clr_primary" />
+
+        <Space
+            android:layout_width="@dimen/space_4"
+            android:layout_height="0dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/spLevelFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/clr_tab"
+            android:ellipsize="middle"
+            android:padding="@dimen/space_4"
+            android:singleLine="true"
+            android:text="@string/level"
+            app:drawableEndCompat="@drawable/ic_arrow_down"
+            app:drawableTint="@color/clr_primary" />
+
+        <Space
+            android:layout_width="@dimen/space_4"
+            android:layout_height="0dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/spSortFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/clr_tab"
+            android:ellipsize="middle"
+            android:padding="@dimen/space_4"
+            android:singleLine="true"
+            android:text="@string/sort"
+            app:drawableEndCompat="@drawable/ic_arrow_down"
+            app:drawableTint="@color/clr_primary" />
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:background="@color/clr_background"
+        app:tabBackground="@color/clr_background"
+        app:tabIndicatorColor="@color/white"
+        app:tabPaddingBottom="0dp"
+        app:tabPaddingTop="0dp"
+        app:tabTextAppearance="@style/CustomTabLayout"
+        app:tabTextColor="@color/white" />
+
+    <com.widget.NonSwipeViewPager
+        android:id="@+id/vpPracticeFilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

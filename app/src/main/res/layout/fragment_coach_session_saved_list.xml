@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackCoachSessionSaved"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/list_saved"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/noDataCoachSessionSaved"
+        layout="@layout/no_data"
+        android:visibility="gone" />
+
+    <com.mobileplus.dummytriluc.ui.widget.CustomSwipeRcv
+        android:id="@+id/rcvSavedListSessionCoach"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/space_8"
+        android:paddingEnd="@dimen/space_8"
+        tools:listitem="@layout/item_coach_session_saved_list" />
+
+    <include
+        android:id="@+id/loadMoreSavedListSessionCoach"
+        layout="@layout/layout_loading_dialog_default"
+        android:visibility="gone" />
+
+</LinearLayout>

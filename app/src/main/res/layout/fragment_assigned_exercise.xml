@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackAssigned"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/space_32"
+            android:layout_marginEnd="@dimen/space_32"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/label_assigned_exercise"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/noDataAssigned"
+        layout="@layout/no_data"
+        android:visibility="gone" />
+
+    <com.mobileplus.dummytriluc.ui.widget.CustomSwipeRcv
+        android:id="@+id/rcvAssigned"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:paddingStart="@dimen/space_12"
+        android:paddingEnd="@dimen/space_12" />
+
+    <include
+        android:id="@+id/loadMoreAssigned"
+        layout="@layout/layout_loading_dialog_default"
+        android:visibility="gone" />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EditTextBasic">
+        <item name="android:textColorHint">@color/clr_hint</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+        <item name="android:paddingTop">@dimen/space_8</item>
+        <item name="android:paddingBottom">@dimen/space_8</item>
+        <item name="android:lines">1</item>
+        <item name="android:inputType">text</item>
+        <item name="android:background">@color/clr_white_12</item>
+    </style>
+
+    <style name="ButtonPrimary" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:background">@color/clr_primary</item>
+        <item name="android:textAppearance">@style/FontAnTon</item>
+    </style>
+
+    <style name="ButtonGradientOrange" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:background">@drawable/gradient_orange</item>
+        <item name="android:lineSpacingExtra">@dimen/_2sdp</item>
+        <item name="android:textAppearance">@style/FontAnTon</item>
+    </style>
+
+    <style name="FontAnTon" parent="android:TextAppearance">
+        <item name="fontPath">fonts/anton_regular.ttf</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <style name="FontRobotoLight" parent="android:TextAppearance">
+        <item name="fontPath">fonts/roboto_light.ttf</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <style name="FontAnTonVideo" parent="android:TextAppearance">
+        <item name="fontPath">fonts/anton_regular.ttf</item>
+        <item name="android:textColor">@color/clr_primary</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily">@font/anton_regular</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="FontAnTonText" parent="android:TextAppearance">
+        <item name="fontPath">fonts/anton_regular.ttf</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily">@font/anton_regular</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="FontMetroClock" parent="android:TextAppearance">
+        <item name="fontPath">fonts/metrophobic_regular.ttf</item>
+        <item name="android:textColor">@color/clr_color_sup</item>
+        <item name="android:textSize">@dimen/text_10</item>
+        <item name="android:fontFamily">@font/metrophobic_regular</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="FontMetroSlider" parent="android:TextAppearance">
+        <item name="fontPath">fonts/metrophobic_regular.ttf</item>
+        <item name="android:textColor">@color/clr_tab</item>
+        <item name="android:textSize">@dimen/text_8</item>
+        <item name="android:fontFamily">@font/metrophobic_regular</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="FontVideoMetrophobic" parent="android:TextAppearance">
+        <item name="fontPath">fonts/metrophobic_regular.ttf</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:textSize">@dimen/text_8</item>
+    </style>
+
+    <style name="FontMetrophobic" parent="android:TextAppearance">
+        <item name="fontPath">fonts/metrophobic_regular.ttf</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <style name="BottomNavigationView.Text" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/text_10</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BottomNavigationView.Text.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:textColor">@color/clr_primary</item>
+    </style>
+
+    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ColorBottomNavigation</item>
+    </style>
+
+    <style name="ColorBottomNavigation" parent="">
+        <item name="colorOnPrimary">@color/clr_primary</item>
+        <item name="colorPrimary">@color/clr_primary</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <style name="NestScrollViewStyle">
+        <item name="android:scrollbarSize">@dimen/_1sdp</item>
+        <item name="android:scrollbarThumbVertical">@color/clr_hint</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
+    <style name="StyleDropDownSpinner">
+        <item name="android:windowEnterAnimation">@anim/show_down_center</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="CustomTabLayout" parent="TextAppearance.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="autoSizeMaxTextSize">@dimen/text_14</item>
+        <item name="autoSizeMinTextSize">@dimen/text_10</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="fontFamily">@font/anton_regular</item>
+        <item name="android:fontFamily">@font/anton_regular</item>
+    </style>
+
+    <style name="StyleDropUpSpinner">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+
+    <declare-styleable name="ViewSeekBar">
+        <attr name="level" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomSeekBar">
+        <attr name="min" format="integer" />
+        <attr name="max" format="integer" />
+        <attr name="current" format="integer" />
+        <attr name="maxProgress" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CoachManagerButton">
+        <attr name="title" format="string" />
+        <attr name="srcImg" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PositionPowerCoachSessionResult">
+        <attr name="title_position" format="string" />
+        <attr name="score" format="integer" />
+    </declare-styleable>
+
+    <style name="CustomCheckbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:button">@null</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="drawableEndCompat">@drawable/checkbox_state</item>
+        <item name="android:textSize">@dimen/text_12</item>
+    </style>
+
+    <style name="CustomRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:button">@null</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="drawableEndCompat">@drawable/radio_button_state</item>
+        <item name="android:drawablePadding">@dimen/space_8</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_12</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="PositionPunchPower" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/ic_touch_red</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_10</item>
+    </style>
+
+    <style name="PositionHighScore" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAppearance">@style/FontAnTon</item>
+        <item name="android:paddingTop">@dimen/_2sdp</item>
+        <item name="android:paddingBottom">@dimen/_2sdp</item>
+        <item name="android:paddingStart">@dimen/_4sdp</item>
+        <item name="android:paddingEnd">@dimen/_4sdp</item>
+        <item name="android:minWidth">@dimen/_20sdp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_10</item>
+    </style>
+
+
+    <style name="CustomPopupTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- if using android.widget.PopupMenu -->
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <!-- if using android.support.v7.widget.PopupMenu -->
+        <item name="popupMenuStyle">@style/PopupMenu</item>
+    </style>
+
+    <style name="PopupMenu" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:popupBackground">@color/clr_tab</item>
+    </style>
+
+</resources>

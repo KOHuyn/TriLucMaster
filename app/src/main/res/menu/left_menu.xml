@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/friend"
+        android:icon="@drawable/ic_friend"
+        android:title="@string/friend" />
+    <item
+        android:id="@+id/message"
+        android:icon="@drawable/ic_message"
+        android:title="@string/message" />
+    <item
+        android:id="@+id/coachMode"
+        android:icon="@drawable/ic_coach_mode"
+        android:title="@string/coach_mode" />
+
+    <item
+        android:id="@+id/editVideo"
+        android:visible="false"
+        android:icon="@drawable/ic_message"
+        android:title="@string/video_edit" />
+
+    <item
+        android:id="@+id/changePassword"
+        android:icon="@drawable/ic_change_password"
+        android:title="@string/change_password" />
+    <item
+        android:id="@+id/information"
+        android:icon="@drawable/ic_information"
+        android:title="@string/information" />
+</menu>

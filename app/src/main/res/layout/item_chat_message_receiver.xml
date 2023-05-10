@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="@color/clr_tab">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/viewTimeSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:alpha="0.6"
+            android:background="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chatTimeSystem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/space_4"
+            android:textSize="@dimen/text_12"
+            tools:text="12:00 11/11" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:alpha="0.6"
+            android:background="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_12"
+        android:paddingEnd="@dimen/space_12">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chatAvatar"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_default_image_circle" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/chatProfileReceive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/chatName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anton_regular"
+                    android:includeFontPadding="false"
+                    android:textAppearance="@style/FontAnTon"
+                    android:textSize="@dimen/text_12"
+                    tools:text="Bach Lee" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/chatTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_4"
+                    android:gravity="bottom"
+                    android:includeFontPadding="false"
+                    android:textSize="@dimen/text_12"
+                    app:layout_alignSelf="baseline"
+                    tools:text="14:00" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/chatContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_white_radius_12"
+                    android:padding="@dimen/space_8"
+                    android:textColor="#333333"
+                    tools:text="Lorem Ipsum chỉ đơn giản là văn bản giả của ngành in ấn và sắp chữ." />
+            </FrameLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

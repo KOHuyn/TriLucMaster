@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_50sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageThumbSubject"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:id="@+id/viewMarkSubject"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/state_subject_mark" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtSubjectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_18"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Muay Thai" />
+
+</FrameLayout>

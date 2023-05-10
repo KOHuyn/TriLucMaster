@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackChooseModeChallenge"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/create_challenge"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true"
+            tools:fontFamily="@font/anton_regular" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/space_8">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kiểu thách đấu"
+                android:textAppearance="@style/FontAnTon" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        style="@style/CustomRadioButton"
+                        android:layout_marginTop="@dimen/space_4"
+                        android:text="@string/power" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        style="@style/CustomRadioButton"
+                        android:layout_marginTop="@dimen/space_4"
+                        android:text="@string/speed" />
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/space_32"
+                    android:layout_marginEnd="@dimen/space_16"
+                    android:text="@string/number_of_hits"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/txtMinusPunchOfflineFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:padding="@dimen/space_4"
+                        android:src="@drawable/ic_minus" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtNumberPunchOfflineFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:minWidth="@dimen/_50sdp"
+                        android:padding="@dimen/space_4"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_18"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/txtPlusPunchOfflineFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:padding="@dimen/space_4"
+                        android:src="@drawable/ic_plus" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_24" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vị trí đánh"
+                android:textAppearance="@style/FontAnTon" />
+
+            <RadioGroup
+                android:id="@+id/rgPositionFight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/_120sdp">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbFreePositionFight"
+                    style="@style/CustomRadioButton"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:checked="true"
+                    android:text="@string/free" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbLimitPositionFight"
+                    style="@style/CustomRadioButton"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:text="@string/position_limit" />
+            </RadioGroup>
+
+            <TableLayout
+                android:id="@+id/layoutLimitPosition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TableRow>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        style="@style/CustomCheckbox"
+                        android:layout_weight="1"
+                        android:text="@string/left_shoulder" />
+
+                    <Space android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        style="@style/CustomCheckbox"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/space_8"
+                        android:paddingEnd="@dimen/space_8"
+                        android:text="@string/head" />
+
+                    <Space android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        style="@style/CustomCheckbox"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/space_8"
+                        android:paddingEnd="@dimen/space_8"
+                        android:text="@string/right_shoulder" />
+                </TableRow>
+
+                <TableRow android:layout_marginTop="@dimen/space_4">
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        style="@style/CustomCheckbox"
+                        android:layout_weight="1"
+                        android:text="@string/left_leg" />
+
+                    <Space android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        style="@style/CustomCheckbox"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/space_8"
+                        android:paddingEnd="@dimen/space_8"
+                        android:text="@string/stomach" />
+
+                    <Space android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        style="@style/CustomCheckbox"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/space_8"
+                        android:paddingEnd="@dimen/space_8"
+                        android:text="@string/right_leg" />
+                </TableRow>
+            </TableLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_24" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/challenge"
+                android:textAppearance="@style/FontAnTon" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/_120sdp">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    style="@style/CustomRadioButton"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:text="@string/online" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    style="@style/CustomRadioButton"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:text="@string/offline" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Điểm cược"
+                        android:textAppearance="@style/FontAnTon" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hiện có:650"
+                        android:textSize="@dimen/text_10" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/txtMinusScoreOfflineFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:padding="@dimen/space_4"
+                        android:src="@drawable/ic_minus" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtNumberScoreOfflineFree"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:minWidth="@dimen/_50sdp"
+                        android:padding="@dimen/space_4"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_24"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/txtPlusScoreOfflineFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:padding="@dimen/space_4"
+                        android:src="@drawable/ic_plus" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnInviteChallengeOfflineFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/space_8"
+                android:background="@color/clr_tab"
+                android:drawableEnd="@drawable/ic_add_user"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_8"
+                android:text="Mời thách đấu" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvInviteChallengeOfflineFree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_invite_people" />
+
+            <include
+                android:id="@+id/noDataInviteChallengeOfflineFree"
+                layout="@layout/no_data"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnInviteViewerOfflineFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@color/clr_tab"
+                android:drawableEnd="@drawable/ic_add_viewer"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_8"
+                android:text="Người chứng kiến" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvInviteViewerOfflineFree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_invite_people" />
+
+            <include
+                android:id="@+id/noDataInviteViewerOfflineFree"
+                layout="@layout/no_data"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:layout_marginBottom="@dimen/space_8"
+                android:text="Nội dung thách đấu"
+                android:textAppearance="@style/FontAnTon" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="start"
+                android:hint="Thêm nội dung"
+                android:lines="3"
+                android:padding="@dimen/space_4"
+                android:textColorHint="@color/clr_hint"
+                android:textSize="@dimen/text_12" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/ButtonGradientOrange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_4"
+        android:text="Gửi thách đấu"
+        android:textSize="@dimen/text_24" />
+</androidx.appcompat.widget.LinearLayoutCompat>

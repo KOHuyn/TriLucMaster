@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "648396044651",
+    "firebase_url": "https://tri-luc-master.firebaseio.com",
+    "project_id": "tri-luc-master",
+    "storage_bucket": "tri-luc-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648396044651:android:32490d53b36f1a2386f42e",
+        "android_client_info": {
+          "package_name": "com.mobileplus.trilucmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648396044651-4q49u6n23ihjr730uh47etsvod68m43c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobileplus.trilucmaster",
+            "certificate_hash": "ba7e4c4bbaf4cabfa6e95137acec95f6a10ab4ed"
+          }
+        },
+        {
+          "client_id": "648396044651-j7ndghe6bm9cjg32jb14000qm19k3e1a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobileplus.trilucmaster",
+            "certificate_hash": "45e1eec028d0774767912f3e62fe7de65c271bf7"
+          }
+        },
+        {
+          "client_id": "648396044651-ncvgtcbgsli8g53fh4eo8oppbbu6n3ep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobileplus.trilucmaster",
+            "certificate_hash": "6b2e6a51466136b92a215b6334f0bccfc59f0884"
+          }
+        },
+        {
+          "client_id": "648396044651-s0v7du0ga3114jn51elad90m03e7gd96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQu9Hhas_8ADCSoSWaYJtLdyNKNzCR4r8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648396044651-na035re1f8km4frvd1lffes8bhtrnrcr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "648396044651-9j04lb0b36lkp5vppfss128jaau5ru2n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.mobileplus.Kungfu.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648396044651:android:f02d36023096eb6b86f42e",
+        "android_client_info": {
+          "package_name": "com.mobileplus.trilucmaster.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648396044651-s0v7du0ga3114jn51elad90m03e7gd96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQu9Hhas_8ADCSoSWaYJtLdyNKNzCR4r8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648396044651-na035re1f8km4frvd1lffes8bhtrnrcr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "648396044651-9j04lb0b36lkp5vppfss128jaau5ru2n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.mobileplus.Kungfu.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

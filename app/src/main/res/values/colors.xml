@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="clr_secondary">#5668CB</color>
+    <color name="clr_blue">#00D1FF</color>
+    <color name="clr_blue_light">#E0F9FF</color>
+    <color name="clr_grey">#828282</color>
+    <color name="clr_dark_bg">#2A2E43</color>
+    <color name="clr_gradient_orange_start">#FF7A00</color>
+    <color name="clr_gradient_orange_end">#FF0000</color>
+    <color name="clr_gradient_purple_start">#5A6FF0</color>
+    <color name="clr_unselected_button">#44475A</color>
+    <color name="clr_gradient_purple_end">#C31FE6</color>
+    <color name="clr_tab">#0F1838</color>
+    <color name="clr_light_grey">#F0F0F0</color>
+    <color name="clr_primary">#E32828</color>
+    <color name="clr_blur_black">#1a1a1a</color>
+    <color name="clr_hint">#A8A8A8</color>
+    <color name="clr_white_12">#1FFFFFFF</color>
+    <color name="clr_background">#2A2E43</color>
+    <color name="clr_bg_title_dark">#0C1124</color>
+    <color name="clr_red">#BD0000</color>
+    <color name="clr_green">#00BD13</color>
+    <color name="clr_green_news">#2F80ED</color>
+    <color name="clr_new_time">#8A8A8A</color>
+    <color name="clr_victory_start">#FF7A00</color>
+    <color name="clr_victory_end">#FF0000</color>
+    <color name="clr_color_sup">#C4C4C4</color>
+    <color name="clr_summary">#BDBDBD</color>
+    <color name="clr_gray">#333333</color>
+    <color name="clr_bottom">#DADADA</color>
+</resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeToRefreshSession"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="@dimen/space_8">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_tab"
+                android:orientation="vertical"
+                android:padding="@dimen/space_8">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_session"
+                    android:textAppearance="@style/FontAnTon" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:paddingTop="@dimen/space_4"
+                        android:paddingBottom="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:alpha="0.6"
+                            android:text="@string/time_start"
+                            android:textSize="@dimen/text_12" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtSessionResultTimeStart"
+                            android:gravity="end"
+                            android:text="--:--"
+                            android:textSize="@dimen/text_12" />
+                    </TableRow>
+
+                    <TableRow
+                        android:paddingTop="@dimen/space_4"
+                        android:paddingBottom="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:alpha="0.6"
+                            android:text="@string/time_end"
+                            android:textSize="@dimen/text_12" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtSessionResultTimeEnd"
+                            android:gravity="end"
+                            android:text="--:--"
+                            android:textSize="@dimen/text_12" />
+                    </TableRow>
+
+                    <TableRow
+                        android:paddingTop="@dimen/space_4"
+                        android:paddingBottom="@dimen/space_4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:alpha="0.6"
+                            android:text="@string/round_practiced"
+                            android:textSize="@dimen/text_12" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtSessionResultTotalRound"
+                            android:gravity="end"
+                            android:text="0"
+                            android:textSize="@dimen/text_12" />
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/txtDescriptionSwipeRefreshCoachSession"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:alpha="0.6"
+                    android:gravity="center"
+                    android:text="@string/swipe_to_refresh_data"
+                    android:textSize="@dimen/space_8"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvCoachSessionResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:overScrollMode="never"
+                tools:listitem="@layout/item_coach_session_result" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

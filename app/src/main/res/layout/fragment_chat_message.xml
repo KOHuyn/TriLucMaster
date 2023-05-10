@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootChatMessage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackChatMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:padding="@dimen/space_4">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatarMessage"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/space_8"
+                android:src="@drawable/ic_default_image_circle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtHeaderMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_18"
+                app:textAllCaps="true"
+                tools:fontFamily="@font/anton_regular"
+                tools:text="Nguyễn Trần Duy Nhất" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnInformationPractice"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/ic_info" />
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <include
+                android:id="@+id/loadingChatMessage"
+                layout="@layout/layout_loading_dialog_default"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvChatMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="2dp"
+                android:scrollbarThumbVertical="@drawable/background_white_radius_8"
+                android:scrollbars="vertical" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_tab"
+                android:elevation="@dimen/space_4"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/txtContentMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_white_radius_8"
+                    android:hint="Aa"
+                    android:maxLines="3"
+                    android:padding="@dimen/space_8"
+                    tools:ignore="HardcodedText"
+                    tools:text="Một thực tế đã được thiết lập từ lâu rằng người đọc sẽ bị phân tâm bởi nội dung có thể đọc được của một trang khi nhìn vào bố cục của nó" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnRecordPracticeChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/space_4"
+                    android:padding="@dimen/space_4"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_camera" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnSendMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/space_4"
+                    app:srcCompat="@drawable/ic_send" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

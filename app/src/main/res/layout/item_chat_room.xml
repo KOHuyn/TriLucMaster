@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="@color/clr_tab">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatarChatList"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/space_4"
+            tools:src="@drawable/ic_default_image_circle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/iconStatusOnline"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/space_4"
+            android:background="@drawable/ic_green_badge"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/space_4">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtNameReceiverChatList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textColor="@color/clr_tab"
+                android:textSize="@dimen/text_14"
+                tools:text="Nguyễn trần duy nhất" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtTimeAgoChatList"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="top"
+                android:gravity="top"
+                android:includeFontPadding="false"
+                android:maxWidth="@dimen/_100sdp"
+                android:textColor="@color/clr_tab"
+                android:textSize="@dimen/text_10"
+                tools:text="30 phút" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtLastMessageChatList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:singleLine="true"
+            android:textColor="@color/clr_grey"
+            android:textSize="@dimen/text_10"
+            tools:text="Lorem Ipsum is simply dummy text of the... " />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

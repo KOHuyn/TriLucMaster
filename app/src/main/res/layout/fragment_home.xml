@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnOpenNavView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/space_8"
+            app:srcCompat="@drawable/ic_menu_three_line" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/logo_slogan_transparent_small" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnConnectBleHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/space_8"
+            app:srcCompat="@drawable/ic_refresh" />
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:background="@drawable/background_target_home"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            tools:ignore="NestedWeights">
+
+                            <com.github.mikephil.charting.charts.RadarChart
+                                android:id="@+id/chartTargetHome"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtAvgRadarChart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/FontAnTon"
+                                android:textColor="@color/clr_red"
+                                android:textSize="@dimen/text_12"
+                                app:layout_constraintBottom_toBottomOf="@id/chartTargetHome"
+                                app:layout_constraintEnd_toEndOf="@id/chartTargetHome"
+                                app:layout_constraintStart_toStartOf="@id/chartTargetHome"
+                                app:layout_constraintTop_toTopOf="@id/chartTargetHome"
+                                tools:text="8.9" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvToday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/space_4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/lnProfileHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_8"
+                            android:orientation="horizontal">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/imgAvatarUserHome"
+                                android:layout_width="@dimen/_50sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_default_image_circle" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtNameUserHome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:layout_marginEnd="@dimen/space_4"
+                                android:maxLines="4"
+                                android:text="--- ---"
+                                android:textAppearance="@style/FontAnTon"
+                                android:textSize="@dimen/text_14" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/btnPracticeNowHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/space_8"
+                            android:layout_marginTop="@dimen/space_8"
+                            android:layout_marginEnd="@dimen/space_8"
+                            android:background="@drawable/gradient_orange"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingBottom="@dimen/space_4"
+                            android:text="@string/practice_now"
+                            android:textAppearance="@style/FontAnTon"
+                            android:textSize="@dimen/_12sdp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/space_8">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/viewPunch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_punch" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelPunch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/punch"
+                                android:textAppearance="@style/FontAnTon" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_statistics" />
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBarPunchHome"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/space_4"
+                            android:progressDrawable="@drawable/progress_gradient"
+                            tools:progress="70" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/space_4">
+
+                            <LinearLayout
+                                android:id="@+id/componentPunch1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/componentPunch2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtCountPunchHome"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="---"
+                                    android:textAppearance="@style/FontAnTon"
+                                    android:textColor="@color/clr_primary"
+                                    android:textSize="@dimen/text_30"
+                                    tools:ignore="HardcodedText" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabelValuePunch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/punch"
+                                    android:textAppearance="@style/FontAnTon"
+                                    android:textSize="@dimen/text_18" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/componentPunch2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/componentPunch1"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabelTargetPunch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/target"
+                                    android:textSize="@dimen/text_18" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvGoalPunch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:includeFontPadding="false"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_24"
+                                    tools:ignore="HardcodedText" />
+                            </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/viewPower"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_lighting" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelPower"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/power"
+                                android:textAppearance="@style/FontAnTon" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_statistics" />
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBarPowerHome"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/space_4"
+                            android:progressDrawable="@drawable/progress_gradient"
+                            tools:progress="70" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_150sdp"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    tools:ignore="NestedWeights">
+
+                                    <com.github.mikephil.charting.charts.PieChart
+                                        android:id="@+id/chartPowerHome"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="@dimen/_12sdp"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="@dimen/_12sdp"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/txtTotalPowerCountHome"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:lines="1"
+                                            android:includeFontPadding="false"
+                                            android:paddingStart="@dimen/space_16"
+                                            android:paddingEnd="@dimen/space_16"
+                                            android:text="---"
+                                            android:textAppearance="@style/FontAnTon"
+                                            android:textSize="@dimen/text_30"
+                                            app:autoSizeMaxTextSize="@dimen/text_30"
+                                            app:autoSizeMinTextSize="@dimen/text_20"
+                                            app:autoSizeTextType="uniform" />
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/txtLabelValuePower"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:includeFontPadding="false"
+                                            android:text="@string/power"
+                                            android:textAllCaps="true"
+                                            android:textAppearance="@style/FontAnTon"
+                                            android:textSize="@dimen/text_12" />
+                                    </LinearLayout>
+                                </FrameLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="@dimen/space_4"
+                                    android:orientation="horizontal">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/txtLabelTargetPower"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:text="@string/target" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvGoalPower"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_marginStart="@dimen/space_4"
+                                        android:textSize="@dimen/text_18" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcvChartPowerHome"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="@dimen/space_4"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:overScrollMode="never"
+                                    tools:listitem="@layout/item_description_chart_power" />
+                            </FrameLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/viewRanking"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_cup" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelRankPoint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/point_ranking"
+                                android:textAppearance="@style/FontAnTon" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_statistics" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_150sdp"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/space_8"
+                                    tools:ignore="NestedWeights">
+
+                                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                        android:id="@+id/progressRankingHome"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        app:cpb_background_progressbar_color="@color/white"
+                                        app:cpb_background_progressbar_width="@dimen/_3sdp"
+                                        app:cpb_progress_direction="to_right"
+                                        app:cpb_progressbar_color_end="@color/clr_gradient_purple_end"
+                                        app:cpb_progressbar_color_start="@color/clr_gradient_purple_start"
+                                        app:cpb_progressbar_width="@dimen/_3sdp"
+                                        app:cpb_round_border="false"
+                                        tools:ignore="NestedWeights" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/txtScoreRanking"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="---"
+                                        android:textAppearance="@style/FontAnTon"
+                                        android:textColor="@color/clr_primary"
+                                        android:textSize="@dimen/text_36"
+                                        tools:ignore="HardcodedText" />
+                                </FrameLayout>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtNameRankingHome"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="@dimen/space_4"
+                                    android:layout_marginBottom="@dimen/space_4"
+                                    android:text="-----"
+                                    android:textAppearance="@style/FontAnTon"
+                                    tools:ignore="HardcodedText" />
+
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
+                                    tools:ignore="UselessParent">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="@string/top"
+                                        android:textSize="@dimen/text_18" />
+
+                                    <com.google.android.flexbox.FlexboxLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        app:flexDirection="row"
+                                        app:flexWrap="wrap">
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/tvRank"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="@dimen/space_4"
+                                            android:text="--"
+                                            android:textSize="@dimen/text_36"
+                                            tools:ignore="HardcodedText" />
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/txtRankUp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:drawablePadding="@dimen/space_4"
+                                            android:gravity="bottom"
+                                            android:textSize="@dimen/text_12"
+                                            app:drawableStartCompat="@drawable/ic_rank_normal"
+                                            app:layout_alignSelf="baseline"
+                                            tools:text="+5" />
+                                    </com.google.android.flexbox.FlexboxLayout>
+                                </LinearLayout>
+                            </FrameLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_challenge" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:textAppearance="@style/FontAnTon"
+                                tools:text="Thách đấu mới từ Tony Ja" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_8"
+                            tools:text="Punch 200 times in 400 power" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_8"
+                            tools:text="Kick 200 times in 30min" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            style="@style/ButtonGradientOrange"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8"
+                            android:text="@string/view" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_challenge" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/my_nick_name"
+                                android:textAppearance="@style/FontAnTon" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutYesterdayHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_history" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelLastestExercise"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/latest_exercise"
+                                android:textAppearance="@style/FontAnTon" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcvLessonYesterday"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:paddingStart="@dimen/space_8"
+                            android:paddingTop="@dimen/space_4"
+                            android:paddingEnd="@dimen/space_8"
+                            android:paddingBottom="@dimen/space_4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_4">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_calendar" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelLast7Day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/last_7_days"
+                                android:textAppearance="@style/FontAnTon" />
+                        </LinearLayout>
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8"
+                            android:paddingStart="@dimen/space_16"
+                            android:paddingEnd="@dimen/space_16">
+
+                            <TableRow>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabel7DayPunch"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:drawableStart="@drawable/ic_punch"
+                                    android:drawablePadding="@dimen/space_8"
+                                    android:text="@string/punch"
+                                    android:textAppearance="@style/FontAnTon" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPunch"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_18"
+                                    tools:ignore="HardcodedText" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabel7DayPower"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:drawableStart="@drawable/ic_lighting"
+                                    android:drawablePadding="@dimen/space_8"
+                                    android:text="@string/power"
+                                    android:textAppearance="@style/FontAnTon" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvPower"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_18"
+                                    tools:ignore="HardcodedText" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabel7DayCal"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:drawableStart="@drawable/ic_fire"
+                                    android:drawablePadding="@dimen/space_12"
+                                    android:text="@string/cal"
+                                    android:textAppearance="@style/FontAnTon" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvCal"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_18"
+                                    tools:ignore="HardcodedText" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/trAccuracyHome"
+                                android:visibility="gone"
+                                tools:visibility="visible">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabel7DayAccuracy"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:drawableStart="@drawable/ic_target"
+                                    android:drawablePadding="@dimen/space_8"
+                                    android:text="@string/accuracy"
+                                    android:textAppearance="@style/FontAnTon" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvAccuracy"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_18"
+                                    tools:ignore="HardcodedText" />
+                            </TableRow>
+                        </TableLayout>
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/chartStatistics"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_250sdp"
+                            android:paddingStart="@dimen/space_16"
+                            android:paddingEnd="@dimen/space_16"
+                            android:paddingBottom="@dimen/space_8" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

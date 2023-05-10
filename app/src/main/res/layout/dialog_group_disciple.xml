@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_16"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleGroupDialog"
+            style="@style/FontAnTon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_tab"
+            android:gravity="center"
+            android:padding="@dimen/space_8"
+            android:text="@string/label_change_group_name"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtLabelEditTextGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/white"
+            android:text="@string/label_new_name"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_14" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtNameGroupDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginBottom="@dimen/space_16"
+            android:background="@drawable/bg_gray_border"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="@dimen/space_8"
+            android:paddingTop="@dimen/space_4"
+            android:paddingEnd="@dimen/space_8"
+            android:paddingBottom="@dimen/space_4"
+            android:textSize="@dimen/text_12"
+            tools:text="ABC" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAcceptGroupDialog"
+            style="@style/ButtonPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_4"
+            android:text="@string/label_confirm"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_12" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSkipGroupDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E5E5E5"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_4"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_10" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

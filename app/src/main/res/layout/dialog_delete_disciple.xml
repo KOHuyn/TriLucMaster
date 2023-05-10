@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_16"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleGroupDialog"
+            style="@style/FontAnTon"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/clr_tab"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14"
+            tools:text="Xóa đệ tử" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtContentDeleteDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_32"
+            android:layout_marginBottom="@dimen/space_32"
+            android:background="@color/white"
+            android:gravity="center"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_14"
+            tools:text="Bạn có chắc muốn xóa Huy Lee ?" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDeleteGroupDialog"
+            style="@style/ButtonPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_8"
+            android:text="@string/label_delete"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_12" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSkipGroupDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E5E5E5"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_8"
+            android:text="@string/skip"
+            android:textAllCaps="false"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_10" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

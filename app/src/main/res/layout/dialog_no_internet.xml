@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_16"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_tab">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/space_8"
+                android:text="@string/no_internet_connection"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgCancelNoInternet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/space_4"
+                android:src="@drawable/ic_cancel" />
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/space_12"
+            android:src="@drawable/ic_no_internet" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/you_are_offline"
+            android:textColor="@color/clr_tab" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUnderstandNoInternetDialog"
+            style="@style/ButtonGradientOrange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:minHeight="0dp"
+            android:paddingTop="@dimen/space_4"
+            android:paddingBottom="@dimen/space_4"
+            android:text="@string/understand"
+            android:textSize="@dimen/text_12" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/skipNoInternetDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E5E5E5"
+            android:minHeight="0dp"
+            android:paddingTop="@dimen/space_4"
+            android:paddingBottom="@dimen/space_4"
+            android:text="@string/skip"
+            android:textAllCaps="false"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_10" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

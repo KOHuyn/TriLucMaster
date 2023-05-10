@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    text size-->
+    <dimen name="text_8">@dimen/_8sdp</dimen>
+    <dimen name="text_10">@dimen/_10sdp</dimen>
+    <dimen name="text_12">@dimen/_12sdp</dimen>
+    <dimen name="text_14">@dimen/_14sdp</dimen>
+    <dimen name="text_16">@dimen/_16sdp</dimen>
+    <dimen name="text_18">@dimen/_18sdp</dimen>
+    <dimen name="text_20">@dimen/_20sdp</dimen>
+    <dimen name="text_22">@dimen/_22sdp</dimen>
+    <dimen name="text_24">@dimen/_24sdp</dimen>
+    <dimen name="text_28">@dimen/_28sdp</dimen>
+    <dimen name="text_30">@dimen/_30sdp</dimen>
+    <dimen name="text_36">@dimen/_36sdp</dimen>
+    <dimen name="text_48">@dimen/_48sdp</dimen>
+    <!--    spacing-->
+    <dimen name="space_2">@dimen/_2sdp</dimen>
+    <dimen name="space_4">@dimen/_4sdp</dimen>
+    <dimen name="space_5">@dimen/_5sdp</dimen>
+    <dimen name="space_6">@dimen/_6sdp</dimen>
+    <dimen name="space_8">@dimen/_8sdp</dimen>
+    <dimen name="space_10">@dimen/_10sdp</dimen>
+    <dimen name="space_13">@dimen/_13sdp</dimen>
+    <dimen name="space_12">@dimen/_12sdp</dimen>
+    <dimen name="space_16">@dimen/_16sdp</dimen>
+    <dimen name="space_18">@dimen/_18sdp</dimen>
+    <dimen name="space_20">@dimen/_20sdp</dimen>
+    <dimen name="space_24">@dimen/_24sdp</dimen>
+    <dimen name="space_32">@dimen/_32sdp</dimen>
+    <dimen name="space_48">@dimen/_48sdp</dimen>
+    <dimen name="space_56">@dimen/_56sdp</dimen>
+    <dimen name="space_72">@dimen/_72sdp</dimen>
+</resources>

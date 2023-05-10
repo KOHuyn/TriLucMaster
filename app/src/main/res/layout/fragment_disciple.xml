@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackDisciple"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_16"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtHeaderDisciple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/label_disciple"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_8"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rgChooseDisciple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_primary"
+            android:orientation="horizontal"
+            android:padding="@dimen/_2sdp">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbListDisciple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_switch_disciple_list"
+                android:button="@null"
+                android:checked="true"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/space_4"
+                android:text="@string/label_disciple_list"
+                android:textAppearance="@style/FontAnTon"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbWaitingDisciple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_switch_disciple_list"
+                android:button="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/space_4"
+                android:text="@string/label_waiting_list"
+                android:textAppearance="@style/FontAnTon"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <com.widget.NonSwipeViewPager
+        android:id="@+id/viewPagerDisciple"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:layout_weight="1" />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginBottom="@dimen/space_2"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackCoachSession"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/session"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:orientation="vertical"
+        android:padding="@dimen/space_8">
+
+        <RadioGroup
+            android:id="@+id/rgCoachSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbCoachSessionExercise"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/state_switch_session_coach"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:paddingTop="@dimen/space_6"
+                android:paddingBottom="@dimen/space_6"
+                android:text="@string/exercise"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textColor="@drawable/state_switch_session_coach_text" />
+
+            <RadioButton
+                android:id="@+id/rbCoachSessionPractitioner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/state_switch_session_coach"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:paddingTop="@dimen/space_6"
+                android:paddingBottom="@dimen/space_6"
+                android:text="@string/exerciser"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textColor="@drawable/state_switch_session_coach_text" />
+
+            <RadioButton
+                android:id="@+id/rbCoachSessionResult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/state_switch_session_coach"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:paddingTop="@dimen/space_6"
+                android:paddingBottom="@dimen/space_6"
+                android:text="@string/result"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FontAnTon"
+                android:textColor="@drawable/state_switch_session_coach_text" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/white" />
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerCoachSession"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/layoutControlSessionCoach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:padding="@dimen/space_8"
+        android:visibility="gone"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        app:justifyContent="space_around"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnPlayPrevSessionCoach"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"
+            android:minWidth="@dimen/_80sdp"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/ic_play_previous"
+            app:layout_alignSelf="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnPlayEndSessionCoach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_play_stop"
+            android:gravity="center"
+            android:minWidth="@dimen/_80sdp"
+            android:text="@string/end"
+            android:textAppearance="@style/FontAnTon"
+            android:visibility="gone"
+            app:layout_alignSelf="center" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPlaySessionCoach"
+            style="@style/ButtonGradientOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_marginEnd="@dimen/space_8"
+            android:layout_weight="3"
+            android:minWidth="@dimen/_100sdp"
+            android:text="@string/start"
+            android:textSize="@dimen/text_16"
+            app:layout_alignSelf="center" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnPlayNextSessionCoach"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"
+            android:minWidth="@dimen/_80sdp"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/ic_play_next"
+            app:layout_alignSelf="center" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+</LinearLayout>

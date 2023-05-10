@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/clr_background"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_4"
+        android:paddingEnd="@dimen/space_4">
+
+        <TextView
+            android:id="@+id/txtNameTriLucBle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:text="BLE Trí Lực Master"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12" />
+
+        <TextView
+            android:id="@+id/btnOnBleService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@color/clr_tab"
+            android:padding="@dimen/space_8"
+            android:paddingStart="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            tools:text="@string/connect" />
+        <TextView
+            android:id="@+id/btnConnectingBleService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@drawable/gradient_orage"
+            android:padding="@dimen/space_8"
+            android:paddingStart="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            tools:text="@string/connect" />
+
+        <TextView
+            android:id="@+id/btnOffBleService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@drawable/gradient_orage"
+            android:padding="@dimen/space_8"
+            android:paddingStart="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            tools:text="@string/disconnect" />
+    </RelativeLayout>
+</RelativeLayout>

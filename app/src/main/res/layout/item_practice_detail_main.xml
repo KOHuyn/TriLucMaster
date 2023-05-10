@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/clr_tab"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_16"
+        android:paddingTop="@dimen/space_8"
+        android:paddingEnd="@dimen/space_16"
+        android:paddingBottom="@dimen/space_8">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtCurrDatePracticeDetailMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/FontAnTon"
+                tools:text="21/12/2020" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtCurrTimePracticeDetailMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_12"
+                tools:text="10:10 am" />
+
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TableRow android:id="@+id/viewPunchPracticeDetailMain">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:alpha="0.6"
+                    android:text="@string/number_of_punches"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValuePunchesPracticeDetailMain"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
+                    tools:text="650" />
+            </TableRow>
+
+            <TableRow android:id="@+id/viewPowerPracticeDetailMain">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:alpha="0.6"
+                    android:text="@string/power"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValuePowerPracticeDetailMain"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
+                    tools:text="650" />
+            </TableRow>
+
+            <TableRow android:id="@+id/viewTimePracticeDetailMain">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:alpha="0.6"
+                    android:text="@string/time_practice"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValueTimePracticeDetailMain"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
+                    tools:text="650" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</LinearLayout>

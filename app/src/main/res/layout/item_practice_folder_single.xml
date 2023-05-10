@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_70sdp"
+    android:background="@color/clr_tab"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgFolderSinglePractice"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_default_image_rectangle" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="start|center"
+        android:orientation="vertical"
+        android:padding="@dimen/space_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtFolderTitleSinglePractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12"
+            tools:text="Bài 1:  UpperCut UpperCut" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtFolderContentSinglePractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="3"
+            android:maxLines="3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12"
+            tools:text="Lor In viverra pharetra in commodo. Sit quis." />
+    </LinearLayout>
+</LinearLayout>

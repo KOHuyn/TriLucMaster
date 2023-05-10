@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <include
+            android:id="@+id/noDataPracticeFilterCoach"
+            layout="@layout/no_data" />
+
+        <com.mobileplus.dummytriluc.ui.widget.CustomSwipeRcv
+            android:id="@+id/rcvPracticeFilterCoach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:paddingStart="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8" />
+    </FrameLayout>
+
+    <include
+        android:id="@+id/loadMorePracticeFilterCoach"
+        layout="@layout/layout_loading_dialog_default"
+        android:visibility="gone" />
+</LinearLayout>

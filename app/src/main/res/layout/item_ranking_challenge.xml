@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtRankingTopChallenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:fontFamily="@font/anton_regular"
+        android:gravity="center"
+        android:lines="1"
+        android:minWidth="@dimen/_35sdp"
+        android:minHeight="@dimen/_35sdp"
+        android:textAppearance="@style/FontAnTon"
+        tools:text="#2" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageAvatarUserChallenge"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/space_8"
+        android:src="@drawable/ic_default_image_circle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtNameUserChallenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:fontFamily="@font/anton_regular"
+        android:maxWidth="@dimen/_120sdp"
+        android:padding="@dimen/space_4"
+        android:singleLine="true"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="@color/clr_tab"
+        tools:text="NGUYỄN TRẦN DUY NHẤT DUY NHẤT DUY NHẤT" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtPointBonusChallenge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_4"
+        android:layout_weight="1"
+        android:ellipsize="middle"
+        android:fontFamily="@font/anton_regular"
+        android:singleLine="true"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="@color/clr_gradient_orange_start"
+        tools:text="200" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtPointChallenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_4"
+        android:fontFamily="@font/anton_regular"
+        android:padding="@dimen/space_4"
+        android:singleLine="true"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="@color/clr_gradient_orange_start"
+        tools:text="200" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtScoreUserChallenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_8"
+        android:drawableStart="@drawable/ic_rank_up"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/space_4"
+        android:fontFamily="@font/anton_regular"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="#FF7A00"
+        android:textSize="@dimen/text_8"
+        tools:text="989" />
+</androidx.appcompat.widget.LinearLayoutCompat>

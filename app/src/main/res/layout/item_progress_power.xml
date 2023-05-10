@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_4"
+    tools:background="@color/clr_background">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtIntroductionProgressPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/text_12"
+        tools:text="Point 1" />
+
+    <View
+        android:id="@+id/viewSpaceProgressPower"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/space_4"
+        android:layout_marginEnd="@dimen/space_4"
+        android:layout_marginBottom="@dimen/space_4"
+        android:layout_weight="1"
+        android:alpha="0.6" />
+
+    <View
+        android:id="@+id/viewDotProgressPower"
+        android:layout_width="@dimen/_5sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="@dimen/space_8"
+        android:layout_marginBottom="@dimen/space_4"
+        android:background="@drawable/ic_dot"
+        android:backgroundTint="#FF6B00" />
+
+    <ProgressBar
+        android:id="@+id/progressProgressPower"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/space_4"
+        android:progress="60"
+        android:progressDrawable="@drawable/progress_bar_border"
+        android:progressTint="@color/clr_tab" />
+</LinearLayout>

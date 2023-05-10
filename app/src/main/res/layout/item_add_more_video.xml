@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgPracticeThumbVideoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            app:srcCompat="@drawable/ic_default_image_rectangle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleItemVideoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:lines="2"
+            android:padding="@dimen/space_4"
+            android:textSize="@dimen/text_10"
+            tools:text="Bài 1:  UpperCut UpperCut" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbSelectedVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:buttonTint="@color/white"
+        android:minWidth="0dp"
+        android:minHeight="0dp" />
+</FrameLayout>

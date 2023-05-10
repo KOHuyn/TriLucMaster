@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/clr_tab"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_4">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAvatarUserRequestMatchChallenge"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="center"
+        android:background="@drawable/background_circle_gradient_purple"
+        android:padding="@dimen/_2sdp"
+        android:src="@color/clr_primary"
+        android:visibility="visible"
+        app:civ_border_color="@color/clr_gradient_purple_start" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleRequestMatchChallenge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/FontAnTon"
+            tools:text="Thách đấu của Bách Lee" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTypeRequestMatchChallenge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Thách đấu online" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:flexDirection="row"
+            app:flexWrap="wrap">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtAuthorRequestMatchChallenge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_4"
+                android:alpha="0.6"
+                android:textSize="@dimen/text_10"
+                tools:text="Bởi Bách Lee" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtStatusRequestMatchChallenge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/space_4"
+                android:textColor="@color/clr_red"
+                android:textSize="@dimen/text_10"
+                tools:text="Chưa chấp nhận" />
+        </com.google.android.flexbox.FlexboxLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/space_4"
+        app:srcCompat="@drawable/ic_next" />
+</androidx.appcompat.widget.LinearLayoutCompat>

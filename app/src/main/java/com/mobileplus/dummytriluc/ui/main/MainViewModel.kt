@@ -1,0 +1,302 @@
+package com.mobileplus.dummytriluc.ui.main
+
+import com.core.BaseViewModel
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.mobileplus.dummytriluc.BuildConfig
+import com.mobileplus.dummytriluc.R
+import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
+import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
+import com.mobileplus.dummytriluc.bluetooth.request.TransferBluetoothData
+import com.mobileplus.dummytriluc.data.DataManager
+import com.mobileplus.dummytriluc.data.model.entity.DataBluetoothRetryEntity
+import com.mobileplus.dummytriluc.data.model.entity.TableConfig
+import com.mobileplus.dummytriluc.data.remote.ApiConstants
+import com.mobileplus.dummytriluc.data.request.SubmitModeFreedomPractice
+import com.mobileplus.dummytriluc.data.response.LevelPractice
+import com.mobileplus.dummytriluc.ui.utils.AppConstants
+import com.mobileplus.dummytriluc.ui.utils.TypeCoach
+import com.mobileplus.dummytriluc.ui.utils.extensions.*
+import com.utils.SchedulerProvider
+import com.utils.ext.toList
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.PublishSubject
+import org.json.JSONArray
+import org.json.JSONObject
+
+class MainViewModel(
+    dataManager: DataManager,
+    schedulerProvider: SchedulerProvider,
+    private val gson: Gson
+) :
+    BaseViewModel<DataManager>(dataManager, schedulerProvider) {
+
+    private val compositeDisposable = CompositeDisposable()
+
+    private var errorBle: BleErrorRequest = BleErrorRequest()
+
+    val logoutSuccess: PublishSubject<Boolean> = PublishSubject.create()
+    val rxCoachType: PublishSubject<Pair<TypeCoach, JsonObject?>> = PublishSubject.create()
+    var isFirstConnect = dataManager.isFirstConnect()
+    fun setFirstConnected(isFirstConnect: Boolean) = dataManager.setFirstConnect(isFirstConnect)
+    val user = dataManager.getUserInfo()
+    val hotline = dataManager.numberHotLine
+    val rxPostModeFreedomSuccess: PublishSubject<Boolean> = PublishSubject.create()
+    val rxShowPopupUpdateVersionApp: PublishSubject<Triple<String, Boolean, String?>> =
+        PublishSubject.create()
+    var isDataSecurity: Boolean
+        set(value) {
+            dataManager.isDataSecurityBle = value
+        }
+        get() = dataManager.isDataSecurityBle
+
+    var versionUpdateApp: String
+        set(value) {
+            dataManager.versionUpdateApp = value
+        }
+        get() = dataManager.versionUpdateApp
+
+    fun logout(): Disposable {
+        isLoading.onNext(true)
+        return dataManager.logoutServer(uuid = deviceId)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({
+                isLoading.onNext(false)
+                logoutSuccess.onNext(true)
+                dataManager.logout()
+            }, {
+                isLoading.onNext(false)
+                logoutSuccess.onNext(true)
+                dataManager.logout()
+                it.logErr()
+            })
+    }
+
+    fun submitDataBle(request: List<BluetoothResponse>, level: LevelPractice? = null) {
+        logErr(gson.toJson(request))
+
+        val dataTransform = TransferBluetoothData.transferDataArrayToDataString(request, level)
+            ?: return
+        dataManager.postSubmitMultiPracticeResult(dataTransform)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                logErr("$response")
+                rxPostModeFreedomSuccess.onNext(response.isSuccess())
+            }, {
+                it.logErr()
+                saveDataWhenPushServerFail(dataTransform)
+                rxMessage.onNext(it.getErrorMsg())
+            }).addTo(compositeDisposable)
+    }
+
+    fun submitPractice(bleRequest: BluetoothResponse, isFirstConnect: Boolean = true): Disposable {
+        val request = SubmitModeFreedomPractice(
+            bleRequest.machineId,
+            bleRequest.mode,
+            bleRequest.startTime1,
+            bleRequest.startTime2,
+            bleRequest.endTime,
+            if (isFirstConnect)
+                gson.toJson(bleRequest.data.mapNotNull { it?.force ?: 0F })
+            else gson.toJson(bleRequest.data)
+        )
+        return dataManager.postSubmitModeFreedomPractice(request)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                logErr(response.toString())
+            }, {
+                it.logErr()
+                rxMessage.onNext(it.getErrorMsg())
+            })
+    }
+
+    fun saveResultSession(
+        data: List<BluetoothResponse>
+    ) {
+        val dataTransform = JSONArray(gson.toJson(data))
+        val arrFail = mutableListOf<Int>()
+        for (i in 0 until dataTransform.length()) {
+            val dataBleObj: JSONObject = dataTransform.getJSONObject(i)
+            if (dataBleObj.has("session_id")) {
+                if (dataBleObj.has("lesson_id")) {
+                    dataBleObj.put("practice_id", dataBleObj.getInt("lesson_id"))
+                    dataBleObj.remove("lesson_id")
+                }
+                if (dataBleObj.has("data")) {
+                    dataBleObj.remove("data")
+                    dataBleObj.put("data", gson.toJson(data[i].data))
+                }
+            } else {
+                arrFail.add(i)
+            }
+        }
+        arrFail.forEach {
+            dataTransform.remove(it)
+        }
+        if (dataTransform.length() == 0) {
+            return
+        }
+        dataManager.saveResultSession(dataTransform.toString())
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe()
+    }
+
+    fun readNotification(id: Int): Disposable {
+        return dataManager.getNotificationDetail(id)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe()
+    }
+
+    fun checkScreenCoach(): Disposable {
+        isLoading.onNext(true)
+        return dataManager.checkMaster()
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                isLoading.onNext(false)
+                if (response.isSuccess()) {
+                    when (response.dataObject().get(ApiConstants.IS_MASTER).asString) {
+                        TypeCoach.MEMBER.value -> {
+                            rxCoachType.onNext(Pair(TypeCoach.MEMBER, response.dataObject()))
+                        }
+                        TypeCoach.REVIEW.value -> {
+                            rxCoachType.onNext(Pair(TypeCoach.REVIEW, response.dataObject()))
+                        }
+                        TypeCoach.MASTER.value -> {
+                            rxCoachType.onNext(Pair(TypeCoach.MASTER, response.dataObject()))
+                        }
+                        else -> {
+                            rxCoachType.onNext(Pair(TypeCoach.UNKNOWN, null))
+                        }
+                    }
+                } else {
+                    rxCoachType.onNext(Pair(TypeCoach.UNKNOWN, null))
+                }
+            }, {
+                isLoading.onNext(false)
+                rxCoachType.onNext(Pair(TypeCoach.UNKNOWN, null))
+                rxMessage.onNext(it.getErrorMsg())
+            })
+    }
+
+    fun getConfigApp(): Disposable {
+        return dataManager.getConfig()
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                if (response.isSuccess()) {
+                    try {
+                        val listConfig: List<TableConfig> =
+                            gson.toList(response.dataArray())
+//                        saveConfigApp(listConfig)
+                        checkVersionApp(listConfig)
+                    } catch (e: Exception) {
+                        e.logErr()
+                    }
+                }
+            }, {
+                it.logErr()
+            })
+    }
+
+    private fun checkVersionApp(arrConfig: List<TableConfig>) {
+        var lastedVersionName: String? = null
+        var minVersionName: String? = null
+        var contentVersion: String? = null
+        arrConfig.forEach { config ->
+            when (config.name) {
+                "lastedVersionAndroid" -> lastedVersionName = config.value
+                "minVersionAndroid" -> minVersionName = config.value
+                "contentVersionAndroid" -> contentVersion = config.value
+                "hotLineNumber" -> {
+                    config.value?.let { dataManager.numberHotLine = it }
+                }
+            }
+        }
+        if (lastedVersionName == null || minVersionName == null) return
+        val lastedVersionCode = lastedVersionName.transformVersionCode()
+        val minVersionCode = minVersionName.transformVersionCode()
+        logErr("lastedVersionName:$lastedVersionName lastedVersionCode:$lastedVersionCode minVersionName:$minVersionName minVersionCode:$minVersionCode")
+        if (lastedVersionCode == BuildConfig.VERSION_CODE || lastedVersionName == BuildConfig.VERSION_NAME)
+            return
+        else {
+            if (lastedVersionCode > minVersionCode) {
+                if (versionUpdateApp == lastedVersionName) return
+            }
+            if (lastedVersionCode < BuildConfig.VERSION_CODE) return
+
+            rxShowPopupUpdateVersionApp.onNext(
+                Triple(
+                    lastedVersionName ?: BuildConfig.VERSION_NAME,
+                    BuildConfig.VERSION_CODE < minVersionCode,
+                    contentVersion
+                )
+            )
+        }
+    }
+
+    private fun String?.transformVersionCode(): Int {
+        if (this == null) return 0
+        val arrVersion = split(".").map { it.replaceStringToIntOrNull() }
+        val versionMajor = (arrVersion.getOrNull(0) ?: 0) * 1000000
+        val versionMinor = (arrVersion.getOrNull(1) ?: 0) * 1000
+        val versionPatch = (arrVersion.getOrNull(2) ?: 0) * 100
+        return versionMajor + versionMinor + versionPatch
+    }
+
+    private fun saveConfigApp(arrConfig: List<TableConfig>): Disposable {
+        return dataManager.saveConfigs(arrConfig)
+            .compose(schedulerProvider.ioToMainObservableScheduler())
+            .subscribe({
+                logErr("Save Config success")
+            }, {
+                it.logErr()
+            })
+    }
+
+    fun logErrorBleMachineJSON(content: String) {
+        if (content.isBlank()) return
+        if (content.contains(AppConstants.SUCCESS_BLE)) return
+        try {
+            val idMachine =
+                content.substringAfter("\"machine_id\":").substring(0, 5).replaceStringToIntOrNull()
+            errorBle.machineId = idMachine
+        } catch (e: Exception) {
+            e.logErr()
+        }
+        errorBle.content = content
+        dataManager.logErrorMachine(errorBle)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({
+                logErr(it.toString())
+            }, {
+                logErr(it.getErrorMsg())
+                saveDataJSONErrorWhenPushServerFail(errorBle)
+            }).addTo(compositeDisposable)
+    }
+
+    private fun saveDataWhenPushServerFail(data: String) {
+        dataManager.saveBluetoothDataRetry(DataBluetoothRetryEntity(data))
+            .compose(schedulerProvider.ioToMainObservableScheduler())
+            .subscribe({
+                logErr("saveDataWhenError:$data")
+            }, {
+                logErr(it.getErrorMsg())
+            }).addTo(compositeDisposable)
+    }
+
+    private fun saveDataJSONErrorWhenPushServerFail(data: BleErrorRequest) {
+        dataManager.saveBluetoothDataError(data)
+            .compose(schedulerProvider.ioToMainObservableScheduler())
+            .subscribe({
+                logErr("saveDataJSONErrorWhenPushServerFail:$data")
+            }, {
+                logErr(it.getErrorMsg())
+            }).addTo(compositeDisposable)
+    }
+
+    override fun onCleared() {
+        compositeDisposable.clear()
+        super.onCleared()
+    }
+}

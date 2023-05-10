@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connecting">Đang kết nối …</string>
+    <string name="synchronized_data_ble">Đang đồng bộ\n dữ liệu máy tập</string>
+</resources>

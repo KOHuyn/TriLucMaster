@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:openDrawer="start">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.widget.NonSwipeViewPager
+            android:id="@+id/homeViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="#C4C4C4" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavMain"
+            style="@style/BottomNavigationViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemBackground="@color/clr_tab"
+            app:itemTextAppearanceActive="@style/BottomNavigationView.Text.Active"
+            app:itemTextAppearanceInactive="@style/BottomNavigationView.Text"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_bar" />
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/clr_background"
+        app:itemBackground="@color/clr_tab"
+        app:itemIconTint="@color/white"
+        app:itemTextAppearance="@style/FontMetrophobic"
+        app:itemTextColor="@color/white"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/clr_background"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@color/clr_tab">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/spLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|bottom"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:drawablePadding="@dimen/space_8"
+                    app:drawableTint="@color/white"
+                    tools:text="Tiếng Anh" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnCloseNav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:layout_marginBottom="@dimen/space_4"
+                    app:srcCompat="@drawable/ic_menu_horizontal" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/frameProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_4"
+                android:background="@color/clr_tab"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_8">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgAvatarUserLeftMenu"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/space_8"
+                    tools:src="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtNameUserLeftMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/FontAnTon"
+                        android:textSize="@dimen/text_16"
+                        tools:text="Lee Sin" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtIdUserLeftMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/space_4"
+                        android:textSize="@dimen/text_12"
+                        app:drawableEndCompat="@drawable/ic_copy"
+                        tools:text="id: 111199" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/space_4"
+                android:layout_marginEnd="@dimen/space_4"
+                android:background="@drawable/gradient_orange" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvMenuLeft"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/space_4"
+                android:layout_marginEnd="@dimen/space_4"
+                android:layout_weight="1"
+                android:overScrollMode="never"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_menu_left" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/space_16"
+                android:drawablePadding="@dimen/space_8"
+                android:text="@string/logout"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_18"
+                app:drawableStartCompat="@drawable/ic_logout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtVersionApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/space_4"
+                android:alpha="0.6"
+                android:textSize="@dimen/text_12"
+                tools:text="v1.0.0" />
+
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

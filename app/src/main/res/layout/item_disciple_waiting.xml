@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/clr_tab">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_8">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatarWaitingDisciple"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_default_image_circle" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtNameWaitingDisciple"
+                style="@style/FontAnTon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                tools:text="Tùng Lee" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtDescriptionWaitingDisciple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="@dimen/text_12"
+                tools:text="Xin chào! thách đấu ..." />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgRejectWaitingDisciple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/space_4"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/space_4"
+            android:scaleType="center"
+            android:src="@drawable/ic_reject" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgAcceptWaitingDisciple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/space_4"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/space_4"
+            android:src="@drawable/ic_accept" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        android:id="@+id/viewBottomWaitingDisciple"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/space_8"
+        android:background="@color/clr_hint" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

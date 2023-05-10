@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/clr_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:padding="@dimen/space_8">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvCoachSessionPractitioner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:paddingTop="@dimen/space_4"
+            android:paddingBottom="@dimen/space_4"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_coach_session_practitioner" />
+
+        <FrameLayout
+            android:id="@+id/btnAddPractitionerCoachSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clickable_background_primary"
+            app:layout_constraintBottom_toTopOf="@id/btnAddFromGroupCoachSession"
+            app:layout_constraintTop_toBottomOf="@id/rcvCoachSessionPractitioner"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_plus_white"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_12"
+                android:text="@string/label_add_member"
+                android:textAppearance="@style/FontAnTon" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btnAddFromGroupCoachSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/clickable_background_primary"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnAddPractitionerCoachSession"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_plus_white"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_12"
+                android:text="@string/title_add_from_group"
+                android:textAppearance="@style/FontAnTon" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

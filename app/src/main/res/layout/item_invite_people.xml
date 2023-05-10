@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/backgroundAvatarInvite"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="fill_parent"
+        android:background="@color/clr_tab"
+        android:minHeight="@dimen/_50sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatarInvitePeople"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/space_4"
+            tools:src="@color/clr_primary" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="@dimen/space_4">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtNameInvitePeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_18"
+            tools:text="Cung Le" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtIdInvitePeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/clr_tab"
+            tools:text="id:00055" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgDeleteInvitePeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:minWidth="@dimen/_20sdp"
+        android:minHeight="@dimen/_20sdp"
+        android:padding="@dimen/space_4"
+        android:src="@drawable/ic_delete"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbInvitePeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:buttonTint="@color/clr_tab"
+        android:minWidth="0dp" />
+</androidx.appcompat.widget.LinearLayoutCompat>

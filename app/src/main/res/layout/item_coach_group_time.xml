@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:background="@color/clr_background">
+
+    <TextView
+        android:id="@+id/txtTimeCoachGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_12"
+        tools:text="19/05/2021" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/space_4"
+        android:layout_marginBottom="@dimen/space_4"
+        android:layout_weight="1"
+        android:alpha="0.6"
+        android:background="@color/white" />
+</LinearLayout>

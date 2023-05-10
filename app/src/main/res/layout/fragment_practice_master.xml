@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackPracticeMaster"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+    </FrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollPracticeFolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingStart="@dimen/space_8"
+        android:paddingEnd="@dimen/space_8"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtLabelFolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/space_4"
+                android:gravity="center"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_18"
+                tools:text="Khoá học Karate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleMasterFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coach" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/lnMasterPractice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgAvatarPracticeMaster"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/background_circle_gradient_purple"
+                    android:padding="@dimen/_1sdp"
+                    android:src="@drawable/ic_default_image_circle" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/space_8"
+                    app:flexDirection="row"
+                    app:flexWrap="wrap"
+                    app:justifyContent="space_between">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtNamePracticeMaster"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="middle"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:textAppearance="@style/FontAnTon"
+                        android:textSize="@dimen/text_14"
+                        app:layout_alignSelf="center"
+                        app:textAllCaps="true"
+                        tools:text="NGUYỄN TRẦN DUY NHẤT" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnReceiveMasterPractice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_orange"
+                        android:drawableStart="@drawable/ic_belt"
+                        android:drawablePadding="@dimen/space_4"
+                        android:paddingStart="@dimen/space_4"
+                        android:paddingEnd="@dimen/space_4"
+                        android:text="@string/receive_master" />
+                </com.google.android.flexbox.FlexboxLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtLevelPracticeMasterPractice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                tools:text="Level: Đai đen" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtNameSubjectMasterPractice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                tools:text="Môn phái: Karate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtDateCreatedMasterPractice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                tools:text="Ngày tạo: 20-01-2020" />
+
+            <!--            <androidx.appcompat.widget.AppCompatTextView-->
+            <!--                android:id="@+id/txtCountDiscipleMasterPractice"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_4"-->
+            <!--                tools:text="Số người tập: 30" />-->
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgDescriptionPracticeMaster"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginTop="@dimen/space_4"
+                android:maxHeight="@dimen/_250sdp"
+                android:src="@drawable/ic_default_image_rectangle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtDescriptionPracticeMaster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:textSize="@dimen/text_12"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A vel viverra quam ac ultrices tincidunt. Ultrices eget amet integer donec dolor scelerisque semper pharetra. Eu id quam ultrices senectus diam nibh. Lobortis amet in malesuada dolor." />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cbViewMoreContentPracticeMaster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:button="@null"
+                android:checked="true"
+                android:drawableEnd="@drawable/ic_arrow_state"
+                android:drawablePadding="@dimen/space_4"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:text="@string/more"
+                android:textColor="@color/clr_grey"
+                android:visibility="gone"
+                app:drawableTint="@color/clr_grey"
+                app:drawableTintMode="multiply"
+                tools:visibility="visible" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvPracticeFolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_20" />
+
+                <ProgressBar
+                    android:id="@+id/loadMoreFolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:background="@android:color/transparent"
+                    android:indeterminate="true"
+                    android:padding="@dimen/space_4"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

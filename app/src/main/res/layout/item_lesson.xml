@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_4"
+    android:layout_marginBottom="@dimen/space_4"
+    android:background="@color/clr_bg_title_dark"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/prgLesson"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_4"
+        android:progress="100"
+        android:progressDrawable="@drawable/progress_gradient" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtNameLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginTop="@dimen/space_8"
+        android:textAppearance="@style/FontAnTon"
+        android:textSize="@dimen/text_10"
+        tools:text="Bài 1:Tự do" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_16"
+        android:paddingTop="@dimen/space_8"
+        android:paddingEnd="@dimen/space_16"
+        android:paddingBottom="@dimen/space_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTimeLesson"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            tools:text="Thời gian: 60p"
+            android:textSize="@dimen/text_12" />
+
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TableRow android:id="@+id/viewPunch">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtLabelNumberOfPunch"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:alpha="0.6"
+                    android:text="@string/number_of_punches"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValuePunches"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
+                    tools:text="650" />
+            </TableRow>
+
+
+            <TableRow android:id="@+id/viewPower">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtLabelPower"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:alpha="0.6"
+                    android:text="@string/power"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValuePower"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
+                    tools:text="650" />
+            </TableRow>
+
+            <TableRow android:id="@+id/viewCal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:alpha="0.6"
+                    android:text="@string/cal"
+                    android:textSize="@dimen/text_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValueCal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
+                    tools:text="650" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</LinearLayout>

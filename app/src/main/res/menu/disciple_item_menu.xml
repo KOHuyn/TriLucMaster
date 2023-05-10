@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemAddGroup"
+        android:title="@string/label_add_to_group" />
+    <item
+        android:id="@+id/itemAssignExerciseDisciple"
+        android:title="@string/label_assign_exercise" />
+    <item
+        android:id="@+id/itemDeleteDisciple"
+        android:title="@string/label_delete_disciple" />
+
+</menu>

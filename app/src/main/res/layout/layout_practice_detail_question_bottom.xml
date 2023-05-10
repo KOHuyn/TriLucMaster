@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvFAQ"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:background="@color/clr_tab"
+        android:fadeScrollbars="true"
+        android:scrollbarSize="2dp"
+        android:scrollbarThumbVertical="@drawable/background_white_radius_8"
+        android:scrollbars="vertical" />
+
+    <include
+        android:id="@+id/loadingChatPractice"
+        layout="@layout/layout_loading_dialog_default"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top" />
+</FrameLayout>

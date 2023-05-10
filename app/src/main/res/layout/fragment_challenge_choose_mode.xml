@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/clr_tab"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackChooseModeChallenge"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/create_challenge"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true"
+            tools:fontFamily="@font/anton_regular" />
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RadioGroup
+        android:id="@+id/rgChooseModeChallenge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbLessonChallenge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_8"
+            android:background="@drawable/background_button_challenge_lesson_state"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/follow_the_exercise"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_24" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbFreeChallenge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_marginEnd="@dimen/space_8"
+            android:background="@drawable/background_button_challenge_free_state"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/free"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_24" />
+    </RadioGroup>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNextChallengeMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:paddingTop="@dimen/space_4"
+        android:paddingBottom="@dimen/space_4"
+        android:text="@string/next"
+        android:textAllCaps="true"
+        android:textAppearance="@style/FontAnTon"
+        android:textSize="@dimen/text_24" />
+</LinearLayout>

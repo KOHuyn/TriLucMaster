@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemChangeName"
+        android:title="@string/label_change_group_name" />
+    <item
+        android:id="@+id/itemDeleteGroup"
+        android:title="@string/label_delete_group" />
+    <item
+        android:id="@+id/itemAddMember"
+        android:title="@string/label_add_member"
+        />
+    <item
+        android:id="@+id/itemAssignExercise"
+        android:title="@string/label_assign_exercise"
+        />
+</menu>

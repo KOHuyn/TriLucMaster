@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/clr_tab">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/humanDefaultBody"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/human_default"
+        android:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/layoutHumanPosition"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/humanHead"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/human_head_green" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/humanChestLeft"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/human_chest_left_green" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/humanChestRight"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/human_chest_right_green" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/humanAbdomen"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/human_abdomen_green" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/humanLegLeft"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/human_leg_left_green" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/humanLegRight"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/human_leg_right_green" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPositionScore"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/positionHead"
+            style="@style/PositionPunchPower"
+            android:layout_gravity="center|top" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.5" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="10" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionLeftHand"
+                style="@style/PositionPunchPower" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionRightHand"
+                style="@style/PositionPunchPower" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="10" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/positionAbdomen"
+            style="@style/PositionPunchPower"
+            android:layout_gravity="center|top" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="7" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionLegLeft"
+                style="@style/PositionPunchPower" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionLegRight"
+                style="@style/PositionPunchPower" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPositionScoreHigh"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/positionHeadHighScore"
+            style="@style/PositionHighScore"
+            android:layout_gravity="center|top"
+            tools:text="100" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.5" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="10" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionLeftChestHighScore"
+                style="@style/PositionHighScore"
+                tools:text="100" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionRightChestHighScore"
+                style="@style/PositionHighScore"
+                tools:text="100" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="10" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/positionAbdomenHighScore"
+            style="@style/PositionHighScore"
+            android:layout_gravity="center|top"
+            tools:text="100" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="7" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionLegLeftHighScore"
+                style="@style/PositionHighScore"
+                tools:text="100" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/positionLegRightHighScore"
+                style="@style/PositionHighScore"
+                tools:text="100" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="15" />
+    </LinearLayout>
+
+</FrameLayout>

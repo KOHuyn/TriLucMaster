@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitlePosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="#636566"
+        android:textSize="@dimen/text_8"
+        tools:text="Đầu:" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtScorePower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_2"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="#F44335"
+        android:textSize="@dimen/text_8"
+        tools:text="989" />
+</LinearLayout>

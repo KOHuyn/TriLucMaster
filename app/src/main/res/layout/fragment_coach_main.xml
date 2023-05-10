@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackCoach"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/coach"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshCoachMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollCoach"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/clr_background"
+            android:clickable="true"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_8">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChartCoach"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/clr_tab"
+                        android:minHeight="@dimen/_150sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/practice_turn"
+                        android:textSize="@dimen/text_8" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/space_4"
+                        android:text="@string/time"
+                        android:layout_gravity="bottom|end"
+                        android:textSize="@dimen/text_8" />
+
+                </FrameLayout>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_marginBottom="@dimen/space_8"
+                    android:gravity="center"
+                    app:flexDirection="row"
+                    app:flexWrap="wrap">
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbMyExercise"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_my_practices"
+                        app:title="@string/my_exercise" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbExerciseDraft"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_draft_practices"
+                        app:title="@string/draft_exercise" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbDisciple"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_my_disciple"
+                        app:title="@string/label_disciple" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbDiscipleGroup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_my_disciple_group"
+                        app:title="@string/label_disciple_group" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbCreateExerciseNewCoach"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_create_exercise"
+                        app:title="@string/create_exercise" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbCreateCourseNewCoach"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_create_course"
+                        app:title="@string/create_course" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbListExerciseSave"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_exercise_saved"
+                        app:title="@string/exercise_saved" />
+
+                    <com.mobileplus.dummytriluc.ui.widget.CoachManagerButton
+                        android:id="@+id/cmbListExerciseOld"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_flexBasisPercent="25%"
+                        app:srcImg="@drawable/ic_session_old"
+                        app:title="@string/session_old" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCreateSessionNewCoach"
+                    style="@style/FontAnTon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:layout_marginBottom="@dimen/space_4"
+                    android:background="@color/clr_primary"
+                    android:minHeight="0dp"
+                    android:padding="@dimen/space_6"
+                    android:text="@string/create_new_session"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_14" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_4"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/exercise"
+                        android:textAppearance="@style/FontAnTon"
+                        android:textSize="@dimen/text_14" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnMoreMyExerciseCoach"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/space_4"
+                        android:text="@string/more"
+                        android:textSize="@dimen/text_12" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvMyExerciseCoach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_practice_content" />
+
+                <include
+                    android:id="@+id/noDataExercise"
+                    layout="@layout/no_data"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDisciple"
+                    style="@style/FontAnTon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:text="@string/label_disciple"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_14" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDiscipleList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/space_8"
+                        android:layout_marginEnd="@dimen/space_8"
+                        android:layout_marginBottom="@dimen/space_20"
+                        android:overScrollMode="never"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_ranking" />
+
+                    <ProgressBar
+                        android:id="@+id/loadMoreCoachMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:background="@android:color/transparent"
+                        android:indeterminate="true"
+                        android:padding="@dimen/space_8"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

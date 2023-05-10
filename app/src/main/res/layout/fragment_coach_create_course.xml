@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolBarCoachCreateCourse"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/clr_tab"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackCoachCreateCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_16"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtHeaderCreateCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/create_course"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewCreateCourse"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnCreateCourseNewCoach"
+        app:layout_constraintTop_toBottomOf="@+id/toolBarCoachCreateCourse">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/space_12"
+            android:paddingEnd="@dimen/space_12">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_4"
+                android:text="@string/name_course"
+                android:textSize="@dimen/text_12" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtNameCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_light_grey"
+                android:hint="@string/name_course"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:singleLine="true"
+                android:textColor="@color/clr_tab"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_4"
+                android:text="@string/sect"
+                android:textSize="@dimen/text_12" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/spSubjectCreateCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_light_grey"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:ellipsize="end"
+                android:focusableInTouchMode="true"
+                android:hint="@string/sect"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:singleLine="true"
+                android:textColor="@color/clr_tab"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_4"
+                android:text="@string/video_label_status"
+                android:textSize="@dimen/text_12" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/spStatusCreateCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_light_grey"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:ellipsize="end"
+                android:focusableInTouchMode="true"
+                android:hint="@string/video_label_status"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:singleLine="true"
+                android:textColor="@color/clr_tab"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_4"
+                android:text="@string/introduce"
+                android:textSize="@dimen/text_12" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtIntroduceCreateCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_light_grey"
+                android:gravity="top|start"
+                android:lines="5"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:textColor="@color/clr_tab"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_4"
+                android:text="@string/video_fight_summary"
+                android:textSize="@dimen/text_12" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnUploadPhotoNewCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/clr_light_grey"
+                android:minHeight="@dimen/_180sdp"
+                android:scaleType="center"
+                android:src="@drawable/ic_photo" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAddExerciseCourseNewCoach"
+                style="@style/FontAnTon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:background="@color/clr_primary"
+                android:minHeight="0dp"
+                android:padding="@dimen/space_4"
+                android:text="@string/add_exercise"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvExerciseAddToCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_coach_draft_single" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreateCourseNewCoach"
+        style="@style/ButtonGradientOrange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4"
+        android:padding="@dimen/space_4"
+        android:text="@string/create_course"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

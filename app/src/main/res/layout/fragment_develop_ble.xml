@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:fillViewport="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Câu lệnh" />
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/edtWriteCommandBle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@color/white"
+            android:gravity="start"
+            android:lines="3"
+            android:padding="@dimen/space_4" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDevBleWriteData"
+            style="@style/ButtonGradientOrange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_6"
+            android:text="Ghi dữ liệu" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDevBleLongWriteData"
+            style="@style/ButtonGradientOrange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_6"
+            android:text="Ghi dữ liệu JSON" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDevBleClearAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_6"
+            android:text="Xoá dữ liệu"
+            android:textColor="@color/clr_tab" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Bluetooth response" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtDevBleResponse"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="start"
+            android:lines="12"
+            android:singleLine="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBackDevBle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="@string/back"
+            android:textColor="@color/clr_tab" />
+    </LinearLayout>
+</ScrollView>

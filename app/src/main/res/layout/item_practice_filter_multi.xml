@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_4"
+        android:alpha="0.3"
+        android:background="@color/clr_tab"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgFolderPracticeFilterThumbClone2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_default_image_rectangle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C8C8C8"
+            android:ellipsize="end"
+            android:lines="2"
+            android:padding="@dimen/space_4"
+            android:textSize="@dimen/text_10"
+            tools:text="Bài 1:  UpperCut UpperCut" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_2"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginEnd="@dimen/space_2"
+        android:alpha="0.6"
+        android:background="@color/clr_tab"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgFolderPracticeFilterThumbClone1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_default_image_rectangle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C8C8C8"
+            android:ellipsize="end"
+            android:lines="2"
+            android:padding="@dimen/space_4"
+            android:textSize="@dimen/text_10"
+            tools:text="Bài 1:  UpperCut UpperCut" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4"
+        android:layout_marginEnd="@dimen/space_4"
+        android:background="@color/clr_tab"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgFolderPracticeFilterThumb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_default_image_rectangle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtNameSubjectPracticeFolderFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@color/clr_primary"
+                android:paddingStart="@dimen/space_4"
+                android:paddingEnd="@dimen/space_4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_8"
+                tools:text="Boxing" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnFolderDeleteItemPracticeFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="@dimen/space_8"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_delete_item" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtFolderTitleItemPracticeFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C8C8C8"
+            android:ellipsize="end"
+            android:lines="2"
+            android:padding="@dimen/space_4"
+            android:textColor="@color/clr_tab"
+            android:textSize="@dimen/text_10"
+            tools:text="Bài 1:  UpperCut UpperCut" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/viewSelectedPracticeMultiFilter"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:alpha="0.7"
+            android:background="@color/black" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_selected" />
+    </FrameLayout>
+</FrameLayout>

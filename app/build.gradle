@@ -1,0 +1,167 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+def appName = "Trí lực Master"
+def versionMajor = 1
+def versionMinor = 3
+def versionPatch = 4
+
+android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/KOHuyn/StudioProjects/dummy-tri-luc/keystore/keystorefinal.jks')
+            storePassword '14121517'
+            keyAlias 'key1'
+            keyPassword '14121517'
+        }
+    }
+    compileSdkVersion compile_version
+    buildToolsVersion android_version
+
+    defaultConfig {
+        applicationId "com.mobileplus.trilucmaster"
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_version
+        versionCode versionMajor * 1000000 + versionMinor * 1000 + versionPatch * 100
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    flavorDimensions "mode"
+
+    productFlavors {
+        dev {
+            resValue "string", "app_alias_name", "DEV.${appName}"
+            resValue "string", "server_client_id", "646915433566-e4bk5s2asgi3gcc0tp77tcq7po9ljlof.apps.googleusercontent.com"
+            dimension "mode"
+            applicationIdSuffix ".dev"
+            buildConfigField "String", "BASE_URL", "\"http://dummy-api.mobileplus.info\""
+            buildConfigField "String", "SOCKET_URL", "\"http://dummy-api.mobileplus.info:9000\""
+        }
+
+        production {
+            resValue "string", "app_alias_name", appName
+            resValue "string", "server_client_id", "648396044651-na035re1f8km4frvd1lffes8bhtrnrcr.apps.googleusercontent.com"
+            dimension "mode"
+            buildConfigField "String", "BASE_URL", "\"http://api.trilucmaster.vn\""
+            buildConfigField "String", "SOCKET_URL", "\"http://api.trilucmaster.vn:9000\""
+        }
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+}
+
+dependencies {
+    implementation project(':core')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.50"
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    implementation "uk.co.chrisjenx:calligraphy:2.3.0"
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.2.0'
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation 'androidx.room:room-rxjava2:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+
+    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.2'
+    //support multi screen
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    //font
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //MP chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    //circular progressbar
+    implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
+    //flex layout
+    implementation 'com.google.android:flexbox:2.0.1'
+    //basic recyclerView
+    implementation 'me.ibrahimyilmaz:kiel:1.2.1'
+    //Image picker
+    implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
+    //Wheel Picker
+    implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.3'
+    //camera View
+    implementation 'com.otaliastudios:cameraview:2.6.4'
+    //exoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.4'
+    //Facebook SDK
+    implementation 'com.facebook.android:facebook-login:[8,9)'
+
+    //Firebase SDK
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-messaging-directboot'
+
+    //Google Auth
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+//    socket
+    implementation('io.socket:socket.io-client:1.0.1')
+            { exclude group: 'org.json', module: 'json' }
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+
+}

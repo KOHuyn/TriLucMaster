@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp"
+    tools:background="@color/clr_primary"
+    tools:ignore="MissingPrefix">
+
+
+    <ImageView
+        android:id="@+id/imageTrophy"
+        android:layout_width="@dimen/_57sdp"
+        android:layout_height="@dimen/_53sdp"
+        android:src="@drawable/ic_boxing"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        fontPath="fonts/anton_regular.ttf"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/text_8"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="Golden Punch"
+        app:layout_constraintTop_toBottomOf="@id/imageTrophy" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

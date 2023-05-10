@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:background="@color/clr_tab">
+
+    <View
+        android:id="@+id/colorItemChartPower"
+        android:layout_width="@dimen/_4sdp"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:background="@drawable/ic_dot"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitleItemChartPower"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:alpha="0.6"
+        android:textSize="@dimen/text_12"
+        tools:text="Point 1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtScoreItemChartPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_12"
+        android:layout_marginStart="@dimen/space_8"
+        android:gravity="end"
+        tools:text="10000" />
+</LinearLayout>

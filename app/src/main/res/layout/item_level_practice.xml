@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/viewLevel"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/clr_hint" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtNameLevelPractice"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/space_4"
+        android:paddingBottom="@dimen/space_4"
+        tools:text="Level 1"
+        android:textAppearance="@style/FontAnTon"
+        android:textColor="@color/clr_tab"
+        android:textSize="@dimen/text_12" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

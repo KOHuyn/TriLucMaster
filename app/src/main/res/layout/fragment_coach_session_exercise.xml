@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/clr_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:padding="@dimen/space_8">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvCoachSessionExercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"
+            android:paddingBottom="@dimen/space_8"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_coach_session_exercise" />
+
+        <FrameLayout
+            android:id="@+id/btnAddExerciseCoachSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clickable_background_primary"
+            app:layout_constraintBottom_toTopOf="@id/btnAddExerciseSavedCoachSession"
+            app:layout_constraintTop_toBottomOf="@id/rcvCoachSessionExercise"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_plus_white"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_12"
+                android:text="@string/add_exercise"
+                android:textAppearance="@style/FontAnTon" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btnAddExerciseSavedCoachSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/clickable_background_primary"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toTopOf="@id/btnSaveExerciseCoachSession"
+            app:layout_constraintTop_toBottomOf="@id/btnAddExerciseCoachSession">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_plus_white"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_12"
+                android:text="@string/add_from_saved_list"
+                android:textAppearance="@style/FontAnTon" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btnSaveExerciseCoachSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/clickable_background_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnAddExerciseSavedCoachSession">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_save_as"
+                android:drawablePadding="@dimen/space_8"
+                android:padding="@dimen/space_12"
+                android:text="@string/save_list"
+                android:textAppearance="@style/FontAnTon" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

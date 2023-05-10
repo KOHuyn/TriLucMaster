@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtItemRankNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/clr_tab"
+        android:gravity="center"
+        android:minWidth="@dimen/_40sdp"
+        android:textAppearance="@style/FontAnTon"
+        android:textSize="@dimen/text_20"
+        tools:text="#1" />
+
+    <LinearLayout
+        android:id="@+id/layoutBodyRanking"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_4">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtItemRankingDifference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:drawablePadding="@dimen/space_4"
+            android:gravity="center"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="#00D254"
+            android:textSize="@dimen/text_12"
+            app:drawableStartCompat="@drawable/ic_rank_up"
+            tools:text="+1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtItemScorePersonRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_8"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/clr_gradient_orange_start"
+            android:textSize="@dimen/text_16"
+            tools:text="9" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtItemNamePersonRank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:ellipsize="middle"
+            android:paddingStart="@dimen/space_4"
+            android:paddingEnd="@dimen/space_4"
+            android:singleLine="true"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/clr_dark_bg"
+            android:textSize="@dimen/text_16"
+            app:textAllCaps="true"
+            tools:text="NGUYỄN TRẦN DUY NHẤT" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgItemAvatarPersonRank"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            tools:src="@color/clr_background" />
+    </LinearLayout>
+</LinearLayout>

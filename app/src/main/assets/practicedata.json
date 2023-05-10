@@ -1,0 +1,100 @@
+{
+  "mode": 4,
+  "user_id": 23,
+  "practice_id": 2,
+  "machine_id": 57,
+  "start_time1": "30/11/2020",
+  "start_time2": 545798,
+  "data": [
+    {
+      "force": 224,
+      "on_target": 1,
+      "position": 1,
+      "time": 546921
+    },
+    {
+      "force": 312,
+      "on_target": 1,
+      "position": 5,
+      "time": 548302
+    },
+    {
+      "force": 320,
+      "on_target": 1,
+      "position": 4,
+      "time": 549725
+    },
+    {
+      "force": 208,
+      "on_target": 1,
+      "position": 3,
+      "time": 550497
+    },
+    {
+      "force": 313,
+      "on_target": 1,
+      "position": 5,
+      "time": 552023
+    },
+    {
+      "force": 210,
+      "on_target": 1,
+      "position": 1,
+      "time": 553048
+    },
+    {
+      "force": 226,
+      "on_target": 1,
+      "position": 0,
+      "time": 554260
+    },
+    {
+      "force": 320,
+      "on_target": 1,
+      "position": 4,
+      "time": 555812
+    },
+    {
+      "force": 208,
+      "on_target": 1,
+      "position": 3,
+      "time": 556699
+    },
+    {
+      "force": 216,
+      "on_target": 1,
+      "position": 2,
+      "time": 557703
+    },
+    {
+      "force": 338,
+      "on_target": 1,
+      "position": 5,
+      "time": 559318
+    },
+    {
+      "force": 232,
+      "on_target": 1,
+      "position": 0,
+      "time": 560738
+    },
+    {
+      "force": 224,
+      "on_target": 1,
+      "position": 2,
+      "time": 561539
+    },
+    {
+      "force": 305,
+      "on_target": 1,
+      "position": 5,
+      "time": 563227
+    },
+    {
+      "force": 217,
+      "on_target": 1,
+      "position": 1,
+      "time": 564201
+    }
+  ]
+}

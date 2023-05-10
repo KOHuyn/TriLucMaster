@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clr_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBackGroupMember"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/space_12"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleGroupDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/space_32"
+            android:layout_marginEnd="@dimen/space_32"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/label_disciple_group"
+            android:textAppearance="@style/FontAnTon"
+            android:textSize="@dimen/text_18"
+            app:textAllCaps="true" />
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/rgChooseModeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginTop="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_12"
+        android:background="@color/clr_primary"
+        android:orientation="horizontal"
+        android:padding="@dimen/_2sdp">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbListDisciple"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/state_switch_disciple_list"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_4"
+            android:text="@string/label_disciple_list"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbLesson"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/state_switch_disciple_list"
+            android:button="@null"
+            android:gravity="center"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_4"
+            android:text="@string/label_lesson"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbMessageGroup"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/state_switch_disciple_list"
+            android:button="@null"
+            android:gravity="center"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="@dimen/space_4"
+            android:text="@string/message"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white" />
+    </RadioGroup>
+
+    <com.widget.NonSwipeViewPager
+        android:id="@+id/vpGroupDisciple"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemMove"
+        android:title="@string/label_move_to_group" />
+
+    <item
+        android:id="@+id/itemAssignExerciseMemberInGroup"
+        android:title="@string/label_assign_exercise" />
+
+    <item
+        android:id="@+id/itemRemove"
+        android:title="@string/label_remove_from_group" />
+</menu>

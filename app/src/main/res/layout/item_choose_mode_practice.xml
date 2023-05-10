@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp"
+    android:background="@drawable/gradient_orage">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgThumbChooseModePractice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/space_2"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/img_thumb_free_fight" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/space_2"
+        android:alpha="0.5"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleChooseModePractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontAnTon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18"
+            tools:text="Đánh tự do" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtDescriptionChooseModePractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontRobotoLight"
+            android:textColor="@color/white"
+            android:textFontWeight="200"
+            tools:text="free fight" />
+    </LinearLayout>
+</FrameLayout>

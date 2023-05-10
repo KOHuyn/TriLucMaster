@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="@color/clr_background">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgMyAppellation"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="center"
+        android:background="@drawable/background_frame"
+        android:paddingStart="@dimen/space_12"
+        android:paddingTop="@dimen/space_8"
+        android:paddingEnd="@dimen/space_12"
+        android:paddingBottom="@dimen/space_12"
+        tools:srcCompat="@drawable/ic_punch" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtNameMyAppellation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_4"
+        android:textAppearance="@style/FontAnTon"
+        android:textSize="@dimen/text_8"
+        tools:fontFamily="@font/anton_regular"
+        tools:text="Golden Punch" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

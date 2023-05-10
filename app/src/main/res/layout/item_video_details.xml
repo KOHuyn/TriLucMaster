@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/playerVideoEditExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/clr_grey" />
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/videoViewCoachFinish"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                app:show_timeout="2000"
+                app:shutter_background_color="@android:color/transparent"
+                app:use_controller="true" />
+
+
+            <GridLayout
+                android:id="@+id/leftControlVideo"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_bg_video_control"
+                android:columnCount="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnAddVideoDraft"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:src="@drawable/ic_video_plus" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnCropVideoDraft"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:src="@drawable/ic_video_crop"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnDeleteVideoDraft"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:src="@drawable/ic_video_delete" />
+            </GridLayout>
+
+            <ProgressBar
+                android:id="@+id/loadingVideoInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/repeatVideoInfo"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_circle_reload"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/playVideoInfo"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_play"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pauseVideoInfo"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_pause"
+                android:visibility="gone" />
+        </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_5">
+
+        <FrameLayout
+            android:id="@+id/scrollEditVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginBottom="@dimen/_2sdp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTimeLineEditorVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4"
+                android:layout_marginEnd="@dimen/space_4"
+                android:orientation="horizontal"
+                android:scrollbarThumbHorizontal="@color/clr_red"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/view_power_per_second" />
+
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center|start"
+                android:layout_marginStart="@dimen/space_4"
+                android:background="@drawable/rounded_rectangle_red" />
+        </FrameLayout>
+
+        <GridLayout
+            android:id="@+id/timeLineControls"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:columnCount="3"
+            android:foregroundGravity="top">
+
+            <LinearLayout
+                android:layout_columnWeight="1"
+                android:layout_gravity="start"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnPlayTimeLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_video_player" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnClearTimeLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_video_clear" />
+
+
+                <TextView
+                    android:id="@+id/tvCurrentPower"
+                    style="@style/FontAnTon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:textColor="@color/clr_red"
+                    android:textSize="@dimen/text_16"
+                    tools:text="150" />
+
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_columnWeight="1"
+                android:layout_gravity="center" />
+
+            <GridLayout
+                android:layout_columnWeight="2"
+                android:layout_gravity="end">
+
+                <GridLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnZoomOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/space_8"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_loop_minus" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnZoomIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_loop_plus" />
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/btnShowTimer"
+                    android:columnCount="3">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/timeHourVideo"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_19sdp"
+                        android:background="@drawable/rounded_video_timer"
+                        android:text="@string/default_time_number"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/divide"
+                        android:textColor="@color/clr_tab" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/timeMinuteVideo"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_19sdp"
+                        android:background="@drawable/rounded_video_timer"
+                        android:text="@string/default_time_number"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </GridLayout>
+            </GridLayout>
+
+        </GridLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <include
+            android:id="@+id/humanVideoResult"
+            layout="@layout/layout_human_video" />
+    </FrameLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
