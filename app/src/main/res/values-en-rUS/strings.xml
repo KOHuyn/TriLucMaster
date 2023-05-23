@@ -510,4 +510,21 @@
     <string name="practice_turn">Practice turn</string>
     <string name="you_have_not_entered_the_group_name">You have not entered the group name</string>
 
+    <string name="esptouch_message_permission">APP require Location permission to get Wi-Fi information. \nClick to request permission</string>
+    <string name="esptouch_message_location">Please turn on GPS to get Wi-Fi information.</string>
+    <string name="esptouch_message_wifi_connection">Please connect Wi-Fi first.</string>
+    <string name="esptouch_message_wifi_frequency">Current Wi-Fi connection is 5G, make sure your device supports it.</string>
+    <string name="location_permission_title">⚠️Warning</string>
+    <string name="location_permission_message">On Android M or higher version, App can\'t get Wi-Fi connection information if you forbid Location permission.</string>
+    <string name="esptouch_configure_wifi_change_message">Wi-Fi disconnected or changed</string>
+    <string name="esptouch_configure_result_failed">Failed to send wifi to machine</string>
+    <string name="esptouch_configure_result_failed_port">Create EspTouch task failed, the EspTouch port could be used by other thread</string>
+    <string name="esptouch_configure_result_success">Connection</string>
+    <string name="esptouch_configure_result_success_item">Wifi connection to the machine is successful</string>
+    <string name="connect_wifi_for_machine">Wifi connection for machine</string>
+    <string name="wifi_password">Wifi password</string>
+    <string name="wifi_password_input">Input wifi password</string>
+    <string name="tip_send_pass_wifi_to_machine">Enter the password of the connection and click send to send the password to machine</string>
+    <string name="note_send_pass_wifi_to_machine">Note: the machine can only connect to 2.4 ghz wifi. Please reconnect to wifi before sending the password to the machine.</string>
+    <string name="wifi_configuring">Configuring wifi for the machine, please wait a moment…</string>
 </resources>

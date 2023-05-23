@@ -15,6 +15,12 @@ import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.data.response.DetailPracticeResponse
 import com.mobileplus.dummytriluc.data.response.LevelPractice
 import com.mobileplus.dummytriluc.data.response.PracticeAvgResponse
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.command.FinishCommand
+import com.mobileplus.dummytriluc.transceiver.command.ICommand
+import com.mobileplus.dummytriluc.transceiver.command.LessonCommand
+import com.mobileplus.dummytriluc.transceiver.command.PracticeFreePunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.PracticeLedPunchCommand
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.practice.dialog.ConfirmPracticeTestDialog
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
@@ -33,6 +39,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_practice_test.*
+import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -41,14 +48,14 @@ import kotlin.math.abs
 class PracticeTestFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_practice_test
     private val testViewModel by viewModel<PracticeTestViewModel>()
-    private fun commandRequestBle(command: String) =
-        (requireActivity() as MainActivity).actionWriteBle(command)
 
-    private fun commandLongRequestBle(command: String) =
-        (requireActivity() as MainActivity).actionWriteBle(command)
+    private val transceiver by lazy { ITransceiverController.getInstance() }
+    private fun commandRequestBle(command: ICommand): Boolean {
+        transceiver.send(command)
+        return true
+    }
 
     private lateinit var countDownStart: CountDownTimer
-    private val rxMsgNotifiBle by lazy { (requireActivity() as MainActivity).rxResponseDataBle }
     private val rxRequestPostFragment: PublishSubject<Boolean> = PublishSubject.create()
     private var dataRequest: List<BluetoothResponse> = emptyList()
     private var dataDetail: DetailPracticeResponse? = null
@@ -143,7 +150,7 @@ class PracticeTestFragment : BaseFragment() {
             if (isRetry) {
                 startPractice()
             } else {
-                commandRequestBle(CommandBle.FINISH)
+                commandRequestBle(FinishCommand)
                 countTimesDisposable?.dispose()
                 countTimesDisposable = null
                 isRetry = true
@@ -200,36 +207,42 @@ class PracticeTestFragment : BaseFragment() {
         return when (typeRecord) {
             TYPE_COURSE -> {
                 if (positionArr.isNotEmpty()) {
-                    commandLongRequestBle(
-                        String.format(
-                            CommandBle.LESSON_MODE,
-                            timeL,
-                            dataDetail?.id ?: -1,
-                            positionArr,
-                            delayPositionArr,
-                            avgResponse?.avgPower?:0,
-                            avgResponse?.avgHit?:0,
+                    commandRequestBle(
+                        LessonCommand(
+                            lessonId = listOf(dataDetail?.id ?: -1),
+                            round = 2,
+                            fullName = "",
+                            level = JSONObject().apply {
+                                put("name", "level1")
+                                put("value", 0.75)
+                            }, avgPower = avgResponse?.avgPower ?: 50,
+                            avgHit = avgResponse?.avgHit ?: 20
                         )
+//                                String . format (
+//                                CommandBle.LESSON_MODE,
+//                        timeL,
+//                        dataDetail?.id ?: -1,
+//                        positionArr,
+//                        delayPositionArr,
+//                        avgResponse?.avgPower ?: 0,
+//                        avgResponse?.avgHit ?: 0,
+//                    )
                     )
                 } else false
             }
             TYPE_FREE_FIGHT -> {
                 commandRequestBle(
-                    String.format(
-                        CommandBle.FREESTYLE_MODE,
-                        timeL,
-                        avgResponse?.avgPower ?: 0,
-                        avgResponse?.avgHit ?: 0
+                    PracticeFreePunchCommand(
+                        avgPower = avgResponse?.avgPower ?: 50,
+                        avgHit = avgResponse?.avgHit ?: 50
                     )
                 )
             }
             TYPE_ACCORDING_TO_LED -> {
                 commandRequestBle(
-                    String.format(
-                        CommandBle.RANDOM_LED_MODE,
-                        timeL,
-                        avgResponse?.avgPower ?: 0,
-                        avgResponse?.avgHit ?: 0
+                    PracticeLedPunchCommand(
+                        avgPower = avgResponse?.avgPower ?: 50,
+                        avgHit = avgResponse?.avgHit ?: 50
                     )
                 )
             }

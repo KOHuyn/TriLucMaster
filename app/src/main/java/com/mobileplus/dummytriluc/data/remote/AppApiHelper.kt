@@ -949,4 +949,27 @@ class AppApiHelper : ApiHelper, KoinComponent {
             .build()
             .getObjectSingle(JsonObject::class.java)
     }
+
+    override fun connectMachine(machineName: String): Single<JsonObject> {
+        return Rx2AndroidNetworking.post(ApiEndPoint.URL_REQUEST_CONNECT_MACHINE)
+            .addBodyParameter(ApiConstants.MACHINE_ID, machineName)
+            .addBodyParameter(ApiConstants.UUID, deviceId)
+            .build()
+            .getObjectSingle(JsonObject::class.java)
+    }
+
+    override fun forceConnectMachine(machineName: String): Single<JsonObject> {
+        return Rx2AndroidNetworking.post(ApiEndPoint.URL_FORCE_CONNECT_MACHINE)
+            .addBodyParameter(ApiConstants.MACHINE_ID, machineName)
+            .addBodyParameter(ApiConstants.UUID, deviceId)
+            .build()
+            .getObjectSingle(JsonObject::class.java)
+    }
+
+    override fun getDataPracticeResult(practiceId: String): Single<JsonObject> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.URL_PRACTICE_GET_DATA_RESULT)
+            .addQueryParameter("id", practiceId)
+            .build()
+            .getObjectSingle(JsonObject::class.java)
+    }
 }

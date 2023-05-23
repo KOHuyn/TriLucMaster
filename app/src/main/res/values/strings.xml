@@ -520,4 +520,23 @@
     <string name="optimizing_data_machine">Đang tối ưu hoá\n dữ liệu máy tập</string>
     <string name="practice_turn">Lượt tập</string>
     <string name="you_have_not_entered_the_group_name">Bạn chưa nhập tên nhóm</string>
+
+    <string name="esptouch_message_permission">APP yêu cầu quyền Vị trí để nhận thông tin Wi-Fi. \nNhấp để yêu cầu quyền</string>
+    <string name="esptouch_message_location">Vui lòng bật GPS để nhận thông tin Wi-Fi.</string>
+    <string name="esptouch_message_wifi_connection">Vui lòng kết nối Wi-Fi trước.</string>
+    <string name="esptouch_message_wifi_frequency">Kết nối Wi-Fi hiện tại là 5G, hãy đảm bảo thiết bị của bạn hỗ trợ kết nối này.</string>
+    <string name="location_permission_title">⚠Cảnh báo</string>
+    <string name="location_permission_message">Trên phiên bản Android M trở lên, Ứng dụng không thể nhận thông tin kết nối Wi-Fi nếu bạn cấm quyền Vị trí.</string>
+    <string name="esptouch_configure_wifi_change_message">Wi-Fi bị ngắt kết nối hoặc thay đổi</string>
+    <string name="esptouch_configure_result_failed">Không thể gửi wifi đến máy</string>
+    <string name="esptouch_configure_result_failed_port">Tạo tác vụ EspTouch không thành công, cổng EspTouch có thể được sử dụng bởi luồng khác</string>
+    <string name="esptouch_configure_result_success">Kết nối</string>
+    <string name="esptouch_configure_result_success_item">Kết nối Wifi với máy tập thành công</string>
+    <string name="connect_wifi_for_machine">Kết nối wifi cho máy tập</string>
+    <string name="wifi_password">Mật khẩu wifi</string>
+    <string name="wifi_password_input">Nhập mật khẩu wifi</string>
+    <string name="tip_send_pass_wifi_to_machine">Nhập mật khẩu đang kết nối và bấm gửi để gửi mật khẩu xuống máy tập</string>
+    <string name="note_send_pass_wifi_to_machine">Lưu ý: máy tập chỉ kết nối được với wifi 2.4 ghz. Vui lòng kết nối lại wifi trước khi gửi mật khẩu cho máy tập.</string>
+    <string name="wifi_configuring">Đang cấu hình wifi cho máy tập, vui lòng đợi trong giây lát…</string>
+    <string name="warning_force_connect">Đang có thiết bị/người dùng khác kết nối đến máy tập. Bạn có muốn cố gắng kết nối không?</string>
 </resources>

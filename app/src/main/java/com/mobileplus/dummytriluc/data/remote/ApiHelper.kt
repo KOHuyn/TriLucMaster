@@ -188,4 +188,7 @@ interface ApiHelper {
     fun removeToken(): Single<JsonObject>
     fun refreshToken(): Single<JsonObject>
     fun logErrorMachine(data: BleErrorRequest): Single<JsonObject>
+    fun connectMachine(machineName: String): Single<JsonObject>
+    fun forceConnectMachine(machineName: String): Single<JsonObject>
+    fun getDataPracticeResult(practiceId: String): Single<JsonObject>
 }

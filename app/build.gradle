@@ -66,15 +66,15 @@ android {
             resValue "string", "server_client_id", "646915433566-e4bk5s2asgi3gcc0tp77tcq7po9ljlof.apps.googleusercontent.com"
             dimension "mode"
             applicationIdSuffix ".dev"
-            buildConfigField "String", "BASE_URL", "\"http://dummy-api.mobileplus.info\""
-            buildConfigField "String", "SOCKET_URL", "\"http://dummy-api.mobileplus.info:9000\""
+            buildConfigField "String", "BASE_URL", "\"http://api.vtech.click\""
+            buildConfigField "String", "SOCKET_URL", "\"http://103.159.51.113:3001\""
         }
 
         production {
             resValue "string", "app_alias_name", appName
             resValue "string", "server_client_id", "648396044651-na035re1f8km4frvd1lffes8bhtrnrcr.apps.googleusercontent.com"
             dimension "mode"
-            buildConfigField "String", "BASE_URL", "\"http://api.trilucmaster.vn\""
+            buildConfigField "String", "BASE_URL", "\"http://api.vtech.click\""
             buildConfigField "String", "SOCKET_URL", "\"http://api.trilucmaster.vn:9000\""
         }
     }
@@ -163,5 +163,6 @@ dependencies {
     implementation('io.socket:socket.io-client:1.0.1')
             { exclude group: 'org.json', module: 'json' }
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
-
+    implementation('com.journeyapps:zxing-android-embedded:4.2.0') { transitive = false }
+    implementation 'com.github.EspressifApp:lib-esptouch-android:1.1.1'
 }

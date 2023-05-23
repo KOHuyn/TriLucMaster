@@ -42,6 +42,8 @@ fun JsonObject.isDataEmpty(): Boolean = get(ApiConstants.CODE).asInt == CODE_ERR
 
 fun JsonObject.message(): String = get(ApiConstants.MESSAGE).asString
 
+fun JsonObject.code(): Int = get(ApiConstants.CODE).asInt
+
 fun JsonObject.page(): Page = try {
     Page(get(ApiConstants.CURRENT_PAGE).asInt, get(ApiConstants.LAST_PAGE).asInt)
 } catch (e: Exception) {

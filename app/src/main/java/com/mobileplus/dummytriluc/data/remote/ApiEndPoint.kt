@@ -161,4 +161,7 @@ object ApiEndPoint {
     const val URL_REMOVE_ALL_TOKEN = "$BASE_URL/remove_all_token"
     const val URL_REFRESH_TOKEN = "$BASE_URL/auth/refresh-token"
     const val URL_ERROR_LOG = "$BASE_URL/machine_error/log"
+    const val URL_REQUEST_CONNECT_MACHINE = "$BASE_URL/requestConnectMachine"
+    const val URL_FORCE_CONNECT_MACHINE = "$BASE_URL/forceConnect"
+    const val URL_PRACTICE_GET_DATA_RESULT = "$BASE_URL/practice/getDataResult"
 }

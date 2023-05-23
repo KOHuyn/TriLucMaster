@@ -1,13 +1,21 @@
 package com.mobileplus.dummytriluc
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.LocationManager
+import android.net.wifi.WifiManager
+import android.os.Build
 import android.util.Base64
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.multidex.MultiDexApplication
 import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.android.exoplayer2.database.DatabaseProvider
@@ -18,9 +26,11 @@ import com.google.firebase.FirebaseApp
 import com.mobileplus.dummytriluc.data.DataManager
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.di.dummyModule
-import com.mobileplus.dummytriluc.ui.utils.language.SPUtil
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.TransceiverControllerImpl
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.mobileplus.dummytriluc.ui.utils.language.LocalManageUtil
+import com.mobileplus.dummytriluc.ui.utils.language.SPUtil
 import com.utils.LogUtil
 import io.github.inflationx.viewpump.ViewPump
 import okhttp3.CipherSuite
@@ -33,7 +43,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.EmptyLogger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.*
+import java.util.Collections
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -43,6 +53,20 @@ import javax.net.ssl.X509TrustManager
 class DummyTriLucApplication : MultiDexApplication() {
     private val viewPump: ViewPump by inject()
     private val dataManager by inject<DataManager>()
+    private val mBroadcastData: MutableLiveData<String> = MutableLiveData()
+
+    private var mCacheMap: HashMap<String, Any> = hashMapOf()
+
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action ?: return
+            when (action) {
+                WifiManager.NETWORK_STATE_CHANGED_ACTION,
+                LocationManager.PROVIDERS_CHANGED_ACTION -> mBroadcastData.setValue(action)
+            }
+        }
+    }
+
 
     companion object {
         var exoCache: SimpleCache? = null
@@ -67,11 +91,18 @@ class DummyTriLucApplication : MultiDexApplication() {
             initFastNetworking(isUnSafeNetworking = true)
             ViewPump.init(viewPump)
         }
+        ITransceiverController.getInstance().startup()
         setupCacheExo()
         initialSocial()
 //        RxJavaPlugins.setErrorHandler {
 //            it.logErr()
 //        }
+        mCacheMap = HashMap()
+        val filter = IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            filter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+        }
+        registerReceiver(mReceiver, filter)
 
         try {
             val info = packageManager.getPackageInfo(
@@ -88,6 +119,31 @@ class DummyTriLucApplication : MultiDexApplication() {
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
         }
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        unregisterReceiver(mReceiver)
+    }
+
+    fun observeBroadcast(owner: LifecycleOwner, observer: Observer<String>) {
+        mBroadcastData.observe(owner, observer)
+    }
+
+    fun observeBroadcastForever(observer: Observer<String>) {
+        mBroadcastData.observeForever(observer)
+    }
+
+    fun removeBroadcastObserver(observer: Observer<String>) {
+        mBroadcastData.removeObserver(observer)
+    }
+
+    fun putCache(key: String, value: Any) {
+        mCacheMap[key] = value
+    }
+
+    fun takeCache(key: String?): Any? {
+        return mCacheMap.remove(key)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -148,8 +204,8 @@ class DummyTriLucApplication : MultiDexApplication() {
 
             val queryLanguage = original.url().newBuilder()
                 .addQueryParameter("lang", SPUtil.getInstance(this).getSelectLanguage())
-                .addQueryParameter("app_version",BuildConfig.VERSION_NAME)
-                .addQueryParameter("app_type","ANDROID")
+                .addQueryParameter("app_version", BuildConfig.VERSION_NAME)
+                .addQueryParameter("app_type", "ANDROID")
                 .build()
             val requestBuilder = original.newBuilder().url(queryLanguage)
                 .method(original.method(), original.body())

@@ -14,6 +14,8 @@ import com.mobileplus.dummytriluc.data.local.prefs.PrefsHelper
 import com.mobileplus.dummytriluc.data.remote.ApiHelper
 import com.mobileplus.dummytriluc.data.remote.AppApiHelper
 import com.mobileplus.dummytriluc.service.TriLucNotification
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.TransceiverControllerImpl
 import com.utils.SchedulerProvider
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -40,6 +42,7 @@ val appModule: Module = module {
             ).build()
     }
     single { TriLucNotification(get()) }
+    factory<ITransceiverController> { TransceiverControllerImpl.getInstance() }
 }
 
 val dummyModule = listOf(appModule, viewModule)

@@ -38,8 +38,8 @@ data class BluetoothResponse(
     val error: JsonObject? = null,
 ) {
     companion object {
-        const val MODE_FREE_FIGHT = 2
-        const val MODE_ACCORDING_LED = 3
+        const val MODE_FREE_FIGHT = 5
+        const val MODE_ACCORDING_LED = 4
     }
 }
 

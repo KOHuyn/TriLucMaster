@@ -23,6 +23,7 @@ import com.mobileplus.dummytriluc.data.model.NotificationObjService
 import com.mobileplus.dummytriluc.data.model.UserInfo
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.service.TriLucNotification
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
 import com.mobileplus.dummytriluc.ui.dialog.ConnectBleWithDeviceDialog
 import com.mobileplus.dummytriluc.ui.dialog.NoInternetDialog
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
@@ -83,7 +84,15 @@ class MainActivity : BaseActivity() {
         }
         navigateDeepLink(intent?.data)
         onHandleIntentNotification(intent)
-
+        ITransceiverController.getInstance().onEventMachineSend {
+            try {
+                gson.fromJsonSafe<BluetoothResponseMachine>(it)?.let {
+                    postSticky(EventOpenPopupBle(listOf(it).transformToBleServer()))
+                }
+            } catch (e: Exception) {
+                logErr(e.toString(), e)
+            }
+        }
     }
 
     //--------------------------------------------------------------------------|

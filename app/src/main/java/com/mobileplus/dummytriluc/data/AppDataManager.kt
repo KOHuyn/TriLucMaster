@@ -337,6 +337,16 @@ class AppDataManager constructor(
     override fun logErrorMachine(data: BleErrorRequest): Single<JsonObject> =
         apiHelper.logErrorMachine(data)
 
+    override fun connectMachine(machineName: String): Single<JsonObject> =
+        apiHelper.connectMachine(machineName)
+
+    override fun forceConnectMachine(machineName: String): Single<JsonObject> =
+        apiHelper.forceConnectMachine(machineName)
+
+    override fun getDataPracticeResult(practiceId: String): Single<JsonObject> {
+        return apiHelper.getDataPracticeResult(practiceId)
+    }
+
     override fun loginSocial(body: SocialLoginRequest): Single<JsonObject> =
         apiHelper.loginSocial(body)
 

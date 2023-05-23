@@ -136,6 +136,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.scanner.ScannerActivity" />
+        <activity android:name=".ui.main.setupwifi.EspTouchActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

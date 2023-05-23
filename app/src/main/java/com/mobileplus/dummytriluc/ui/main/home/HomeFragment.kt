@@ -21,6 +21,8 @@ import com.mobileplus.dummytriluc.bluetooth.*
 import com.mobileplus.dummytriluc.data.model.*
 import com.mobileplus.dummytriluc.data.response.*
 import com.mobileplus.dummytriluc.databinding.FragmentHomeBinding
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
 import com.mobileplus.dummytriluc.ui.dialog.ChooseModePracticeDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.connect.ConnectFragment
@@ -60,6 +62,7 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
     private val lessonAdapter by lazy { LessonHomeAdapter() }
     var onSwitchToPractice: CallbackToFragment? = null
     private var dataHomeResponse: HomeListResponse? = null
+    private val transceiver by lazy { ITransceiverController.getInstance() }
     override fun updateUI(savedInstanceState: Bundle?) {
         loadLanguageResource()
         disposeViewModel()
@@ -296,16 +299,14 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
     }
 
     private fun configView() {
-        addDispose(
-            (requireActivity() as MainActivity).rxStateConnectBle
-                .subscribe { stateBle ->
-                    if (stateBle == BluetoothStatus.CONNECTED) {
-                        setColorFilterConnect(R.color.clr_primary)
-                    } else {
-                        setColorFilterConnect(R.color.white)
-                    }
-                })
-        if ((requireActivity() as MainActivity).isConnectedBle) {
+        transceiver.onTransceiverEventStateListener { transceiverEvent ->
+            if (transceiverEvent == TransceiverEvent.CONNECT) {
+                setColorFilterConnect(R.color.clr_primary)
+            } else {
+                setColorFilterConnect(R.color.white)
+            }
+        }
+        if (transceiver.isConnected()) {
             setColorFilterConnect(R.color.clr_primary)
         } else {
             setColorFilterConnect(R.color.white)
@@ -319,20 +320,19 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
 
     private fun controllerClick() {
         binding.btnPracticeNowHome.clickWithDebounce {
-//            openDialogTest()
             ChooseModePracticeDialog()
                 .show(parentFragmentManager)
                 .setCallbackChooseMode { type ->
                     when (type) {
                         ChooseModePracticeDialog.TypeModePractice.FREE_FIGHT -> {
-                            if ((activity as MainActivity).isConnectedBle) {
+                            if (transceiver.isConnected()) {
                                 PracticeTestFragment.openFragmentFreeFight()
                             } else {
                                 (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_FREE_FIGHT)
                             }
                         }
                         ChooseModePracticeDialog.TypeModePractice.ACCORDING_LED -> {
-                            if ((activity as MainActivity).isConnectedBle) {
+                            if (transceiver.isConnected()) {
                                 PracticeTestFragment.openFragmentAccordingToLed()
                             } else {
                                 (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_LED)

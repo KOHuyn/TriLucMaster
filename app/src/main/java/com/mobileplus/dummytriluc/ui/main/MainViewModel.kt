@@ -9,6 +9,7 @@ import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
 import com.mobileplus.dummytriluc.bluetooth.request.TransferBluetoothData
 import com.mobileplus.dummytriluc.data.DataManager
+import com.mobileplus.dummytriluc.data.model.MachineInfo
 import com.mobileplus.dummytriluc.data.model.entity.DataBluetoothRetryEntity
 import com.mobileplus.dummytriluc.data.model.entity.TableConfig
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
@@ -46,6 +47,9 @@ class MainViewModel(
     val rxPostModeFreedomSuccess: PublishSubject<Boolean> = PublishSubject.create()
     val rxShowPopupUpdateVersionApp: PublishSubject<Triple<String, Boolean, String?>> =
         PublishSubject.create()
+    val rxMachineInfo: PublishSubject<MachineInfo> = PublishSubject.create()
+    val rxForceConnect: PublishSubject<String> = PublishSubject.create()
+
     var isDataSecurity: Boolean
         set(value) {
             dataManager.isDataSecurityBle = value
@@ -295,8 +299,52 @@ class MainViewModel(
             }).addTo(compositeDisposable)
     }
 
+    fun connectByBarCode(barCode: String) {
+        isLoading.onNext(true)
+        dataManager.connectMachine(barCode)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                isLoading.onNext(false)
+                if (response.isSuccess()) {
+                    val data = gson.fromJsonSafe<MachineInfo>(response.dataObject())
+                    if (data != null) {
+                        rxMachineInfo.onNext(data)
+                    }
+                } else {
+                    if (response.code() == 401) {
+                        rxForceConnect.onNext(barCode)
+                    } else {
+                        rxMessage.onNext(response.message())
+                    }
+                }
+            }, { error ->
+                isLoading.onNext(false)
+                rxMessage.onNext(error.getErrorMsg())
+            }).addTo(compositeDisposable)
+    }
+
     override fun onCleared() {
         compositeDisposable.clear()
         super.onCleared()
+    }
+
+    fun forceConnect(machineEncode: String) {
+        isLoading.onNext(true)
+        dataManager.forceConnectMachine(machineEncode)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                isLoading.onNext(false)
+                if (response.isSuccess()) {
+                    val data = gson.fromJsonSafe<MachineInfo>(response.dataObject())
+                    if (data != null) {
+                        rxMachineInfo.onNext(data)
+                    }
+                } else {
+                    rxMessage.onNext(response.message())
+                }
+            }, { error ->
+                isLoading.onNext(false)
+                rxMessage.onNext(error.getErrorMsg())
+            }).addTo(compositeDisposable)
     }
 }

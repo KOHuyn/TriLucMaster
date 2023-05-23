@@ -95,4 +95,5 @@ object ApiConstants {
     const val VIDEO_PATH = "video_path"
     const val DATA_JSON = "data_json"
     const val UUID = "uuid"
+    const val MACHINE_ID = "machine_id"
 }
