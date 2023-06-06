@@ -37,6 +37,7 @@
                 android:id="@+id/humanConfirmTest"
                 layout="@layout/layout_human"
                 android:layout_width="0dp"
+                android:layout_margin="@dimen/space_8"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="3" />

@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 import com.mobileplus.dummytriluc.ui.main.home.adapter.PowerChartDescriptionAdapter
 import com.mobileplus.dummytriluc.ui.utils.DateTimeUtil
 import com.mobileplus.dummytriluc.ui.utils.extensions.BlePosition
+import com.mobileplus.dummytriluc.ui.utils.extensions.BodyPosition
+import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
 import kotlin.math.abs
 
 data class ItemPracticeDetailMain(
@@ -52,59 +54,15 @@ data class ItemPracticeDetailMain(
 
     fun items(): MutableList<PowerChartDescriptionAdapter.ItemDescriptionChartPower> {
         val items = mutableListOf<PowerChartDescriptionAdapter.ItemDescriptionChartPower>()
-        var scoreTotalFace = 0
-        var scoreTotalAbdomen = 0
         dataDetailPunch?.forEach { item ->
-            if (item.key == BlePosition.FACE.key
-                || item.key == BlePosition.LEFT_CHEEK.key
-                || item.key == BlePosition.RIGHT_CHEEK.key
-            ) {
-                scoreTotalFace += item.score ?: 0
-                if (items.none {
-                        it.key == BlePosition.FACE.key || it.key == BlePosition.LEFT_CHEEK.key
-                                || it.key == BlePosition.RIGHT_CHEEK.key
-                    }) {
-                    items.add(addPos(scoreTotalFace, BlePosition.FACE.title, BlePosition.FACE.key))
-                } else {
-                    items[items.indexOf(items.first { it.key == BlePosition.FACE.key })] =
-                        addPos(scoreTotalFace, BlePosition.FACE.title, BlePosition.FACE.key)
-                }
-            } else if (item.key == BlePosition.ABDOMEN_UP.key
-                || item.key == BlePosition.LEFT_ABDOMEN.key
-                || item.key == BlePosition.ABDOMEN.key
-                || item.key == BlePosition.RIGHT_ABDOMEN.key
-            ) {
-                scoreTotalAbdomen += item.score ?: 0
-                if (items.none {
-                        it.key == BlePosition.ABDOMEN_UP.key
-                                || it.key == BlePosition.LEFT_ABDOMEN.key
-                                || it.key == BlePosition.ABDOMEN.key
-                                || it.key == BlePosition.RIGHT_ABDOMEN.key
-                    }) {
-                    items.add(
-                        addPos(
-                            scoreTotalAbdomen,
-                            BlePosition.ABDOMEN.title,
-                            BlePosition.ABDOMEN.key
-                        )
-                    )
-                } else {
-                    items[items.indexOf(items.first { it.key == BlePosition.ABDOMEN.key })] =
-                        addPos(
-                            scoreTotalAbdomen,
-                            BlePosition.ABDOMEN.title,
-                            BlePosition.ABDOMEN.key
-                        )
-                }
-            } else {
-                items.add(
-                    addPos(
-                        item.score ?: 0,
-                        BlePosition.values().find { it.key == item.key }?.title ?: "---",
-                        item.key
-                    )
+            items.add(
+                addPos(
+                    item.score ?: 0,
+                    BodyPosition.values()
+                        .find { it.key == item.key }?.titleRes?.let { loadStringRes(it) } ?: "---",
+                    item.key
                 )
-            }
+            )
         }
         return items
     }

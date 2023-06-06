@@ -151,15 +151,19 @@ class PracticeTestFragment : BaseFragment() {
                 startPractice()
             } else {
                 commandRequestBle(FinishCommand)
-                countTimesDisposable?.dispose()
-                countTimesDisposable = null
-                isRetry = true
+                endPractice()
             }
         }
 
         btnBackPracticeTest.clickWithDebounce {
             onBackPressed()
         }
+    }
+
+    private fun endPractice() {
+        countTimesDisposable?.dispose()
+        countTimesDisposable = null
+        isRetry = true
     }
 
 
@@ -356,6 +360,9 @@ class PracticeTestFragment : BaseFragment() {
                         if (data.isNotEmpty()) {
                             dataRequest = data
                             rxRequestPostFragment.onNext(true)
+                            if (!isRetry) {
+                                endPractice()
+                            }
                         }
                     } else {
                         toast(getString(R.string.please_try_again))

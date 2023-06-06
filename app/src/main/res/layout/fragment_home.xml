@@ -168,8 +168,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/clr_bg_title_dark"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/space_4">
+                            android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
@@ -198,6 +197,16 @@
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/space_4"
                                 app:srcCompat="@drawable/ic_statistics" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivEditPunch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_6sdp"
+                                android:layout_marginStart="@dimen/space_8"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_edit" />
                         </LinearLayout>
 
                         <ProgressBar
@@ -290,7 +299,7 @@
                             android:layout_height="wrap_content"
                             android:background="@color/clr_bg_title_dark"
                             android:orientation="horizontal"
-                            android:padding="@dimen/space_4">
+                            android:paddingHorizontal="@dimen/space_4">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
@@ -319,6 +328,16 @@
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/space_4"
                                 app:srcCompat="@drawable/ic_statistics" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivEditPower"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_6sdp"
+                                android:layout_marginStart="@dimen/space_8"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_edit" />
                         </LinearLayout>
 
                         <ProgressBar
@@ -437,6 +456,264 @@
                             </FrameLayout>
 
                         </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/viewCalories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_fire" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelCalories"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/calories"
+                                android:textAppearance="@style/FontAnTon" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_statistics" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivEditCalories"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_6sdp"
+                                android:layout_marginStart="@dimen/space_8"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_edit" />
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBarCaloriesHome"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/space_4"
+                            android:progressDrawable="@drawable/progress_gradient"
+                            tools:progress="70" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/space_4">
+
+                            <LinearLayout
+                                android:id="@+id/componentCalories1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/componentCalories2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtCountCaloriesHome"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="---"
+                                    android:textAppearance="@style/FontAnTon"
+                                    android:textColor="@color/clr_primary"
+                                    android:textSize="@dimen/text_30"
+                                    tools:ignore="HardcodedText" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabelValueCalories"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/calories"
+                                    android:textAppearance="@style/FontAnTon"
+                                    android:textSize="@dimen/text_18" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/componentCalories2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/componentCalories1"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabelTargetCalories"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/target"
+                                    android:textSize="@dimen/text_18" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvGoalCalories"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:includeFontPadding="false"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_24"
+                                    tools:ignore="HardcodedText" />
+                            </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/clr_tab"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/viewPracticeTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/clr_bg_title_dark"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_8"
+                                app:srcCompat="@drawable/ic_calendar" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtLabelPracticeTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/space_4"
+                                android:text="@string/time_practice"
+                                android:textAppearance="@style/FontAnTon" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_statistics" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivEditPracticeTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_6sdp"
+                                android:layout_marginStart="@dimen/space_8"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:srcCompat="@drawable/ic_edit" />
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBarPracticeTimeHome"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/space_4"
+                            android:progressDrawable="@drawable/progress_gradient"
+                            tools:progress="70" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/space_4">
+
+                            <LinearLayout
+                                android:id="@+id/componentPracticeTime1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/componentPracticeTime2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtCountPracticeTimeHome"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="---"
+                                    android:textAppearance="@style/FontAnTon"
+                                    android:textColor="@color/clr_primary"
+                                    android:textSize="@dimen/text_30"
+                                    tools:ignore="HardcodedText" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabelValuePracticeTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/time_practice"
+                                    android:textAppearance="@style/FontAnTon"
+                                    android:textSize="@dimen/text_18" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/componentPracticeTime2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/componentPracticeTime1"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtLabelTargetPracticeTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/target"
+                                    android:textSize="@dimen/text_18" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvGoalPracticeTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:includeFontPadding="false"
+                                    android:text="---"
+                                    android:textSize="@dimen/text_24"
+                                    tools:ignore="HardcodedText" />
+                            </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
                     <LinearLayout

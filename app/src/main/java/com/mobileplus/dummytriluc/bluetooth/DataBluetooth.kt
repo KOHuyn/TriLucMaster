@@ -45,17 +45,17 @@ data class BluetoothResponse(
 
 data class DataBluetooth(
     @Expose
-    @SerializedName("force")
+    @SerializedName("f")
     var force: Float? = null,
     //    Hủy truyền onTarget
     @Expose
-    @SerializedName("on_target")
+    @SerializedName("o")
     var onTarget: Int? = null,
     @Expose
-    @SerializedName("position")
+    @SerializedName("p")
     val position: String? = null,
     @Expose
-    @SerializedName("time")
+    @SerializedName("t")
     var time: Long? = null
 )
 

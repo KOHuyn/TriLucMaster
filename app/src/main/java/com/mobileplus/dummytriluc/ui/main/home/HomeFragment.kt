@@ -3,8 +3,6 @@ package com.mobileplus.dummytriluc.ui.main.home
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.core.BaseFragmentZ
@@ -24,12 +22,12 @@ import com.mobileplus.dummytriluc.databinding.FragmentHomeBinding
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
 import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
 import com.mobileplus.dummytriluc.ui.dialog.ChooseModePracticeDialog
+import com.mobileplus.dummytriluc.ui.dialog.SetupTargetDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.connect.ConnectFragment
 import com.mobileplus.dummytriluc.ui.main.home.adapter.LessonHomeAdapter
 import com.mobileplus.dummytriluc.ui.main.home.adapter.PowerChartDescriptionAdapter
 import com.mobileplus.dummytriluc.ui.main.power.PowerFragment
-import com.mobileplus.dummytriluc.ui.main.practice.dialog.ConfirmPracticeTestDialog
 import com.mobileplus.dummytriluc.ui.main.practice.test.PracticeTestFragment
 import com.mobileplus.dummytriluc.ui.main.punch.PunchFragment
 import com.mobileplus.dummytriluc.ui.main.ranking.RankingFragment
@@ -38,19 +36,15 @@ import com.mobileplus.dummytriluc.ui.utils.ChartUtils
 import com.mobileplus.dummytriluc.ui.utils.DateTimeUtil
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventClickNavBar
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
-import com.mobileplus.dummytriluc.ui.utils.eventbus.EventUnAuthen
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventUpdateInfo
 import com.mobileplus.dummytriluc.ui.utils.extensions.*
 import com.mobileplus.dummytriluc.ui.utils.language.EventChangeLanguage
 import com.utils.applyClickShrink
 import com.utils.ext.*
-import kotlinx.coroutines.*
-import me.ibrahimyilmaz.kiel.adapterOf
 import org.greenrobot.eventbus.Subscribe
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.concurrent.thread
 
 class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
     override fun getLayoutBinding(): FragmentHomeBinding =
@@ -132,6 +126,8 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         home.chart?.let { parseAbility(it) }
         home.power?.let { parsePower(it) }
         home.rank?.let { parseRank(it) }
+        parseCalories(home.calories)
+        parseTimePractice(home.timePractice)
     }
 
     private fun getUser() {
@@ -156,17 +152,36 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         dataOnWeek(week.chart)
     }
 
+    private fun parseCalories(goalInfo: GoalInfo?) {
+        binding.progressBarCaloriesHome.progress = goalInfo?.getProgress() ?: 0
+        binding.txtCountCaloriesHome.text = goalInfo?.totalZ ?: "-"
+        binding.tvGoalCalories.text = goalInfo?.goalZ
+        val timeTypeLabel = TargetType.getType(goalInfo?.timeType)?.stringRes?.let { "/" + getString(it) } ?: ""
+        val title = getString(R.string.calories) + timeTypeLabel
+        binding.txtLabelCalories.text = title
+    }
+
+    private fun parseTimePractice(goalInfo: GoalInfo?) {
+        binding.progressBarPracticeTimeHome.progress = goalInfo?.getProgress() ?: 0
+        val strTimePractice = "${(goalInfo?.totalZ ?: "-")} ${getString(R.string.minutes)}"
+        binding.txtCountPracticeTimeHome.text = strTimePractice
+        binding.tvGoalPracticeTime.text = goalInfo?.goalZ ?: "-"
+        val timeTypeLabel = TargetType.getType(goalInfo?.timeType)?.stringRes?.let { "/" + getString(it) } ?: ""
+        val title = getString(R.string.time_practice) + timeTypeLabel
+        binding.txtLabelPracticeTime.text = title
+    }
+
     private fun parseRank(rank: Rank) {
         binding.txtNameRankingHome.text = rank.rankTitle
         binding.tvRank.text = String.format("#%s", rank.top)
         binding.txtScoreRanking.text = rank.scoreZ
         when {
-            rank.rankUp ?: 0 > 0 -> {
+            (rank.rankUp ?: 0) > 0 -> {
                 binding.txtRankUp.text = String.format("+%d", rank.rankUp)
                 binding.txtRankUp.setTextColorz(R.color.clr_green)
                 binding.txtRankUp.setDrawableStart(R.drawable.ic_rank_up)
             }
-            rank.rankUp ?: 0 < 0 -> {
+            (rank.rankUp ?: 0) < 0 -> {
                 binding.txtRankUp.text = String.format("%d", rank.rankUp)
                 binding.txtRankUp.setTextColorz(R.color.clr_red)
                 binding.txtRankUp.setDrawableStart(R.drawable.ic_rank_down)
@@ -184,6 +199,9 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         binding.tvGoalPower.text = power.goalZ
         binding.txtTotalPowerCountHome.text = power.powerZ
         binding.progressBarPowerHome.progress = power.getProgress()
+        val timeTypeLabel = TargetType.getType(power.timeType)?.stringRes?.let { "/" + getString(it) } ?: ""
+        val title = getString(R.string.power) + timeTypeLabel
+        binding.txtLabelPower.text = title
         val entries = arrayListOf<PieEntry>()
         val entriesTitle = arrayListOf<String>()
 
@@ -289,6 +307,9 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         binding.progressBarPunchHome.progress = punch?.getProgress() ?: 0
         binding.txtCountPunchHome.text = punch?.totalZ ?: "-"
         binding.tvGoalPunch.text = punch?.goalZ
+        val timeTypeLabel = TargetType.getType(punch?.timeType)?.stringRes?.let { "/" + getString(it) } ?: ""
+        val title = getString(R.string.punch) + timeTypeLabel
+        binding.txtLabelPunch.text = title
     }
 
     private fun setColorFilterConnect(@ColorRes color: Int) {
@@ -322,26 +343,8 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         binding.btnPracticeNowHome.clickWithDebounce {
             ChooseModePracticeDialog()
                 .show(parentFragmentManager)
-                .setCallbackChooseMode { type ->
-                    when (type) {
-                        ChooseModePracticeDialog.TypeModePractice.FREE_FIGHT -> {
-                            if (transceiver.isConnected()) {
-                                PracticeTestFragment.openFragmentFreeFight()
-                            } else {
-                                (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_FREE_FIGHT)
-                            }
-                        }
-                        ChooseModePracticeDialog.TypeModePractice.ACCORDING_LED -> {
-                            if (transceiver.isConnected()) {
-                                PracticeTestFragment.openFragmentAccordingToLed()
-                            } else {
-                                (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_LED)
-                            }
-                        }
-                        ChooseModePracticeDialog.TypeModePractice.COURSE -> {
-                            onSwitchToPractice?.callbackToPractice()
-                        }
-                    }
+                .setCallbackChooseMode { dialog,type ->
+                    handleSelectPracticeMode(type)
                 }
         }
         binding.viewPunch.clickWithDebounce {
@@ -368,6 +371,99 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
                 vm.getHomeList()
             }
         }
+        binding.ivEditPunch.clickWithDebounce {
+            SetupTargetDialog()
+                .setTargetUnit(TargetUnit.TOTAL_PUNCH)
+                .apply {
+                    dataHomeResponse?.punch?.let {punch ->
+                        TargetType.getType(punch.timeType)?.let { setTargetType(it) }
+                        punch.goal?.let { setTargetPoint(it) }
+                    }
+                }.setOnResultListener { targetUnit, targetTime, targetPoint ->
+                    updateTarget(targetUnit, targetTime, targetPoint)
+                }.show(parentFragmentManager,"ivEditPunch")
+        }
+        binding.ivEditCalories.clickWithDebounce {
+            SetupTargetDialog()
+                .setTargetUnit(TargetUnit.TOTAL_CALORIES)
+                .apply {
+                    dataHomeResponse?.calories?.let {calories ->
+                        TargetType.getType(calories.timeType)?.let { setTargetType(it) }
+                        calories.goal?.let { setTargetPoint(it) }
+                    }
+                }.setOnResultListener { targetUnit, targetTime, targetPoint ->
+                    updateTarget(targetUnit, targetTime, targetPoint)
+                }.show(parentFragmentManager,"ivEditCalories")
+        }
+        binding.ivEditPower.clickWithDebounce {
+            SetupTargetDialog()
+                .setTargetUnit(TargetUnit.TOTAL_POWER)
+                .apply {
+                    dataHomeResponse?.power?.let {power ->
+                        TargetType.getType(power.timeType)?.let { setTargetType(it) }
+                        power.goal?.let { setTargetPoint(it) }
+                    }
+                }.setOnResultListener { targetUnit, targetTime, targetPoint ->
+                    updateTarget(targetUnit, targetTime, targetPoint)
+                }.show(parentFragmentManager,"ivEditCalories")
+        }
+        binding.ivEditPracticeTime.clickWithDebounce {
+            SetupTargetDialog()
+                .setTargetUnit(TargetUnit.TIME_PRACTICE)
+                .apply {
+                    dataHomeResponse?.timePractice?.let {timePractice ->
+                        TargetType.getType(timePractice.timeType)?.let { setTargetType(it) }
+                        timePractice.goal?.let { setTargetPoint(it) }
+                    }
+                }.setOnResultListener { targetUnit, targetTime, targetPoint ->
+                    updateTarget(targetUnit, targetTime, targetPoint)
+                }.show(parentFragmentManager,"ivEditPracticeTime")
+        }
+    }
+
+    private fun handleSelectPracticeMode(type: ChooseModePracticeDialog.PracticeType){
+        when (type) {
+            ChooseModePracticeDialog.PracticeType.COURSE -> {
+                onSwitchToPractice?.callbackToPractice()
+            }
+            ChooseModePracticeDialog.PracticeType.FOR_FUN -> {
+
+            }
+            ChooseModePracticeDialog.PracticeType.FREE_FIGHT -> {
+                if (transceiver.isConnected()) {
+                    PracticeTestFragment.openFragmentFreeFight()
+                } else {
+                    (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_FREE_FIGHT)
+                }
+            }
+
+            ChooseModePracticeDialog.PracticeType.ACCORDING_LED -> {
+                if (transceiver.isConnected()) {
+                    PracticeTestFragment.openFragmentAccordingToLed()
+                } else {
+                    (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_LED)
+                }
+            }
+            ChooseModePracticeDialog.PracticeType.ACCORDING_MUSIC -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.RELAX -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.BEAT_WIFE -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.BEAT_HUSBAND -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.BEAT_LOVE_ENEMY -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.BEAT_EX -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.BEAT_BOSS -> { handleDeveloping() }
+        }
+    }
+
+    private fun updateTarget(targetUnit: TargetUnit, targetTime: TargetType, targetPoint: Int) {
+        vm.updateTarget(targetUnit, targetTime, targetPoint) { isSuccess ->
+            if (isSuccess) {
+                vm.getHomeList()
+            }
+        }
+    }
+
+    private fun  handleDeveloping()  {
+        toast(getString(R.string.feature_developing))
     }
 
     private fun setRefreshHome(isRefresh: Boolean) {

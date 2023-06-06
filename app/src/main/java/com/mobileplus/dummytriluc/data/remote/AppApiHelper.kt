@@ -972,4 +972,10 @@ class AppApiHelper : ApiHelper, KoinComponent {
             .build()
             .getObjectSingle(JsonObject::class.java)
     }
+
+    override fun createTarget(request: CreateTargetRequest): Single<JsonObject> {
+        return Rx2AndroidNetworking.post(ApiEndPoint.URL_CREATE_TARGET)
+            .addJSONObjectBody(request.toJson())
+            .build().getObjectSingle(JsonObject::class.java)
+    }
 }

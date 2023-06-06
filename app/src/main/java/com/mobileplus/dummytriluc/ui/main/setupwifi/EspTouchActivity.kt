@@ -48,6 +48,9 @@ class EspTouchActivity : EspTouchActivityAbs() {
                 mTask!!.cancelEsptouch()
             }
         }
+        mBinding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
         val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
         requestPermissions(permissions, REQUEST_PERMISSION)
         DummyTriLucApplication.getInstance().observeBroadcast(this) { broadcast ->

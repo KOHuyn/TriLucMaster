@@ -125,6 +125,7 @@
     <string name="label_back">Quay lại</string>
     <string name="label_date_of_birth">Ngày sinh</string>
     <string name="label_day">Ngày</string>
+    <string name="label_week">Tuần</string>
     <string name="label_month">Tháng</string>
     <string name="label_year">Năm</string>
     <string name="label_weight">Cân nặng</string>
@@ -488,6 +489,22 @@
     <string name="free_fight_raw">Free fight</string>
     <string name="according_to_led">Đánh theo led</string>
     <string name="according_to_led_raw">According to led</string>
+    <string name="for_fun_exercise">Bài tập vui</string>
+    <string name="for_fun_exercise_raw">For fun exercise</string>
+    <string name="according_to_music">Bài tập theo nhạc</string>
+    <string name="according_to_music_raw">According to music</string>
+    <string name="relax_exercise">Bài tập xả stress</string>
+    <string name="relax_exercise_raw">Relax exercise</string>
+    <string name="beat_wife">Đánh vợ</string>
+    <string name="beat_wife_raw">Beat wife</string>
+    <string name="beat_husband">Đánh chồng</string>
+    <string name="beat_husband_raw">Beat husband</string>
+    <string name="beat_love_enemy">Đánh tình địch</string>
+    <string name="beat_love_enemy_raw">Beat love enemy</string>
+    <string name="beat_ex">Đánh người yêu cũ</string>
+    <string name="beat_ex_raw">Beat Ex</string>
+    <string name="beat_boss">Đánh sếp</string>
+    <string name="beat_boss_raw">Beat boss</string>
     <string name="according_to_course">Đánh theo giáo trình</string>
     <string name="according_to_course_raw">According to course</string>
     <string name="require_term_of_service">Bạn chưa chấp nhận điều khoản dịch vụ</string>
@@ -539,4 +556,10 @@
     <string name="note_send_pass_wifi_to_machine">Lưu ý: máy tập chỉ kết nối được với wifi 2.4 ghz. Vui lòng kết nối lại wifi trước khi gửi mật khẩu cho máy tập.</string>
     <string name="wifi_configuring">Đang cấu hình wifi cho máy tập, vui lòng đợi trong giây lát…</string>
     <string name="warning_force_connect">Đang có thiết bị/người dùng khác kết nối đến máy tập. Bạn có muốn cố gắng kết nối không?</string>
+    <string name="calories">Calo tiêu thụ</string>
+    <string name="minutes">phút</string>
+    <string name="left_punch">Đấm trái</string>
+    <string name="right_punch">Đấm phải</string>
+    <string name="center_punch">Đấm giữa</string>
+    <string name="hook_punch">Đấm móc</string>
 </resources>

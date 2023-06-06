@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
+import com.mobileplus.dummytriluc.databinding.LayoutHumanBinding
 import com.utils.ext.invisible
 import com.utils.ext.show
 import kotlinx.android.synthetic.main.layout_human.view.*
@@ -18,6 +19,12 @@ object PowerLevel {
     const val LOW = 0
     const val MEDIUM = 500
     const val HIGH = 1000
+}
+enum class BodyPosition(val key: String?, @StringRes val titleRes: Int) {
+    LEFT_PUNCH("1", R.string.left_punch),
+    CENTER_PUNCH("2", R.string.center_punch),
+    RIGHT_PUNCH("3", R.string.right_punch),
+    HOOK_PUNCH("4", R.string.hook_punch),
 }
 
 enum class BlePosition(val key: String, @StringRes val titleRes: Int) {
@@ -41,40 +48,28 @@ object BlePositionUtils {
 
     fun setCallbackBleDataForce(layoutHuman: View, data: DataBluetooth) {
         with(layoutHuman) {
-            layoutPositionScore.show()
+            groupHighScore.show()
             when (data.position) {
-                BlePosition.FACE.key, BlePosition.LEFT_CHEEK.key, BlePosition.RIGHT_CHEEK.key -> {
-                    positionHead.setTouchPractice(
+                BodyPosition.HOOK_PUNCH.key -> {
+                    positionBodyBottom.setTouchPractice(
                         data.force,
                         data.onTarget
                     )
                 }
-                BlePosition.LEFT_CHEST.key -> {
-                    positionLeftHand.setTouchPractice(
+                BodyPosition.LEFT_PUNCH.key->{
+                    positionBodyLeft.setTouchPractice(
                         data.force,
                         data.onTarget
                     )
                 }
-                BlePosition.RIGHT_CHEST.key -> {
-                    positionRightHand.setTouchPractice(
+                BodyPosition.CENTER_PUNCH.key->{
+                    positionBodyCenter.setTouchPractice(
                         data.force,
                         data.onTarget
                     )
                 }
-                BlePosition.ABDOMEN_UP.key, BlePosition.LEFT_ABDOMEN.key, BlePosition.ABDOMEN.key, BlePosition.RIGHT_ABDOMEN.key -> {
-                    positionAbdomen.setTouchPractice(
-                        data.force,
-                        data.onTarget
-                    )
-                }
-                BlePosition.LEFT_LEG.key -> {
-                    positionLegLeft.setTouchPractice(
-                        data.force,
-                        data.onTarget
-                    )
-                }
-                BlePosition.RIGHT_LEG.key -> {
-                    positionLegRight.setTouchPractice(
+                BodyPosition.RIGHT_PUNCH.key->{
+                    positionBodyRight.setTouchPractice(
                         data.force,
                         data.onTarget
                     )
@@ -85,28 +80,23 @@ object BlePositionUtils {
         }
     }
 
-    fun setPosColorHuman(layoutHuman: View, score: Int, typePos: BlePosition) {
+    fun setPosColorHuman(layoutHuman: LayoutHumanBinding, score: Int, key: String?) {
+        val typePos = BodyPosition.values().find { it.key == key }
         with(layoutHuman) {
             when {
                 PowerLevel.LOW <= score && score < PowerLevel.MEDIUM -> {
                     when (typePos) {
-                        BlePosition.FACE -> {
-                            humanHead.setImageResource(R.drawable.human_head_green)
+                        BodyPosition.CENTER_PUNCH -> {
+                            bodyCenter.setImageResource(R.drawable.img_body_center_green)
                         }
-                        BlePosition.LEFT_CHEST -> {
-                            humanChestLeft.setImageResource(R.drawable.human_chest_left_green)
+                        BodyPosition.HOOK_PUNCH -> {
+                            bodyBottom.setImageResource(R.drawable.img_body_top_green)
                         }
-                        BlePosition.RIGHT_CHEST -> {
-                            humanChestRight.setImageResource(R.drawable.human_chest_right_green)
+                        BodyPosition.LEFT_PUNCH -> {
+                            bodyLeft.setImageResource(R.drawable.img_body_left_green)
                         }
-                        BlePosition.ABDOMEN -> {
-                            humanAbdomen.setImageResource(R.drawable.human_abdomen_green)
-                        }
-                        BlePosition.LEFT_LEG -> {
-                            humanLegLeft.setImageResource(R.drawable.human_leg_left_green)
-                        }
-                        BlePosition.RIGHT_LEG -> {
-                            humanLegRight.setImageResource(R.drawable.human_leg_right_green)
+                        BodyPosition.RIGHT_PUNCH -> {
+                            bodyRight.setImageResource(R.drawable.img_body_right_green)
                         }
                         else -> {
                             logErr("setPosColorHuman ERROR TYPE")
@@ -115,23 +105,17 @@ object BlePositionUtils {
                 }
                 PowerLevel.MEDIUM < score && score < PowerLevel.HIGH -> {
                     when (typePos) {
-                        BlePosition.FACE -> {
-                            humanHead.setImageResource(R.drawable.human_head_orange)
+                        BodyPosition.CENTER_PUNCH -> {
+                            bodyCenter.setImageResource(R.drawable.img_body_center_orange)
                         }
-                        BlePosition.LEFT_CHEST -> {
-                            humanChestLeft.setImageResource(R.drawable.human_chest_left_orange)
+                        BodyPosition.HOOK_PUNCH -> {
+                            bodyBottom.setImageResource(R.drawable.img_body_top_orange)
                         }
-                        BlePosition.RIGHT_CHEST -> {
-                            humanChestRight.setImageResource(R.drawable.human_chest_right_orange)
+                        BodyPosition.LEFT_PUNCH -> {
+                            bodyLeft.setImageResource(R.drawable.img_body_left_orange)
                         }
-                        BlePosition.ABDOMEN -> {
-                            humanAbdomen.setImageResource(R.drawable.human_abdomen_orange)
-                        }
-                        BlePosition.LEFT_LEG -> {
-                            humanLegLeft.setImageResource(R.drawable.human_leg_left_orange)
-                        }
-                        BlePosition.RIGHT_LEG -> {
-                            humanLegRight.setImageResource(R.drawable.human_leg_right_orange)
+                        BodyPosition.RIGHT_PUNCH -> {
+                            bodyRight.setImageResource(R.drawable.img_body_right_orange)
                         }
                         else -> {
                             logErr("setPosColorHuman ERROR TYPE")
@@ -140,24 +124,17 @@ object BlePositionUtils {
                 }
                 score > PowerLevel.HIGH -> {
                     when (typePos) {
-                        BlePosition.FACE -> {
-                            humanHead.setImageResource(R.drawable.human_head_red)
+                        BodyPosition.CENTER_PUNCH -> {
+                            bodyCenter.setImageResource(R.drawable.img_body_center_red)
                         }
-                        BlePosition.LEFT_CHEST -> {
-                            humanChestLeft.setImageResource(R.drawable.human_chest_left_red)
+                        BodyPosition.HOOK_PUNCH -> {
+                            bodyBottom.setImageResource(R.drawable.img_body_top_red)
                         }
-                        BlePosition.RIGHT_CHEST -> {
-                            humanChestRight.setImageResource(R.drawable.human_chest_right_red)
+                        BodyPosition.LEFT_PUNCH -> {
+                            bodyLeft.setImageResource(R.drawable.img_body_left_red)
                         }
-                        BlePosition.ABDOMEN -> {
-                            humanAbdomen.setImageResource(R.drawable.human_abdomen_red)
-                        }
-                        BlePosition.LEFT_LEG -> {
-                            humanLegLeft.setImageResource(R.drawable.human_leg_left_red)
-
-                        }
-                        BlePosition.RIGHT_LEG -> {
-                            humanLegRight.setImageResource(R.drawable.human_leg_right_red)
+                        BodyPosition.RIGHT_PUNCH -> {
+                            bodyRight.setImageResource(R.drawable.img_body_right_red)
                         }
                         else -> {
                             logErr("setPosColorHuman ERROR TYPE")
@@ -168,40 +145,24 @@ object BlePositionUtils {
         }
     }
 
-    fun setHighScoreWithPos(layoutHuman: View, score: Int, typePos: BlePosition) {
+    fun setHighScoreWithPos(layoutHuman: LayoutHumanBinding, score: Int, key: String?) {
+        val typePos = BodyPosition.values().find { it.key == key }
         with(layoutHuman) {
-            layoutPositionScoreHigh.show()
-            when (typePos.key) {
-                BlePosition.FACE.key -> {
-                    positionHeadHighScore.run {
-                        setHighScore(score, BlePosition.FACE)
-                    }
+            groupHighScore.show()
+            when (typePos) {
+                BodyPosition.CENTER_PUNCH -> {
+                    scoreBodyCenter.setHighScore(score)
                 }
-                BlePosition.LEFT_CHEST.key -> {
-                    positionLeftChestHighScore.run {
-                        setHighScore(score, BlePosition.LEFT_CHEST)
-                    }
+                BodyPosition.HOOK_PUNCH -> {
+                    scoreBodyBottom.setHighScore(score)
                 }
-                BlePosition.RIGHT_CHEST.key -> {
-                    positionRightChestHighScore.run {
-                        setHighScore(score, BlePosition.RIGHT_CHEST)
-                    }
+                BodyPosition.LEFT_PUNCH -> {
+                    scoreBodyLeft.setHighScore(score)
                 }
-                BlePosition.ABDOMEN.key -> {
-                    positionAbdomenHighScore.run {
-                        setHighScore(score, BlePosition.ABDOMEN)
-                    }
+                BodyPosition.RIGHT_PUNCH -> {
+                    scoreBodyRight.setHighScore(score)
                 }
-                BlePosition.LEFT_LEG.key -> {
-                    positionLegLeftHighScore.run {
-                        setHighScore(score, BlePosition.LEFT_LEG)
-                    }
-                }
-                BlePosition.RIGHT_LEG.key -> {
-                    positionLegRightHighScore.run {
-                        setHighScore(score, BlePosition.RIGHT_LEG)
-                    }
-                }
+                else->{}
             }
         }
     }
@@ -280,30 +241,8 @@ private fun TextView.setTouchPractice(force: Float?, onTarget: Int?) {
     }, 1000)
 }
 
-private fun TextView.setHighScore(scoreHigh: Int, typePos: BlePosition) {
-    when (typePos) {
-        BlePosition.FACE -> {
-            this.text = scoreHigh.toInt().toString()
-        }
-        BlePosition.LEFT_CHEST -> {
-            this.text = scoreHigh.toInt().toString()
-        }
-        BlePosition.RIGHT_CHEST -> {
-            this.text = scoreHigh.toInt().toString()
-        }
-        BlePosition.ABDOMEN -> {
-            this.text = scoreHigh.toInt().toString()
-        }
-        BlePosition.LEFT_LEG -> {
-            this.text = scoreHigh.toInt().toString()
-        }
-        BlePosition.RIGHT_LEG -> {
-            this.text = scoreHigh.toInt().toString()
-        }
-        else -> {
-            logErr("setPosColorHuman ERROR TYPE")
-        }
-    }
+private fun TextView.setHighScore(scoreHigh: Int) {
+    this.text = scoreHigh.toString()
 }
 
 

@@ -191,4 +191,5 @@ interface ApiHelper {
     fun connectMachine(machineName: String): Single<JsonObject>
     fun forceConnectMachine(machineName: String): Single<JsonObject>
     fun getDataPracticeResult(practiceId: String): Single<JsonObject>
+    fun createTarget(request: CreateTargetRequest): Single<JsonObject>
 }

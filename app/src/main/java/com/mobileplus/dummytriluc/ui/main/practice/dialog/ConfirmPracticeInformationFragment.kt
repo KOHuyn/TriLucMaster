@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.BaseFragment
+import com.core.BaseFragmentZ
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
 import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 import com.mobileplus.dummytriluc.data.response.DataSubmitPracticeResponse
 import com.mobileplus.dummytriluc.data.response.LevelPractice
+import com.mobileplus.dummytriluc.databinding.FragmentConfirmPracticeInformationBinding
 import com.mobileplus.dummytriluc.ui.main.home.adapter.PowerChartDescriptionAdapter
 import com.mobileplus.dummytriluc.ui.utils.DateTimeUtil
 import com.mobileplus.dummytriluc.ui.utils.extensions.*
@@ -18,7 +19,6 @@ import com.utils.ext.hide
 import com.utils.ext.setTextColorz
 import com.utils.ext.setVisibility
 import com.utils.ext.show
-import kotlinx.android.synthetic.main.fragment_confirm_practice_information.*
 import kotlin.concurrent.thread
 import kotlin.math.abs
 
@@ -26,18 +26,19 @@ import kotlin.math.abs
  * Created by KOHuyn on 3/2/2021
  */
 class ConfirmPracticeInformationFragment(private val listDataBluetooth: List<BluetoothResponse>) :
-    BaseFragment() {
-    override fun getLayoutId(): Int = R.layout.fragment_confirm_practice_information
-
+    BaseFragmentZ<FragmentConfirmPracticeInformationBinding>() {
     private val adapterPos by lazy { PowerChartDescriptionAdapter(false) }
     var dataSubmit: DataSubmitPracticeResponse? = null
     var levelPractice: LevelPractice? = null
+    override fun getLayoutBinding(): FragmentConfirmPracticeInformationBinding {
+        return FragmentConfirmPracticeInformationBinding.inflate(layoutInflater)
+    }
 
     override fun updateUI(savedInstanceState: Bundle?) {
-        txtPointRewardPractice.fillGradientPrimary()
-        txtPointRewardPractice.fillGradientPrimary()
+        binding.txtPointRewardPractice.fillGradientPrimary()
+        binding.txtPointRewardPractice.fillGradientPrimary()
         setLevelUpdate(dataSubmit, levelPractice)
-        rcvPowerPracticeTest.run {
+        binding.rcvPowerPracticeTest.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = adapterPos
@@ -46,15 +47,15 @@ class ConfirmPracticeInformationFragment(private val listDataBluetooth: List<Blu
     }
 
     private fun calculateData() {
-        layoutLoadingConfirmPracticeInformation.show()
+        binding.layoutLoadingConfirmPracticeInformation.root.show()
         thread(true) {
             val timeTotalPractice =
                 if (listDataBluetooth.lastOrNull()?.endTime == null || listDataBluetooth.firstOrNull()?.startTime1 == null) null else abs(
                     listDataBluetooth.lastOrNull()?.endTime!! - listDataBluetooth.firstOrNull()?.startTime1!!
                 )
 
-            runOnUiThread {
-                txtValueTimePracticeTest.text =
+            runUiThread {
+                binding.txtValueTimePracticeTest.text =
                     if (timeTotalPractice == null) "--:--"
                     else DateTimeUtil.convertTimeStampToMMSS(timeTotalPractice)
             }
@@ -67,65 +68,45 @@ class ConfirmPracticeInformationFragment(private val listDataBluetooth: List<Blu
                 dataPunchBle.forEach {
                     countPower += it?.force ?: 0f
                 }
-                runOnUiThread {
-                    txtValuePunchesPracticeTest.text = dataPunchBle.size.toString()
-                    txtValuePowerPracticeTest.text = countPower.toInt().toString()
+                runUiThread {
+                    binding.txtValuePunchesPracticeTest.text = dataPunchBle.size.toString()
+                    binding.txtValuePowerPracticeTest.text = countPower.toInt().toString()
                     adapterPos.items = transformToPower(dataPunchBle)
                 }
 
                 transformToPower(dataPunchBle).forEach { item ->
                     BlePositionUtils.setPosColorHuman(
-                        humanConfirmTest,
+                        binding.humanConfirmTest,
                         item.score,
-                        BlePositionUtils.findBlePositionWithKey(item.key)
+                        item.key
                     )
                 }
-                var highFace = 0
-                var highAbdomen = 0
+                val highMap = hashMapOf<String?, Int>()
                 transformToHighScore(dataPunchBle).forEach { highScore ->
-                    runOnUiThread {
-                        when (highScore.key) {
-                            BlePosition.FACE.key, BlePosition.LEFT_CHEEK.key, BlePosition.RIGHT_CHEEK.key -> {
-                                if (highFace < highScore.score)
-                                    highFace = highScore.score
-                                BlePositionUtils.setHighScoreWithPos(
-                                    humanConfirmTest,
-                                    highFace,
-                                    BlePosition.FACE
-                                )
-                            }
-                            BlePosition.ABDOMEN_UP.key, BlePosition.LEFT_ABDOMEN.key, BlePosition.ABDOMEN.key, BlePosition.RIGHT_ABDOMEN.key -> {
-                                if (highAbdomen < highScore.score)
-                                    highAbdomen = highScore.score
-                                BlePositionUtils.setHighScoreWithPos(
-                                    humanConfirmTest,
-                                    highAbdomen,
-                                    BlePosition.ABDOMEN
-                                )
-                            }
-                            else -> {
-                                BlePositionUtils.setHighScoreWithPos(
-                                    humanConfirmTest,
-                                    highScore.score,
-                                    BlePositionUtils.findBlePositionWithKey(highScore.key)
-                                )
-                            }
-                        }
+                    if ((highMap[highScore.key] ?: 0) < highScore.score) {
+                        highMap[highScore.key] = highScore.score
+                    }
+                    if (highMap[highScore.key] != null) {
+                        BlePositionUtils.setHighScoreWithPos(
+                            binding.humanConfirmTest,
+                            highMap[highScore.key] ?: 0,
+                            highScore.key
+                        )
                     }
                 }
             } else {
-                runOnUiThread {
-                    txtValuePunchesPracticeTest.text = "0"
-                    txtValuePowerPracticeTest.text = "0"
+                runUiThread {
+                    binding.txtValuePunchesPracticeTest.text = "0"
+                    binding.txtValuePowerPracticeTest.text = "0"
                 }
             }
-            runOnUiThread {
-                layoutLoadingConfirmPracticeInformation.hide()
+            runUiThread {
+                binding.layoutLoadingConfirmPracticeInformation.root.hide()
             }
         }
     }
 
-    fun runOnUiThread(block: () -> Unit) {
+    fun runUiThread(block: () -> Unit) {
         if (this.isVisible) {
             activity?.runOnUiThread { block() } ?: Handler(Looper.getMainLooper()).post { block() }
         }
@@ -137,31 +118,31 @@ class ConfirmPracticeInformationFragment(private val listDataBluetooth: List<Blu
     ) {
         if (data != null && choiceLevelPractice != null) {
             if (data.isCompleteLevel == 1) {
-                titleLevelPractice?.text = loadStringRes(R.string.congratulations)
-                contentLevelPractice?.text =
+                binding.titleLevelPractice?.text = loadStringRes(R.string.congratulations)
+                binding.contentLevelPractice?.text =
                     String.format(
                         loadStringRes(R.string.format_level_up),
                         choiceLevelPractice.level ?: "--"
                     )
-                titleLevelPractice?.setTextColorz(R.color.clr_green)
-                contentLevelPractice?.setTextColorz(R.color.clr_green)
+                binding.titleLevelPractice?.setTextColorz(R.color.clr_green)
+                binding.contentLevelPractice?.setTextColorz(R.color.clr_green)
             } else {
-                titleLevelPractice?.text = loadStringRes(R.string.fighting)
-                contentLevelPractice?.text =
+                binding.titleLevelPractice?.text = loadStringRes(R.string.fighting)
+                binding.contentLevelPractice?.text =
                     String.format(
                         loadStringRes(R.string.format_not_level_up),
                         choiceLevelPractice.level
                     )
-                titleLevelPractice?.setTextColorz(R.color.white)
-                contentLevelPractice?.setTextColorz(R.color.white)
+                binding.titleLevelPractice?.setTextColorz(R.color.white)
+                binding.contentLevelPractice?.setTextColorz(R.color.white)
             }
         }
         setVisibleViewWhen(
-            titleLevelPractice,
-            contentLevelPractice,
+            binding.titleLevelPractice,
+            binding.contentLevelPractice,
         ) { data != null && choiceLevelPractice != null }
-        viewPointRewardPractice.setVisibility(data != null)
-        txtPointRewardPractice.setTextNotNull("+${data?.score?.toInt() ?: 0}")
+        binding.viewPointRewardPractice.setVisibility(data != null)
+        binding.txtPointRewardPractice.setTextNotNull("+${data?.score?.toInt() ?: 0}")
     }
 
 

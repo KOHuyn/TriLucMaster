@@ -245,6 +245,7 @@
     <string name="label_year">Year</string>
     <string name="label_month">Month</string>
     <string name="label_day">Day</string>
+    <string name="label_week">Week</string>
     <string name="label_date_of_birth">Birthday</string>
     <string name="label_back">Back</string>
     <string name="label_continue">Continue</string>
@@ -477,6 +478,22 @@
     <string name="free_fight_raw">Free fight</string>
     <string name="according_to_led">According to led</string>
     <string name="according_to_led_raw">According to led</string>
+    <string name="for_fun_exercise">For fun exercise</string>
+    <string name="for_fun_exercise_raw">For fun exercise</string>
+    <string name="according_to_music">According to music</string>
+    <string name="according_to_music_raw">According to music</string>
+    <string name="relax_exercise">Relax exercise</string>
+    <string name="relax_exercise_raw">Relax exercise</string>
+    <string name="beat_wife">Beat wife</string>
+    <string name="beat_wife_raw">Beat wife</string>
+    <string name="beat_husband">Beat husband</string>
+    <string name="beat_husband_raw">Beat husband</string>
+    <string name="beat_love_enemy">Beat love enemy</string>
+    <string name="beat_love_enemy_raw">Beat love enemy</string>
+    <string name="beat_ex">Beat Ex</string>
+    <string name="beat_ex_raw">Beat Ex</string>
+    <string name="beat_boss">Beat boss</string>
+    <string name="beat_boss_raw">Beat boss</string>
     <string name="according_to_course">According to course</string>
     <string name="according_to_course_raw">According to course</string>
     <string name="require_term_of_service">You have not accepted the terms of service</string>
@@ -527,4 +544,11 @@
     <string name="tip_send_pass_wifi_to_machine">Enter the password of the connection and click send to send the password to machine</string>
     <string name="note_send_pass_wifi_to_machine">Note: the machine can only connect to 2.4 ghz wifi. Please reconnect to wifi before sending the password to the machine.</string>
     <string name="wifi_configuring">Configuring wifi for the machine, please wait a moment…</string>
+    <string name="warning_force_connect">There is another device/user connected to the exercise machine. Do you want to try to connect?</string>
+    <string name="calories">Calories</string>
+    <string name="minutes">minutes</string>
+    <string name="left_punch">Left punch</string>
+    <string name="right_punch">Right punch</string>
+    <string name="center_punch">Center punch</string>
+    <string name="hook_punch">Hook punch</string>
 </resources>

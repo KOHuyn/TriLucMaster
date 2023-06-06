@@ -4,10 +4,14 @@ import com.core.BaseViewModel
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
 import com.mobileplus.dummytriluc.data.DataManager
+import com.mobileplus.dummytriluc.data.model.TargetType
+import com.mobileplus.dummytriluc.data.model.TargetUnit
+import com.mobileplus.dummytriluc.data.request.CreateTargetRequest
 import com.mobileplus.dummytriluc.data.response.HomeListResponse
 import com.mobileplus.dummytriluc.ui.utils.extensions.*
 import com.utils.SchedulerProvider
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -50,6 +54,32 @@ class HomeViewModel(
                 isLoading.onNext(false)
                 rxMessage.onNext(it.getErrorMsg())
             })
+    }
+
+    fun updateTarget(
+        targetUnit: TargetUnit,
+        targetTime: TargetType,
+        targetPoint: Int,
+        onSuccess: (Boolean) -> Unit
+    ) {
+        isLoading.onNext(true)
+        dataManager.createTarget(
+            CreateTargetRequest(
+                targetUnit = targetUnit.value,
+                targetType = targetTime.value,
+                targetPoint = targetPoint.toString()
+            )
+        ).compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                isLoading.onNext(false)
+                onSuccess(response.isSuccess())
+                if (!response.isSuccess()) {
+                    rxMessage.onNext(response.message())
+                }
+            }, {
+                isLoading.onNext(false)
+                onSuccess(false)
+            }).addTo(disposable)
     }
 
     private fun checkDataBleFailCache(): Disposable {

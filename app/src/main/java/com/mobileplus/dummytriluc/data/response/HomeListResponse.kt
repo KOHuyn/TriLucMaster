@@ -21,6 +21,12 @@ data class HomeListResponse(
     @SerializedName("PUNCH")
     @Expose
     val punch: Punch? = null,
+    @SerializedName("CALORIES")
+    @Expose
+    val calories: GoalInfo? = null,
+    @SerializedName("TIME_PRACTICE")
+    @Expose
+    val timePractice: GoalInfo? = null,
     @SerializedName("POWER")
     @Expose
     val power: Power? = null,
@@ -71,6 +77,9 @@ data class Power(
     @SerializedName("GOAL")
     @Expose
     val goal: Int? = null,
+    @SerializedName("TIME_TYPE")
+    @Expose
+    val timeType: String? = null,
     @SerializedName("DETAIL")
     @Expose
     val detail: ArrayList<ItemChart>? = null,
@@ -101,6 +110,9 @@ data class Punch(
     @SerializedName("GOAL")
     @Expose
     val goal: Int? = null,
+    @SerializedName("TIME_TYPE")
+    @Expose
+    val timeType: String? = null,
     @SerializedName("TOTAL_PUNCH")
     @Expose
     val totalPunch: Int? = null
@@ -111,7 +123,37 @@ data class Punch(
     val totalZ: String get() = totalPunch?.formatter() ?: "-"
     val goalZ: String get() = goal?.formatter() ?: "-"
 }
+data class GoalInfo(
+    @SerializedName("GOAL")
+    @Expose
+    val goal: Int? = null,
+    @SerializedName("TIME_TYPE")
+    @Expose
+    val timeType: String? = null,
+    @SerializedName("TOTAL")
+    @Expose
+    val total: Int? = null
+) {
+    fun getProgress() =
+        if (total != null && goal != null && goal != 0) (total.toFloat() * 100 / goal.toFloat()).roundToInt() else 0
 
+    val totalZ: String get() = total?.formatter() ?: "-"
+    val goalZ: String get() = goal?.formatter() ?: "-"
+
+    val goalType get() = GoalTimeType.getType(timeType)
+}
+
+enum class GoalTimeType(val type: String) {
+    BY_DAY("by_day"),
+    BY_WEEK("by_week"),
+    BY_MONTH("by_month");
+
+    companion object {
+        fun getType(type: String?): GoalTimeType? {
+            return values().find { it.type == type }
+        }
+    }
+}
 data class LastPractice(
     @Expose
     @SerializedName("practice_id")

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_16"
+        android:background="@color/clr_tab"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_8"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Cài đặt mục tiêu"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_16" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Loại mục tiêu"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/spTargetUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:focusableInTouchMode="true"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                tools:text="Đòn đánh" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/time"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/spTargetType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:drawableTint="@color/clr_red"
+                android:ellipsize="end"
+                android:focusableInTouchMode="true"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                tools:text="Ngày" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Điểm mục tiêu"
+                android:textAppearance="@style/FontAnTon"
+                android:textSize="@dimen/text_14" />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtTargetPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:paddingStart="@dimen/space_8"
+                android:paddingTop="@dimen/space_4"
+                android:paddingEnd="@dimen/space_8"
+                android:paddingBottom="@dimen/space_4"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14"
+                tools:text="2000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tvSave"
+                style="@style/ButtonGradientOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="0dp"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:text="@string/save"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_14" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tvClose"
+                style="@style/ButtonGradientOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:minHeight="0dp"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:text="@string/close"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_14" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

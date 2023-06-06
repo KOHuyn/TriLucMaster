@@ -347,6 +347,10 @@ class AppDataManager constructor(
         return apiHelper.getDataPracticeResult(practiceId)
     }
 
+    override fun createTarget(request: CreateTargetRequest): Single<JsonObject> {
+        return apiHelper.createTarget(request)
+    }
+
     override fun loginSocial(body: SocialLoginRequest): Single<JsonObject> =
         apiHelper.loginSocial(body)
 

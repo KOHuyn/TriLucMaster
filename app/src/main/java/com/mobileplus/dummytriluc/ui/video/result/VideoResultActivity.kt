@@ -133,9 +133,9 @@ class VideoResultActivity : BaseActivity() {
             autoStart = savedInstanceState.getBoolean(KEY_AUTO_PLAY)
             speedParameter = savedInstanceState.getFloat(KEY_SPEED_PARAMETERS)
         }
-        with(humanVideoResult) {
-            layoutPositionScore.show()
-        }
+//        with(humanVideoResult) {
+//            layoutPositionScore.show()
+//        }
         getArg()
         handleDisposableViewModel(videoResultViewModel)
         btnSendRecordVideoResult.fillGradientPrimary()
@@ -629,9 +629,9 @@ class VideoResultActivity : BaseActivity() {
     }
 
     private fun setupDataBluetoothFromMachine(data: List<DataBluetooth>, startTime2: Long) {
-        with(humanVideoResult) {
-            layoutHumanPosition.hide()
-        }
+//        with(humanVideoResult) {
+//            layoutHumanPosition.hide()
+//        }
         addDispose(rxDurationCallback.subscribe { duration ->
             for (i in data.indices) {
                 if (((data[i].time!! - startTime2) / 100) == duration.toLong() / 100) {

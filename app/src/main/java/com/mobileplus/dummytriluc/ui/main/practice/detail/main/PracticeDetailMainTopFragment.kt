@@ -67,44 +67,29 @@ class PracticeDetailMainTopFragment : BaseFragmentZ<LayoutPracticeDetailMainTopB
                 toast(loadStringRes(R.string.data_practice_not_available))
             }
 
-            var highFace = 0
-            var highAbdomen = 0
+            val highMap = hashMapOf<String?, Int>()
             transformToHighScore(dataBle).forEach { highScore ->
-                when (highScore.key) {
-                    BlePosition.FACE.key, BlePosition.LEFT_CHEEK.key, BlePosition.RIGHT_CHEEK.key -> {
-                        if (highFace < highScore.score)
-                            highFace = highScore.score
-                        BlePositionUtils.setHighScoreWithPos(
-                            binding.layoutHumanPractice.root,
-                            highFace,
-                            BlePosition.FACE
-                        )
-                    }
-                    BlePosition.ABDOMEN_UP.key, BlePosition.LEFT_ABDOMEN.key, BlePosition.ABDOMEN.key, BlePosition.RIGHT_ABDOMEN.key -> {
-                        if (highAbdomen < highScore.score)
-                            highAbdomen = highScore.score
-                        BlePositionUtils.setHighScoreWithPos(
-                            binding.layoutHumanPractice.root,
-                            highAbdomen,
-                            BlePosition.ABDOMEN
-                        )
-                    }
-                    else -> {
-                        BlePositionUtils.setHighScoreWithPos(
-                            binding.layoutHumanPractice.root,
-                            highScore.score,
-                            BlePositionUtils.findBlePositionWithKey(highScore.key)
-                        )
-                    }
+                if (highMap[highScore.key] == null) {
+                    highMap[highScore.key] = highScore.score
+                }
+                if ((highMap[highScore.key] ?: 0) < highScore.score) {
+                    highMap[highScore.key] = highScore.score
+                }
+                if (highMap[highScore.key] != null) {
+                    BlePositionUtils.setHighScoreWithPos(
+                        binding.layoutHumanPractice,
+                        highMap[highScore.key] ?: 0,
+                        highScore.key
+                    )
                 }
             }
         }
 
         for (item in data.items()) {
             BlePositionUtils.setPosColorHuman(
-                binding.layoutHumanPractice.root,
+                binding.layoutHumanPractice,
                 item.score,
-                BlePositionUtils.findBlePositionWithKey(item.key)
+                item.key
             )
         }
     }
