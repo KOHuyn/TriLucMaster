@@ -19,9 +19,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -41,9 +38,8 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
     private val currentState = MutableStateFlow(ConnectionState.NONE)
     private val cachedCommand = LinkedList<ICommand>()
     private val transceiverEventState = PublishSubject.create<TransceiverEvent>()
-    private var onEventMachineSend:PublishSubject<JsonObject?> = PublishSubject.create()
+    private var onEventMachineSend: (JsonObject?) -> Unit = {}
     private val compositeDisposable = CompositeDisposable()
-    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     override fun startup() {
         socket = SocketControllerImpl()
@@ -65,7 +61,7 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
     }
 
     override fun onEventMachineSend(listener: (data: JsonObject?) -> Unit) {
-            onEventMachineSend.subscribe(listener).addTo(compositeDisposable)
+        this.onEventMachineSend = listener
     }
 
     override fun onConnectionStateChange(
@@ -159,7 +155,6 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
             TransceiverEvent.DISCONNECT -> {
                 dataManager.isConnectedMachine = false
                 compositeDisposable.clear()
-                coroutineScope.cancel()
                 currentState.tryEmit(ConnectionState.DISCONNECTED)
             }
 
@@ -189,9 +184,7 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                                     .subscribe({ response ->
                                         logErr(response.toString())
                                         val json = response.dataArray().firstOrNull()?.asJsonObject
-                                        if (json != null) {
-                                            onEventMachineSend.onNext(json)
-                                        }
+                                        onEventMachineSend(json)
                                     }, {
                                         logErr(it.toString(), it)
                                     }).let { compositeDisposable.add(it) }
