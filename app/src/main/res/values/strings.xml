@@ -562,4 +562,6 @@
     <string name="right_punch">Đấm phải</string>
     <string name="center_punch">Đấm giữa</string>
     <string name="hook_punch">Đấm móc</string>
+    <string name="connect_old_machine">Bạn có muốn kết nối tới máy %1$s không?</string>
+
 </resources>

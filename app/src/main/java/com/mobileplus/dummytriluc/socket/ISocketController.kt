@@ -12,5 +12,5 @@ interface ISocketController {
     fun unregisterListener(event: String)
     fun unregisterAll()
     fun onListener(listener: (event: String, data: String?) -> Unit)
-    fun emit(event: String, vararg args: Pair<String, String>)
+    fun emit(event: String, vararg args: Pair<String, Any>)
 }

@@ -9,6 +9,7 @@ import com.mobileplus.dummytriluc.DummyTriLucApplication
 import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
 import com.mobileplus.dummytriluc.data.local.db.DbHelper
 import com.mobileplus.dummytriluc.data.local.prefs.PrefsHelper
+import com.mobileplus.dummytriluc.data.model.MachineInfo
 import com.mobileplus.dummytriluc.data.model.UserInfo
 import com.mobileplus.dummytriluc.data.model.entity.DataBluetoothRetryEntity
 import com.mobileplus.dummytriluc.data.model.entity.TableConfig
@@ -388,10 +389,6 @@ class AppDataManager constructor(
 
     override fun isLoggedIn(): Boolean = prefsHelper.isLoggedIn()
 
-    override fun isFirstConnect(): Boolean = prefsHelper.isFirstConnect()
-
-    override fun setFirstConnect(isFirst: Boolean) = prefsHelper.setFirstConnect(isFirst)
-
     override var numberHotLine: String
         get() = prefsHelper.numberHotLine
         set(value) {
@@ -427,6 +424,18 @@ class AppDataManager constructor(
         get() = prefsHelper.versionUpdateApp
         set(value) {
             prefsHelper.versionUpdateApp = value
+        }
+
+    override var isConnectedMachine: Boolean
+        get() = prefsHelper.isConnectedMachine
+        set(value) {
+            prefsHelper.isConnectedMachine = value
+        }
+
+    override var machineCodeConnectLasted: MachineInfo?
+        get() = prefsHelper.machineCodeConnectLasted
+        set(value) {
+            prefsHelper.machineCodeConnectLasted = value
         }
 
     /**

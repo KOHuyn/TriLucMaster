@@ -11,6 +11,7 @@ import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 import com.mobileplus.dummytriluc.ui.utils.DateTimeUtil
 import com.mobileplus.dummytriluc.ui.utils.extensions.BlePosition
 import com.mobileplus.dummytriluc.ui.utils.extensions.BlePositionUtils
+import com.mobileplus.dummytriluc.ui.utils.extensions.BodyPosition
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.mobileplus.dummytriluc.ui.utils.extensions.setTextNotNull
 import com.utils.ext.*
@@ -58,7 +59,8 @@ class AdapterIndexPractice : RecyclerView.Adapter<BaseViewHolder>() {
                 }
                 viewSubmitPracticeBottom.setVisibility(item.type != TypeIndexPractice.INDEX_END)
                 imgPositionSubmitPractice.setImageResource(item.getIcon())
-                txtTurnSubmitPractice.text = BlePositionUtils.findTitleWithKey(item.position)
+                txtTurnSubmitPractice.text =
+                    BodyPosition.getType(item.position)?.let { context.getString(it.titleRes) }
                 txtProgressSubmitPractice.text =
                     "${item.currPunch?.roundToInt() ?: 0}/${item.defaultPunch?.roundToInt() ?: 0}"
                 prgConfirmPractice.progress = item.getProgress()

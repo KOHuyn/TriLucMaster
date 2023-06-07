@@ -24,7 +24,13 @@ enum class BodyPosition(val key: String?, @StringRes val titleRes: Int) {
     LEFT_PUNCH("1", R.string.left_punch),
     CENTER_PUNCH("2", R.string.center_punch),
     RIGHT_PUNCH("3", R.string.right_punch),
-    HOOK_PUNCH("4", R.string.hook_punch),
+    HOOK_PUNCH("4", R.string.hook_punch);
+
+    companion object {
+        fun getType(position: String?): BodyPosition? {
+            return values().find { it.key == position }
+        }
+    }
 }
 
 enum class BlePosition(val key: String, @StringRes val titleRes: Int) {

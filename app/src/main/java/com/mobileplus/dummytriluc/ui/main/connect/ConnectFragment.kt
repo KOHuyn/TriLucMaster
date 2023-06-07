@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.core.BaseFragmentZ
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.databinding.FragmentConnectDeviceBinding
+import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
 import com.mobileplus.dummytriluc.ui.main.MainViewModel
@@ -16,7 +17,6 @@ import com.mobileplus.dummytriluc.ui.main.setupwifi.EspTouchActivity
 import com.mobileplus.dummytriluc.ui.scanner.ScannerActivity
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
 import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
-import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.utils.ext.clickWithDebounce
 import com.utils.ext.invisible
 import com.utils.ext.postNormal
@@ -49,8 +49,23 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
     }
 
     override fun updateUI(savedInstanceState: Bundle?) {
+        handleSuggestConnection()
         checkBleConnect()
         initAction()
+    }
+
+    private fun handleSuggestConnection() {
+        val machineInfo = transceiver.getMachineInfo()
+        if (machineInfo?.machineRoom != null && !transceiver.isConnected()) {
+            YesNoButtonDialog().setTitle(getString(R.string.notification))
+                .setMessage(getString(R.string.connect_old_machine, machineInfo.machineRoom))
+                .setTextCancel(getString(R.string.no))
+                .setTextAccept(getString(R.string.yes))
+                .setOnCallbackAcceptButtonListener {
+                    vm.connectByMachineCode(machineInfo.machineRoom)
+                }
+                .show(parentFragmentManager, "machineRoom")
+        }
     }
 
     private fun checkBleConnect() {
@@ -84,10 +99,26 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
         }, vm.isLoading.subscribe { isLoading ->
             if (isLoading) connectingToMachine(machineEncode ?: MACHINE_NAME_DEFAULT)
         })
-        if (transceiver.isConnected()) {
-            connectedToMachine(transceiver.getMachineInfo()?.machineRoom ?: MACHINE_NAME_DEFAULT)
-        } else {
-            unConnectToMachine()
+        handleStateTransceiver()
+    }
+
+    private fun handleStateTransceiver() {
+        transceiver.onConnectionStateChange(lifecycle) { state ->
+            val machineName = vm.machineInfoCache?.machineRoom ?: MACHINE_NAME_DEFAULT
+            when (state) {
+                ConnectionState.CONNECTING -> {
+                    connectingToMachine(machineName)
+                }
+                ConnectionState.CONNECTED -> {
+                    connectedToMachine(machineName)
+                }
+                ConnectionState.DISCONNECTED -> {
+                    unConnectToMachine()
+                }
+                ConnectionState.NONE -> {
+                    unConnectToMachine()
+                }
+            }
         }
     }
 
@@ -127,19 +158,6 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
         binding.imageConnectDevice.setImageResource(R.drawable.state_connecting_device)
         binding.txtStateConnectDevice.text =
             loadStringRes(R.string.disconnected)
-    }
-
-    private fun removeFragment() {
-        try {
-            parentFragmentManager.fragments.map {
-                if (it.tag == ConnectFragment::class.java.simpleName) {
-                    parentFragmentManager.beginTransaction().remove(it).commit()
-                    parentFragmentManager.popBackStack()
-                }
-            }
-        } catch (e: IllegalStateException) {
-            e.logErr()
-        }
     }
 
     private fun animConnectBle(animate: Boolean) {
@@ -232,6 +250,6 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
 
     private fun setupBarCode(stringExtra: String?) {
         if (stringExtra == null) return
-        vm.connectByBarCode(stringExtra)
+        vm.connectByMachineCode(stringExtra)
     }
 }

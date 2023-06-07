@@ -44,6 +44,7 @@ class SocketControllerImpl : ISocketController {
     }
 
     override fun registerListener(event: String) {
+        if (eventCached.contains(event)) return
         val listener = Listener { args: Array<out Any>? ->
             val data = args?.firstOrNull()?.toString()
             Log.i(event, "__________SOCKET-RESPONSE__________")
@@ -78,7 +79,7 @@ class SocketControllerImpl : ISocketController {
         }
     }
 
-    override fun emit(event: String, vararg args: Pair<String, String>) {
+    override fun emit(event: String, vararg args: Pair<String, Any>) {
         val data = JSONObject()
         args.forEach { (key, value) ->
             data.put(key, value)

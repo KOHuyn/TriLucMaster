@@ -84,7 +84,6 @@ class RegisterStep6Fragment : BaseFragmentZ<FragmentRegisterStep6Binding>() {
                 },
                 rxUpdateInfoSuccess.subscribe {
                     if (it) {
-                        vm.setFirstConnect(true)
                         startActivity(MainActivity::class.java)
                         finish()
                     }

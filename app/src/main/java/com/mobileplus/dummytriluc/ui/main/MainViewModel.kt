@@ -4,7 +4,6 @@ import com.core.BaseViewModel
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mobileplus.dummytriluc.BuildConfig
-import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
 import com.mobileplus.dummytriluc.bluetooth.request.TransferBluetoothData
@@ -40,8 +39,6 @@ class MainViewModel(
 
     val logoutSuccess: PublishSubject<Boolean> = PublishSubject.create()
     val rxCoachType: PublishSubject<Pair<TypeCoach, JsonObject?>> = PublishSubject.create()
-    var isFirstConnect = dataManager.isFirstConnect()
-    fun setFirstConnected(isFirstConnect: Boolean) = dataManager.setFirstConnect(isFirstConnect)
     val user = dataManager.getUserInfo()
     val hotline = dataManager.numberHotLine
     val rxPostModeFreedomSuccess: PublishSubject<Boolean> = PublishSubject.create()
@@ -62,6 +59,8 @@ class MainViewModel(
         }
         get() = dataManager.versionUpdateApp
 
+    val machineInfoCache: MachineInfo? get() = dataManager.machineCodeConnectLasted
+
     fun logout(): Disposable {
         isLoading.onNext(true)
         return dataManager.logoutServer(uuid = deviceId)
@@ -77,76 +76,6 @@ class MainViewModel(
                 it.logErr()
             })
     }
-
-    fun submitDataBle(request: List<BluetoothResponse>, level: LevelPractice? = null) {
-        logErr(gson.toJson(request))
-
-        val dataTransform = TransferBluetoothData.transferDataArrayToDataString(request, level)
-            ?: return
-        dataManager.postSubmitMultiPracticeResult(dataTransform)
-            .compose(schedulerProvider.ioToMainSingleScheduler())
-            .subscribe({ response ->
-                logErr("$response")
-                rxPostModeFreedomSuccess.onNext(response.isSuccess())
-            }, {
-                it.logErr()
-                saveDataWhenPushServerFail(dataTransform)
-                rxMessage.onNext(it.getErrorMsg())
-            }).addTo(compositeDisposable)
-    }
-
-    fun submitPractice(bleRequest: BluetoothResponse, isFirstConnect: Boolean = true): Disposable {
-        val request = SubmitModeFreedomPractice(
-            bleRequest.machineId,
-            bleRequest.mode,
-            bleRequest.startTime1,
-            bleRequest.startTime2,
-            bleRequest.endTime,
-            if (isFirstConnect)
-                gson.toJson(bleRequest.data.mapNotNull { it?.force ?: 0F })
-            else gson.toJson(bleRequest.data)
-        )
-        return dataManager.postSubmitModeFreedomPractice(request)
-            .compose(schedulerProvider.ioToMainSingleScheduler())
-            .subscribe({ response ->
-                logErr(response.toString())
-            }, {
-                it.logErr()
-                rxMessage.onNext(it.getErrorMsg())
-            })
-    }
-
-    fun saveResultSession(
-        data: List<BluetoothResponse>
-    ) {
-        val dataTransform = JSONArray(gson.toJson(data))
-        val arrFail = mutableListOf<Int>()
-        for (i in 0 until dataTransform.length()) {
-            val dataBleObj: JSONObject = dataTransform.getJSONObject(i)
-            if (dataBleObj.has("session_id")) {
-                if (dataBleObj.has("lesson_id")) {
-                    dataBleObj.put("practice_id", dataBleObj.getInt("lesson_id"))
-                    dataBleObj.remove("lesson_id")
-                }
-                if (dataBleObj.has("data")) {
-                    dataBleObj.remove("data")
-                    dataBleObj.put("data", gson.toJson(data[i].data))
-                }
-            } else {
-                arrFail.add(i)
-            }
-        }
-        arrFail.forEach {
-            dataTransform.remove(it)
-        }
-        if (dataTransform.length() == 0) {
-            return
-        }
-        dataManager.saveResultSession(dataTransform.toString())
-            .compose(schedulerProvider.ioToMainSingleScheduler())
-            .subscribe()
-    }
-
     fun readNotification(id: Int): Disposable {
         return dataManager.getNotificationDetail(id)
             .compose(schedulerProvider.ioToMainSingleScheduler())
@@ -278,17 +207,6 @@ class MainViewModel(
                 saveDataJSONErrorWhenPushServerFail(errorBle)
             }).addTo(compositeDisposable)
     }
-
-    private fun saveDataWhenPushServerFail(data: String) {
-        dataManager.saveBluetoothDataRetry(DataBluetoothRetryEntity(data))
-            .compose(schedulerProvider.ioToMainObservableScheduler())
-            .subscribe({
-                logErr("saveDataWhenError:$data")
-            }, {
-                logErr(it.getErrorMsg())
-            }).addTo(compositeDisposable)
-    }
-
     private fun saveDataJSONErrorWhenPushServerFail(data: BleErrorRequest) {
         dataManager.saveBluetoothDataError(data)
             .compose(schedulerProvider.ioToMainObservableScheduler())
@@ -299,9 +217,9 @@ class MainViewModel(
             }).addTo(compositeDisposable)
     }
 
-    fun connectByBarCode(barCode: String) {
+    fun connectByMachineCode(machineCode: String) {
         isLoading.onNext(true)
-        dataManager.connectMachine(barCode)
+        dataManager.connectMachine(machineCode)
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
                 isLoading.onNext(false)
@@ -312,7 +230,7 @@ class MainViewModel(
                     }
                 } else {
                     if (response.code() == 401) {
-                        rxForceConnect.onNext(barCode)
+                        rxForceConnect.onNext(machineCode)
                     } else {
                         rxMessage.onNext(response.message())
                     }

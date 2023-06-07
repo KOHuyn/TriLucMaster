@@ -29,7 +29,6 @@ import com.mobileplus.dummytriluc.ui.main.coach.check.CoachUnqualifiedFragment
 import com.mobileplus.dummytriluc.ui.main.coach.disciple.DiscipleFragment
 import com.mobileplus.dummytriluc.ui.main.coach.group.CoachGroupFragment
 import com.mobileplus.dummytriluc.ui.main.coach.register.CoachRegisterLauncherFragment
-import com.mobileplus.dummytriluc.ui.main.develop_ble.DevelopBleFragment
 import com.mobileplus.dummytriluc.ui.main.home.HomeFragment
 import com.mobileplus.dummytriluc.ui.main.news.NewsFragment
 import com.mobileplus.dummytriluc.ui.main.news.detail.NewsDetailFragment
@@ -385,9 +384,6 @@ class MainFragment : BaseFragmentZ<FragmentMainBinding>() {
                 }
                 LeftMenuAdapter.LeftMenu.INFORMATION -> {
 //                    CoachSaveDraftFragment.openFragment(149)
-                }
-                LeftMenuAdapter.LeftMenu.DEVELOP_BLE -> {
-                    DevelopBleFragment.openFragment()
                 }
                 else -> {
                 }

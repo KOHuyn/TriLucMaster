@@ -32,7 +32,6 @@ class RegisterViewModel(
     val rxUpdateInfoSuccess: PublishSubject<Boolean> = PublishSubject.create()
     val subjectData: PublishSubject<List<SubjectItem>> = PublishSubject.create()
 
-    fun setFirstConnect(isFirstConnect: Boolean) = dataManager.setFirstConnect(isFirstConnect)
     fun getUserInfo() = dataManager.getUserInfo()
 
     fun registerUser(request: RegisterRequest): Disposable {

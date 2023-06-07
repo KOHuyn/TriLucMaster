@@ -551,4 +551,5 @@
     <string name="right_punch">Right punch</string>
     <string name="center_punch">Center punch</string>
     <string name="hook_punch">Hook punch</string>
+    <string name="connect_old_machine">Do you want to connect to machine %1$s?</string>
 </resources>

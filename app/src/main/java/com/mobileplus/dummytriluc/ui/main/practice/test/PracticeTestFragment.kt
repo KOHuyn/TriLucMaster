@@ -9,7 +9,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
-import com.mobileplus.dummytriluc.bluetooth.CommandBle
 import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.data.response.DetailPracticeResponse
@@ -29,9 +28,6 @@ import com.mobileplus.dummytriluc.ui.utils.eventbus.EventReloadPracticeItem
 import com.mobileplus.dummytriluc.ui.utils.extensions.fillGradientPrimary
 import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
-import com.mobileplus.dummytriluc.ui.utils.test.MODE_COURSE_TEST
-import com.mobileplus.dummytriluc.ui.utils.test.MODE_FREE_TEST
-import com.mobileplus.dummytriluc.ui.utils.test.testNextResponseBluetooth
 import com.utils.applyClickShrink
 import com.utils.ext.*
 import io.reactivex.Observable
@@ -164,11 +160,6 @@ class PracticeTestFragment : BaseFragment() {
         countTimesDisposable?.dispose()
         countTimesDisposable = null
         isRetry = true
-    }
-
-
-    private fun fakeDataBleMode4() {
-        (activity as MainActivity).testNextResponseBluetooth(MODE_COURSE_TEST)
     }
 
     fun startPractice() {

@@ -19,6 +19,7 @@ import com.mobileplus.dummytriluc.bluetooth.*
 import com.mobileplus.dummytriluc.data.model.*
 import com.mobileplus.dummytriluc.data.response.*
 import com.mobileplus.dummytriluc.databinding.FragmentHomeBinding
+import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
 import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
 import com.mobileplus.dummytriluc.ui.dialog.ChooseModePracticeDialog
@@ -320,17 +321,16 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
     }
 
     private fun configView() {
-        transceiver.onTransceiverEventStateListener { transceiverEvent ->
-            if (transceiverEvent == TransceiverEvent.CONNECT) {
-                setColorFilterConnect(R.color.clr_primary)
-            } else {
-                setColorFilterConnect(R.color.white)
+        transceiver.onConnectionStateChange(lifecycle) { state ->
+            when (state) {
+                ConnectionState.CONNECTED -> {
+                    setColorFilterConnect(R.color.clr_primary)
+                }
+
+                else -> {
+                    setColorFilterConnect(R.color.white)
+                }
             }
-        }
-        if (transceiver.isConnected()) {
-            setColorFilterConnect(R.color.clr_primary)
-        } else {
-            setColorFilterConnect(R.color.white)
         }
         binding.btnPracticeNowHome.applyClickShrink()
         binding.txtCountPunchHome.fillGradientPrimary()

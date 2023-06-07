@@ -6,6 +6,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.mobileplus.dummytriluc.R
+import com.mobileplus.dummytriluc.data.model.MachineInfo
 import com.mobileplus.dummytriluc.data.model.Page
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.data.remote.ApiConstants.CODE_ERROR_ACCOUNT_MISSING
@@ -66,7 +67,11 @@ fun JsonObject.dataObjectSafe(): JsonObject? {
     }
 }
 
-fun JsonObject.dataArray(): JsonArray = getAsJsonArray(ApiConstants.DATA)
+fun JsonObject.dataArray(): JsonArray = try {
+    getAsJsonArray(ApiConstants.DATA)
+} catch (e: Exception) {
+    JsonArray()
+}
 
 fun JsonObject.isEmptyArray(): Boolean = get(ApiConstants.DATA).toString() == "[]"
 

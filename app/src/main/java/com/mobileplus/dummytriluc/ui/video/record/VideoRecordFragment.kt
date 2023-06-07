@@ -371,7 +371,7 @@ class VideoRecordFragment : BaseFragment() {
     }
 
     private fun commandRecordEnd() {
-        if (!isDataAvailable) (activity as MainActivity).requestFINISH()
+//        if (!isDataAvailable) (activity as MainActivity).requestFINISH()
         val timeEnd = System.currentTimeMillis() / 1000
         when (typeRecord) {
             TYPE_PRACTICE -> {
