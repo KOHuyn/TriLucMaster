@@ -5,15 +5,10 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mobileplus.dummytriluc.BuildConfig
 import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
-import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
-import com.mobileplus.dummytriluc.bluetooth.request.TransferBluetoothData
 import com.mobileplus.dummytriluc.data.DataManager
 import com.mobileplus.dummytriluc.data.model.MachineInfo
-import com.mobileplus.dummytriluc.data.model.entity.DataBluetoothRetryEntity
 import com.mobileplus.dummytriluc.data.model.entity.TableConfig
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
-import com.mobileplus.dummytriluc.data.request.SubmitModeFreedomPractice
-import com.mobileplus.dummytriluc.data.response.LevelPractice
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
 import com.mobileplus.dummytriluc.ui.utils.TypeCoach
 import com.mobileplus.dummytriluc.ui.utils.extensions.*
@@ -23,8 +18,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
-import org.json.JSONArray
-import org.json.JSONObject
 
 class MainViewModel(
     dataManager: DataManager,
@@ -44,8 +37,8 @@ class MainViewModel(
     val rxPostModeFreedomSuccess: PublishSubject<Boolean> = PublishSubject.create()
     val rxShowPopupUpdateVersionApp: PublishSubject<Triple<String, Boolean, String?>> =
         PublishSubject.create()
-    val rxMachineInfo: PublishSubject<MachineInfo> = PublishSubject.create()
-    val rxForceConnect: PublishSubject<String> = PublishSubject.create()
+    val rxMachineInfo: PublishSubject<Pair<Boolean, MachineInfo?>> = PublishSubject.create()
+    val rxForceConnect: PublishSubject<Pair<String, String>> = PublishSubject.create()
 
     var isDataSecurity: Boolean
         set(value) {
@@ -223,21 +216,21 @@ class MainViewModel(
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
                 isLoading.onNext(false)
+                var data: MachineInfo? = null
                 if (response.isSuccess()) {
-                    val data = gson.fromJsonSafe<MachineInfo>(response.dataObject())
-                    if (data != null) {
-                        rxMachineInfo.onNext(data)
-                    }
+                    data = gson.fromJsonSafe<MachineInfo>(response.dataObject())
                 } else {
                     if (response.code() == 401) {
-                        rxForceConnect.onNext(machineCode)
+                        rxForceConnect.onNext(response.message() to machineCode)
                     } else {
                         rxMessage.onNext(response.message())
                     }
                 }
+                rxMachineInfo.onNext(response.isSuccess() to data)
             }, { error ->
                 isLoading.onNext(false)
                 rxMessage.onNext(error.getErrorMsg())
+                rxMachineInfo.onNext(false to null)
             }).addTo(compositeDisposable)
     }
 
@@ -252,17 +245,17 @@ class MainViewModel(
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
                 isLoading.onNext(false)
+                var data: MachineInfo? = null
                 if (response.isSuccess()) {
-                    val data = gson.fromJsonSafe<MachineInfo>(response.dataObject())
-                    if (data != null) {
-                        rxMachineInfo.onNext(data)
-                    }
+                    data = gson.fromJsonSafe<MachineInfo>(response.dataObject())
                 } else {
                     rxMessage.onNext(response.message())
                 }
+                rxMachineInfo.onNext(response.isSuccess() to data)
             }, { error ->
                 isLoading.onNext(false)
                 rxMessage.onNext(error.getErrorMsg())
+                rxMachineInfo.onNext(false to null)
             }).addTo(compositeDisposable)
     }
 }

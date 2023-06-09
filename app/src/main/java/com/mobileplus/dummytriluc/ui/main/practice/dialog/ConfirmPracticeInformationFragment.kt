@@ -118,23 +118,23 @@ class ConfirmPracticeInformationFragment(private val listDataBluetooth: List<Blu
     ) {
         if (data != null && choiceLevelPractice != null) {
             if (data.isCompleteLevel == 1) {
-                binding.titleLevelPractice?.text = loadStringRes(R.string.congratulations)
-                binding.contentLevelPractice?.text =
+                binding.titleLevelPractice.text = loadStringRes(R.string.congratulations)
+                binding.contentLevelPractice.text =
                     String.format(
                         loadStringRes(R.string.format_level_up),
                         choiceLevelPractice.level ?: "--"
                     )
-                binding.titleLevelPractice?.setTextColorz(R.color.clr_green)
-                binding.contentLevelPractice?.setTextColorz(R.color.clr_green)
+                binding.titleLevelPractice.setTextColorz(R.color.clr_green)
+                binding.contentLevelPractice.setTextColorz(R.color.clr_green)
             } else {
-                binding.titleLevelPractice?.text = loadStringRes(R.string.fighting)
-                binding.contentLevelPractice?.text =
+                binding.titleLevelPractice.text = loadStringRes(R.string.fighting)
+                binding.contentLevelPractice.text =
                     String.format(
                         loadStringRes(R.string.format_not_level_up),
                         choiceLevelPractice.level
                     )
-                binding.titleLevelPractice?.setTextColorz(R.color.white)
-                binding.contentLevelPractice?.setTextColorz(R.color.white)
+                binding.titleLevelPractice.setTextColorz(R.color.white)
+                binding.contentLevelPractice.setTextColorz(R.color.white)
             }
         }
         setVisibleViewWhen(
@@ -148,14 +148,14 @@ class ConfirmPracticeInformationFragment(private val listDataBluetooth: List<Blu
 
     private fun transformToHighScore(data: List<DataBluetooth?>): MutableList<PowerChartDescriptionAdapter.ItemDescriptionChartPower> {
         val items = mutableListOf<PowerChartDescriptionAdapter.ItemDescriptionChartPower>()
-        BlePositionUtils.getListBle(true).forEach { blePos ->
-            items.add(addPos(0f, blePos.title, blePos.key))
+        BodyPosition.values().forEach { blePos ->
+            items.add(addPos(0f, getString(blePos.titleRes), blePos.key))
         }
 
         for (i in items.indices) {
             data.forEach { dataBluetooth ->
                 if (dataBluetooth?.position == items[i].key) {
-                    if (items[i].score < dataBluetooth?.force ?: 0f) {
+                    if (items[i].score < (dataBluetooth?.force ?: 0f)) {
                         items[i] =
                             addPos(dataBluetooth?.force ?: 0f, items[i].title, items[i].key)
                     }

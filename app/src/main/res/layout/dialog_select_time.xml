@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/space_8"
+            android:text="Chọn thời gian luyện tập"
+            android:textAppearance="@style/FontAnTon" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/space_4"
+            android:src="@drawable/ic_cancel" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvSelectTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_select_time" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSkip"
+        android:layout_width="match_parent"
+        android:padding="@dimen/space_8"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/space_4"
+        android:layout_height="wrap_content"
+        android:background="@color/clr_tab"
+        android:text="@string/skip"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -69,22 +69,28 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
     }
 
     private fun checkBleConnect() {
-        addDispose(vm.rxMachineInfo.subscribe { machineInfo ->
-            when (machineInfo.status) {
-                1 -> {
-                    transceiver.connectToMachine(machineInfo)
-                    connectedToMachine(machineInfo.machineRoom ?: MACHINE_NAME_DEFAULT)
+        addDispose(vm.rxMachineInfo.subscribe { (isSuccess, machineInfo) ->
+            if (machineInfo != null) {
+                when (machineInfo.status) {
+                    1 -> {
+                        transceiver.connectToMachine(machineInfo)
+                        connectedToMachine(machineInfo.machineRoom ?: MACHINE_NAME_DEFAULT)
+                    }
+
+                    0 -> {
+                        unConnectToMachine()
+                        EspTouchActivity.open(requireActivity())
+                    }
+
+                    else -> unConnectToMachine()
                 }
-                0 -> {
-                    unConnectToMachine()
-                    EspTouchActivity.open(requireActivity())
-                }
-                else -> unConnectToMachine()
+            } else {
+                unConnectToMachine()
             }
-        }, vm.rxForceConnect.subscribe { machineEncode ->
+        }, vm.rxForceConnect.subscribe { (message, machineEncode) ->
             YesNoButtonDialog()
                 .setTitle(getString(R.string.label_alert))
-                .setMessage(getString(R.string.warning_force_connect))
+                .setMessage(message)
                 .setDismissWhenClick(false)
                 .setTextAccept(getString(R.string.yes))
                 .setTextCancel(getString(R.string.no))
@@ -98,7 +104,7 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
                 .showDialog(parentFragmentManager)
         }, vm.isLoading.subscribe { isLoading ->
             if (isLoading) connectingToMachine(machineEncode ?: MACHINE_NAME_DEFAULT)
-        })
+        },vm.rxMessage.subscribe { toast(it) })
         handleStateTransceiver()
     }
 

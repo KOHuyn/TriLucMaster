@@ -6,6 +6,7 @@ import android.os.*
 import android.view.KeyEvent
 import com.core.BaseActivity
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.mobileplus.dummytriluc.BuildConfig
 import com.mobileplus.dummytriluc.DummyTriLucApplication
 import com.mobileplus.dummytriluc.R
@@ -14,7 +15,10 @@ import com.mobileplus.dummytriluc.data.model.NotificationObjService
 import com.mobileplus.dummytriluc.data.model.UserInfo
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.service.TriLucNotification
+import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.TransceiverControllerImpl
+import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.dialog.ConnectBleWithDeviceDialog
 import com.mobileplus.dummytriluc.ui.dialog.NoInternetDialog
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
@@ -39,6 +43,7 @@ import io.reactivex.subjects.PublishSubject
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
+import kotlinx.android.synthetic.main.activity_main.tvPingServer
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
@@ -56,8 +61,6 @@ class MainActivity : BaseActivity() {
     private var mSocket: Socket? = null
     private val gson by inject<Gson>()
     private val transceiver by lazy { ITransceiverController.getInstance() }
-
-
     override fun updateUI(savedInstanceState: Bundle?) {
         saveConfig()
         listenerBleDataResponse()
@@ -66,14 +69,15 @@ class MainActivity : BaseActivity() {
         openFragment(R.id.mainContainer, MainFragment::class.java, null, true)
         navigateDeepLink(intent?.data)
         onHandleIntentNotification(intent)
-        transceiver.onEventMachineSend { jsonObject ->
-            try {
-                val listBle = listOfNotNull(jsonObject?.let {
-                    gson.fromJsonSafe<BluetoothResponseMachine>(jsonObject)
-                }).transformToBleServer()
-                postSticky(EventOpenPopupBle(listBle))
-            } catch (e: Exception) {
-                logErr(e.toString(), e)
+        transceiver.onPingChange { ping, rssi ->
+            runOnUiThread {
+                tvPingServer.text = "$ping"
+            }
+        }
+        transceiver.onConnectionStateChange(lifecycle) { state ->
+            when (state) {
+                ConnectionState.CONNECTED -> tvPingServer.show()
+                else -> tvPingServer.hide()
             }
         }
     }
@@ -86,14 +90,6 @@ class MainActivity : BaseActivity() {
     //                                                                          |
     //--------------------------------------------------------------------------|
 
-    /**
-     * [rxCallbackDataBle]
-     * @return String JSON
-     * @author KO Huyn
-     * Gửi object bluetooth hoàn chỉnh sau khi ghép nối xong
-     */
-    val rxCallbackDataBle: PublishSubject<Pair<Boolean, List<BluetoothResponse>>> =
-        PublishSubject.create()
     /**
      * [isConnectedBle]
      * @author KO Huyn
@@ -111,45 +107,6 @@ class MainActivity : BaseActivity() {
         return false
     }
 
-    private fun List<BluetoothResponseMachine>?.transformToBleServer(): List<BluetoothResponse>? {
-        return this?.map { bleMachine ->
-            val bleDataServer = mutableListOf<DataBluetooth?>()
-            bleMachine.data.forEach { dataBleMachine ->
-                if (dataBleMachine != null) {
-                    bleDataServer.add(
-                        DataBluetooth(
-                            force = dataBleMachine.force,
-                            onTarget = dataBleMachine.onTarget,
-                            position = dataBleMachine.position,
-                            time = dataBleMachine.time
-                        )
-                    )
-                }
-            }
-            BluetoothResponse(
-                mode = bleMachine.mode,
-                userId = bleMachine.userId,
-                sessionId = bleMachine.sessionId,
-                practiceId = bleMachine.practiceId,
-                machineId = bleMachine.machineId,
-                startTime1 = bleMachine.startTime1,
-                endTime = bleMachine.endTime,
-                startTime2 = bleMachine.startTime2,
-                data = bleDataServer,
-                error = bleMachine.error
-            )
-        }
-    }
-
-    private fun handleBluetoothResponseSuccess(bluetoothResponses: List<BluetoothResponse>?) {
-        if (bluetoothResponses.isNullOrEmpty()) {
-            rxCallbackDataBle.onNext(Pair(false, emptyList()))
-        } else {
-            handleDataBleModeFreedom(bluetoothResponses)
-            rxCallbackDataBle.onNext(Pair(true, bluetoothResponses))
-        }
-    }
-
     private fun listenerBleDataResponse() {
         addDispose(mainViewModel.rxPostModeFreedomSuccess.subscribe { isSuccess ->
             if (isSuccess) {
@@ -158,39 +115,6 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    private val isCurrentFragmentInPractice: Boolean = currentFrag() is PracticeTestFragment
-
-    private fun handleDataBleModeFreedom(bluetoothResponses: List<BluetoothResponse>) {
-       val isUserSync =
-            bluetoothResponses.any { bleResponse -> bleResponse.userId == userInfo?.id }
-        val isFreeDom =
-            bluetoothResponses.any { ble -> ble.sessionId == null && (ble.mode == BluetoothResponse.MODE_FREE_FIGHT || ble.mode == BluetoothResponse.MODE_ACCORDING_LED) }
-        if (isUserSync && isFreeDom) {
-            val arr =
-                bluetoothResponses.filter { ble ->
-                    (ble.mode == BluetoothResponse.MODE_FREE_FIGHT || ble.mode == BluetoothResponse.MODE_ACCORDING_LED)
-                            && isUserSync && ble.sessionId == null && ble.userId == userInfo?.id
-                }
-            if (arr.isEmpty()) return
-            runOnUiThread {
-                ConfirmPracticeTestDialog.Builder(arr)
-                    .setTitle(getString(R.string.fight_free_led))
-                    .setCancelable(false)
-                    .setModeCourse(false)
-                    .setShowButtonPlayAgain(isCurrentFragmentInPractice)
-                    .build(supportFragmentManager)
-                    .setSubmitPracticeCallback { isSubmit ->
-                        if (currentFrag() is PracticeTestFragment) {
-                            if (isSubmit) {
-//                            onBackPressed()
-                            } else {
-                                (currentFrag() as PracticeTestFragment).startPractice()
-                            }
-                        }
-                    }
-            }
-        }
-    }
     /**
      * [rxActionConnection]
      * @author KO Huyn
@@ -354,13 +278,6 @@ class MainActivity : BaseActivity() {
     fun logout(ev: EventUnAuthen) {
         mainViewModel.logout()
     }
-
-    @Subscribe(threadMode = ThreadMode.ASYNC, sticky = true)
-    fun onPostPopup(ev: EventOpenPopupBle) {
-        handleBluetoothResponseSuccess(ev.list)
-        removeStickyEvents(ev)
-    }
-
     @Subscribe
     fun nextFragmentMain(ev: EventNextFragmentMain) {
         openFragment(

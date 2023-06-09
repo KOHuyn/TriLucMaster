@@ -1,12 +1,17 @@
 package com.mobileplus.dummytriluc.ui.main.coach.session
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.lifecycle.lifecycleScope
 import com.core.BaseFragmentZ
 import com.core.OnItemClick
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.ActionConnection
+import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
 import com.mobileplus.dummytriluc.bluetooth.request.BleSessionRequest
 import com.mobileplus.dummytriluc.data.model.ItemCoachPractice
 import com.mobileplus.dummytriluc.data.model.ItemDisciple
@@ -14,6 +19,8 @@ import com.mobileplus.dummytriluc.data.request.session.CoachSessionCreateRequest
 import com.mobileplus.dummytriluc.data.response.session.CoachSessionOldResponse
 import com.mobileplus.dummytriluc.data.response.session.DataCoachSessionCreatedResponse
 import com.mobileplus.dummytriluc.databinding.FragmentCoachSessionBinding
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.coach.session.exercise.CoachSessionExerciseFragment
@@ -41,7 +48,7 @@ import java.util.*
 /**
  * Created by KOHuyn on 4/21/2021
  */
-class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>() {
+class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObserverMachine {
     override fun getLayoutBinding(): FragmentCoachSessionBinding =
         FragmentCoachSessionBinding.inflate(layoutInflater)
 
@@ -60,7 +67,38 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>() {
     val isGuest: Boolean by argument(ARG_GUEST, false)
 
     var dataSessionDetailResponse: CoachSessionOldResponse = CoachSessionOldResponse()
+    private val transceiver by lazy { ITransceiverController.getInstance() }
 
+
+    override fun onEventMachineSendData(data: List<BluetoothResponse>) {
+        lifecycleScope.launchWhenStarted {
+            if (data.isNotEmpty()) {
+                fragResult.setRound(if (fragExercise.adapter.itemCount != 0) (data.size / fragExercise.adapter.itemCount) else 0)
+                if (statePlay != STATE_PLAY.RELOAD) {
+                    fragResult.setTimeEndHeader(System.currentTimeMillis() / 1000)
+                    statePlay = STATE_PLAY.REPLAY
+                } else {
+                    statePlay =
+                        if (prevState == STATE_PLAY.PLAY || prevState == STATE_PLAY.REPLAY) {
+                            STATE_PLAY.PAUSE
+                        } else {
+                            prevState
+                        }
+                }
+                vm.saveResultSession(data.toMutableList(), fragPractitioner.adapter)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        transceiver.registerObserver(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        transceiver.removeObserver(this)
+    }
     private fun actionLongWrite(command: String): Boolean {
         return if (activity is MainActivity) {
             (activity as MainActivity).actionWriteBle(command.plus("~"))
@@ -158,32 +196,6 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>() {
     }
 
     private fun disposableViewModel() {
-        addDispose(
-            (activity as MainActivity).rxCallbackDataBle
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val isSuccess = it.first
-                    val data = it.second
-                    if (isSuccess) {
-                        if (data.isNotEmpty()) {
-                            fragResult.setRound(if (fragExercise.adapter.itemCount != 0) (data.size / fragExercise.adapter.itemCount) else 0)
-                            if (statePlay != STATE_PLAY.RELOAD) {
-                                fragResult.setTimeEndHeader(System.currentTimeMillis() / 1000)
-                                statePlay = STATE_PLAY.REPLAY
-                            } else {
-                                statePlay =
-                                    if (prevState == STATE_PLAY.PLAY || prevState == STATE_PLAY.REPLAY) {
-                                        STATE_PLAY.PAUSE
-                                    } else {
-                                        prevState
-                                    }
-                            }
-                            vm.saveResultSession(data.toMutableList(), fragPractitioner.adapter)
-                        }
-                    } else {
-//                        toast(loadStringRes(R.string.data_not_available))
-                    }
-                })
         addDispose(vm.rxCreateSession.subscribe { response ->
             statePlay = STATE_PLAY.PAUSE
             playPractice(response)

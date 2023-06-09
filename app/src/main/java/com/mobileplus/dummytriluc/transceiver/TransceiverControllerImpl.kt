@@ -2,8 +2,9 @@ package com.mobileplus.dummytriluc.transceiver
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
-import com.google.gson.JsonObject
+import com.google.gson.Gson
 import com.mobileplus.dummytriluc.BuildConfig
+import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
 import com.mobileplus.dummytriluc.data.DataManager
 import com.mobileplus.dummytriluc.data.model.MachineInfo
 import com.mobileplus.dummytriluc.socket.ISocketController
@@ -12,8 +13,11 @@ import com.mobileplus.dummytriluc.transceiver.command.ConnectCommand
 import com.mobileplus.dummytriluc.transceiver.command.DisconnectCommand
 import com.mobileplus.dummytriluc.transceiver.command.ICommand
 import com.mobileplus.dummytriluc.transceiver.command.IPracticeCommand
+import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
+import com.mobileplus.dummytriluc.transceiver.observer.ISubjectMachine
 import com.mobileplus.dummytriluc.ui.utils.extensions.dataArray
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
+import com.utils.ext.toList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -33,13 +37,16 @@ import java.util.LinkedList
 class TransceiverControllerImpl private constructor() : ITransceiverController, KoinComponent {
 
     private val dataManager by inject<DataManager>()
+    private val gson by inject<Gson>()
 
     private lateinit var socket: ISocketController
     private val currentState = MutableStateFlow(ConnectionState.NONE)
     private val cachedCommand = LinkedList<ICommand>()
     private val transceiverEventState = PublishSubject.create<TransceiverEvent>()
-    private var onEventMachineSend: (JsonObject?) -> Unit = {}
+    private val onEventMachineSend: (List<BluetoothResponse>) -> Unit = { notifyObserver(it) }
+    private var onPingChange: (ping: Int, rssi: Int) -> Unit = { _, _ -> }
     private val compositeDisposable = CompositeDisposable()
+    private val observers = mutableListOf<IObserverMachine>()
 
     override fun startup() {
         socket = SocketControllerImpl()
@@ -58,10 +65,6 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
 
     override fun onTransceiverEventStateListener(listener: (TransceiverEvent) -> Unit) {
         transceiverEventState.subscribe(listener).addTo(compositeDisposable)
-    }
-
-    override fun onEventMachineSend(listener: (data: JsonObject?) -> Unit) {
-        this.onEventMachineSend = listener
     }
 
     override fun onConnectionStateChange(
@@ -86,6 +89,10 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
 
     override fun getMachineInfo(): MachineInfo? {
         return dataManager.machineCodeConnectLasted
+    }
+
+    override fun onPingChange(listener: (ping: Int, rssi: Int) -> Unit) {
+        this.onPingChange = listener
     }
 
     override fun disconnect() {
@@ -183,8 +190,8 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({ response ->
                                         logErr(response.toString())
-                                        val json = response.dataArray().firstOrNull()?.asJsonObject
-                                        onEventMachineSend(json)
+                                        val listMachineResponse = gson.toList<BluetoothResponse>(response.dataArray())
+                                        onEventMachineSend(listMachineResponse)
                                     }, {
                                         logErr(it.toString(), it)
                                     }).let { compositeDisposable.add(it) }
@@ -196,7 +203,14 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                 }
             }
             TransceiverEvent.CONNECT_MACHINE -> {
-
+                if (!data.isNullOrEmpty()) {
+                    val json = JSONObject(data)
+                    val ping = json.getOrNull<Int>("PING")
+                    val rssi = json.getOrNull<Int>("RSSI")
+                    if (ping!= null && rssi != null) {
+                        onPingChange(ping, rssi)
+                    }
+                }
             }
         }
     }
@@ -209,7 +223,7 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
 
     companion object {
         private var _instance: TransceiverControllerImpl? = null
-        fun getInstance(): ITransceiverController {
+        fun getInstance(): TransceiverControllerImpl {
             if (_instance == null) {
                 synchronized(this) {
                     if (_instance == null) {
@@ -218,6 +232,23 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                 }
             }
             return _instance!!
+        }
+    }
+
+    override fun registerObserver(observer: IObserverMachine) {
+        observers.add(observer)
+    }
+
+    override fun removeObserver(observer: IObserverMachine) {
+        val index = observers.indexOf(observer)
+        if (index >= 0) {
+            observers.removeAt(index)
+        }
+    }
+
+    private fun notifyObserver(data: List<BluetoothResponse>) {
+        observers.forEach {
+            it.onEventMachineSendData(data)
         }
     }
 }

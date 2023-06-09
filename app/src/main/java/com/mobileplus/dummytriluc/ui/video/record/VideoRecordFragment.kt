@@ -18,6 +18,8 @@ import com.mobileplus.dummytriluc.data.request.SubmitChallengeRequest
 import com.mobileplus.dummytriluc.data.request.SubmitCoachDraftRequest
 import com.mobileplus.dummytriluc.data.request.SubmitPracticeResultRequest
 import com.mobileplus.dummytriluc.data.response.DataSendDraftResponse
+import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.challenge.detail.ChallengeDetailFragment
 import com.mobileplus.dummytriluc.ui.main.coach.save_draft.CoachSaveDraftFragment
@@ -47,7 +49,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by KO Huyn on 12/29/2020.
  */
-class VideoRecordFragment : BaseFragment() {
+class VideoRecordFragment : BaseFragment(),IObserverMachine {
     override fun getLayoutId(): Int = R.layout.fragment_record_video
     private val videoRecordViewModel by viewModel<VideoRecordViewModel>()
 
@@ -91,6 +93,7 @@ class VideoRecordFragment : BaseFragment() {
     private val rxRequestPostFragment: PublishSubject<Pair<Boolean, Boolean>> =
         PublishSubject.create()
     private var timerRecordDisposable: Disposable? = null
+    private val transceiver by lazy { ITransceiverController.getInstance() }
 
     companion object {
         private const val KEY_ID_LESSON_ARG_RECORD = "KEY_ID_LESSON_ARG_RECORD"
@@ -155,7 +158,7 @@ class VideoRecordFragment : BaseFragment() {
     }
 
     private fun checkConnectBle() {
-        if (!(activity as MainActivity).isConnectedBle) {
+        if (!transceiver.isConnected()) {
             (activity as MainActivity).showDialogRequestConnect()
         }
     }
@@ -184,19 +187,6 @@ class VideoRecordFragment : BaseFragment() {
                 }
             }
         })
-        addDispose(
-            (activity as MainActivity).rxCallbackDataBle.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val isSuccess = it.first
-                    val data = it.second
-                    if (isSuccess) {
-                        if (data.isNotEmpty()) {
-                            fillDataFromBle(data.first())
-                        }
-                    } else {
-//                        toast(loadStringRes(R.string.data_not_available))
-                    }
-                })
     }
 
     private fun fillDataFromBle(dataBle: BluetoothResponse) {
@@ -503,9 +493,21 @@ class VideoRecordFragment : BaseFragment() {
         register(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        transceiver.registerObserver(this)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         unregister(this)
+        transceiver.removeObserver(this)
         timerRecordDisposable?.dispose()
+    }
+
+    override fun onEventMachineSendData(data: List<BluetoothResponse>) {
+        if (data.isNotEmpty()) {
+            fillDataFromBle(data.first())
+        }
     }
 }

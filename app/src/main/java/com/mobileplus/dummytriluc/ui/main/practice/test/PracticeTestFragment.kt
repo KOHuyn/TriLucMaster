@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.lifecycleScope
 import com.core.BaseFragment
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -20,6 +21,8 @@ import com.mobileplus.dummytriluc.transceiver.command.ICommand
 import com.mobileplus.dummytriluc.transceiver.command.LessonCommand
 import com.mobileplus.dummytriluc.transceiver.command.PracticeFreePunchCommand
 import com.mobileplus.dummytriluc.transceiver.command.PracticeLedPunchCommand
+import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
+import com.mobileplus.dummytriluc.ui.dialog.SelectTimePracticeDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.practice.dialog.ConfirmPracticeTestDialog
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
@@ -29,19 +32,27 @@ import com.mobileplus.dummytriluc.ui.utils.extensions.fillGradientPrimary
 import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.utils.applyClickShrink
-import com.utils.ext.*
+import com.utils.ext.argument
+import com.utils.ext.clickWithDebounce
+import com.utils.ext.hide
+import com.utils.ext.postNormal
+import com.utils.ext.setVisibility
+import com.utils.ext.show
+import com.utils.ext.toList
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.fragment_practice_test.*
+import kotlinx.android.synthetic.main.fragment_practice_test.btnActionPracticeTest
+import kotlinx.android.synthetic.main.fragment_practice_test.btnBackPracticeTest
+import kotlinx.android.synthetic.main.fragment_practice_test.txtTimeCountPracticeTest
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
-class PracticeTestFragment : BaseFragment() {
+class PracticeTestFragment : BaseFragment(), IObserverMachine {
     override fun getLayoutId(): Int = R.layout.fragment_practice_test
     private val testViewModel by viewModel<PracticeTestViewModel>()
 
@@ -51,7 +62,8 @@ class PracticeTestFragment : BaseFragment() {
         return true
     }
 
-    private lateinit var countDownStart: CountDownTimer
+    private var countDownStart: CountDownTimer? = null
+    private var countDownEnd: CountDownTimer? = null
     private val rxRequestPostFragment: PublishSubject<Boolean> = PublishSubject.create()
     private var dataRequest: List<BluetoothResponse> = emptyList()
     private var dataDetail: DetailPracticeResponse? = null
@@ -64,6 +76,7 @@ class PracticeTestFragment : BaseFragment() {
         set(value) {
             field = value
             btnBackPracticeTest.setVisibility(value)
+            btnActionPracticeTest.setVisibility(true)
             if (field) {
                 btnActionPracticeTest.text = loadStringRes(R.string.retry)
             } else {
@@ -143,11 +156,15 @@ class PracticeTestFragment : BaseFragment() {
         btnActionPracticeTest.applyClickShrink()
         btnActionPracticeTest.fillGradientPrimary()
         btnActionPracticeTest.clickWithDebounce {
-            if (isRetry) {
-                startPractice()
+            if (transceiver.isConnected()) {
+                if (isRetry) {
+                    startPractice()
+                } else {
+                    commandRequestBle(FinishCommand)
+                    endPractice()
+                }
             } else {
-                commandRequestBle(FinishCommand)
-                endPractice()
+                (activity as? MainActivity)?.showDialogRequestConnect()
             }
         }
 
@@ -159,10 +176,34 @@ class PracticeTestFragment : BaseFragment() {
     private fun endPractice() {
         countTimesDisposable?.dispose()
         countTimesDisposable = null
+        countDownEnd?.cancel()
+        countDownEnd = null
         isRetry = true
     }
 
-    fun startPractice() {
+    private fun startPractice() {
+        if (transceiver.isConnected()) {
+            SelectTimePracticeDialog()
+                .onChooseListener { timeMs ->
+                    activePractice()
+                    countDownEnd = object : CountDownTimer(((timeMs + 3) * 1000).toLong(), 1000) {
+                        override fun onTick(millisUntilFinished: Long) {}
+
+                        override fun onFinish() {
+                            commandRequestBle(FinishCommand)
+                            endPractice()
+                        }
+                    }.start()
+                }.onDismiss {
+                    endPractice()
+                }
+                .show(parentFragmentManager, "SelectTimePracticeDialog")
+        } else {
+            (activity as? MainActivity)?.showDialogRequestConnect()
+        }
+    }
+
+    fun activePractice() {
         isRetry = false
         try {
             countDownStart = object : CountDownTimer(3200, 1000) {
@@ -191,7 +232,7 @@ class PracticeTestFragment : BaseFragment() {
                         }.let { countTimesDisposable = it }
                 }
             }
-            countDownStart.start()
+            countDownStart?.start()
         } catch (e: Exception) {
             e.logErr()
         }
@@ -342,29 +383,46 @@ class PracticeTestFragment : BaseFragment() {
                     }
                 }
         })
-        addDispose(
-            (requireActivity() as MainActivity).rxCallbackDataBle.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val isSuccess = it.first
-                    val data = it.second
-                    if (isSuccess) {
-                        if (data.isNotEmpty()) {
-                            dataRequest = data
-                            rxRequestPostFragment.onNext(true)
-                            if (!isRetry) {
-                                endPractice()
-                            }
-                        }
-                    } else {
-                        toast(getString(R.string.please_try_again))
-                    }
-//            commandRequestBle(CommandBle.END)
-                })
     }
 
     override fun onDestroy() {
         countTimesDisposable?.dispose()
-        if (this::countDownStart.isInitialized) countDownStart.cancel()
+        countDownStart?.cancel()
+        countDownStart = null
+        countDownEnd?.cancel()
+        countDownEnd = null
         super.onDestroy()
+    }
+
+    override fun onEventMachineSendData(data: List<BluetoothResponse>) {
+        lifecycleScope.launchWhenStarted {
+            val title = when (typeRecord) {
+                TYPE_FREE_FIGHT -> R.string.free_fight
+                TYPE_ACCORDING_TO_LED -> R.string.according_to_led
+                TYPE_COURSE -> R.string.according_to_course
+                else -> null
+            }?.let { getString(it) } ?: "---"
+            ConfirmPracticeTestDialog.Builder(data)
+                .setTitle(title)
+                .setCancelable(false)
+                .setModeCourse(typeRecord == TYPE_COURSE)
+                .setShowButtonPlayAgain(true)
+                .build(parentFragmentManager)
+                .setSubmitPracticeCallback { isSubmit ->
+                    if (!isSubmit) {
+                        startPractice()
+                    }
+                }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        transceiver.registerObserver(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        transceiver.removeObserver(this)
     }
 }
