@@ -276,8 +276,12 @@ class AppApiHelper : ApiHelper, KoinComponent {
             .getObjectSingle(JsonObject::class.java)
     }
 
-    override fun postSubmitMultiPracticeResult(request: String): Single<JsonObject> {
+    override fun postSubmitMultiPracticeResult(
+        sessionId: String,
+        request: String
+    ): Single<JsonObject> {
         return Rx2AndroidNetworking.post(URL_POST_SUBMIT_MULTI_PRACTICE_RESULT)
+            .addBodyParameter(ApiConstants.SESSION_ID, sessionId)
             .addBodyParameter(DATA, request)
             .build()
             .getObjectSingle(JsonObject::class.java)

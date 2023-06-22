@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.BaseFragment
@@ -39,6 +40,7 @@ import com.mobileplus.dummytriluc.ui.main.challenge.detail.adapter.PositionHitAd
 import com.mobileplus.dummytriluc.ui.main.challenge.detail.adapter.RankingChallengeAdapter
 import com.mobileplus.dummytriluc.ui.main.power.adapter.ProgressPowerAdapter
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
+import com.mobileplus.dummytriluc.ui.utils.CacheUtils
 import com.mobileplus.dummytriluc.ui.utils.DateTimeUtil
 import com.mobileplus.dummytriluc.ui.utils.ExoUtils
 import com.mobileplus.dummytriluc.ui.utils.MarginItemDecoration
@@ -356,15 +358,23 @@ class ChallengeDetailFragment : BaseFragment() {
 
     private fun handleClick() {
         btnShareChallenge.clickWithDebounce {
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, responseDetail?.description)
-            shareIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                "Hãy cùng thách đấu với tôi:\n ${responseDetail?.linkShare}"
-            )
-            startActivity(Intent.createChooser(shareIntent, "Send to:"))
+//            val shareIntent = Intent()
+//            shareIntent.action = Intent.ACTION_SEND
+//            shareIntent.type = "text/plain"
+//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, responseDetail?.description)
+//            shareIntent.putExtra(
+//                Intent.EXTRA_TEXT,
+//                "Hãy cùng thách đấu với tôi:\n ${responseDetail?.linkShare}"
+//            )
+//            startActivity(Intent.createChooser(shareIntent, "Send to:"))
+            val bitmap = layoutShareChallenge.takeScreenShot()
+            val uri = CacheUtils.saveToCacheAndGetUri(bitmap,"imageSharing")
+            shareImage(uri)
+        }
+        shareAchievement.clickWithDebounce {
+            val bitmap = layoutShareChallenge.takeScreenShot()
+            val uri = CacheUtils.saveToCacheAndGetUri(bitmap,"imageSharing")
+            shareImage(uri)
         }
         swipeRefreshChallengeDetail.setOnRefreshListener {
             challengeDetailViewModel.getDetailChallenge(idDetailChallenge)
@@ -408,6 +418,16 @@ class ChallengeDetailFragment : BaseFragment() {
                 cbViewMoreContentChallenge.text = loadStringRes(R.string.collapse)
             }
         }
+    }
+
+    private fun shareImage(uri: Uri) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, uri)
+            type = "image/*"
+        }
+        val shareIntent = Intent.createChooser(intent, "Share")
+        startActivity(shareIntent)
     }
 
     private fun nextFragmentRecord() {

@@ -43,7 +43,7 @@ interface ApiHelper {
      * Practice
      */
     fun postSubmitPracticeResult(request: SubmitPracticeResultRequest): Single<JsonObject>
-    fun postSubmitMultiPracticeResult(request: String): Single<JsonObject>
+    fun postSubmitMultiPracticeResult(sessionId: String, request: String): Single<JsonObject>
     fun postSubmitModeFreedomPractice(request: SubmitModeFreedomPractice): Single<JsonObject>
     fun getListPractice(): Single<JsonObject>
     fun getListPracticeMore(

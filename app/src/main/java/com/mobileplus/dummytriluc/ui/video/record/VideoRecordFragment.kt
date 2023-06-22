@@ -20,7 +20,7 @@ import com.mobileplus.dummytriluc.data.response.DataSendDraftResponse
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
 import com.mobileplus.dummytriluc.transceiver.command.FinishCommand
 import com.mobileplus.dummytriluc.transceiver.command.ICommand
-import com.mobileplus.dummytriluc.transceiver.command.IRecordCommand
+import com.mobileplus.dummytriluc.transceiver.command.IPracticeCommand
 import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
 import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.main.MainActivity
@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit
  */
 class VideoRecordFragment : BaseFragment(), IObserverMachine {
     companion object {
-        fun openFragment(command: IRecordCommand) {
+        fun openFragment(command: IPracticeCommand) {
             val bundle = Bundle().apply {
                 putParcelable(ARG_COMMAND, command)
             }
@@ -83,7 +83,7 @@ class VideoRecordFragment : BaseFragment(), IObserverMachine {
     private var timerRecordDisposable: Disposable? = null
     private val transceiver by lazy { ITransceiverController.getInstance() }
 
-    private val command by argument<IRecordCommand>(ARG_COMMAND)
+    private val command by argument<IPracticeCommand>(ARG_COMMAND)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -93,7 +93,7 @@ class VideoRecordFragment : BaseFragment(), IObserverMachine {
     override fun updateUI(savedInstanceState: Bundle?) {
         disposableViewModel()
         checkConnectBle()
-        showWarningExerciseRecord?.setVisibility(command.getCommandMode() == CommandMode.LESSON)
+        showWarningExerciseRecord?.setVisibility(command.getCommandMode() == CommandMode.COACH)
         checkPermission()
         configCameraRecord()
         controlClick()
@@ -142,12 +142,14 @@ class VideoRecordFragment : BaseFragment(), IObserverMachine {
                 practiceRequest.apply {
                     data =
                         if (dataBle.data.isEmpty()) null else gson.toJson(dataBle.data)
+                    dataArr = listOf(dataBle)
                     dummyId = dataBle.machineId
-                    practiceId = command.getIdType()
+                    practiceId = command.getIdPractice().toInt()
                     mode = dataBle.mode
                     startTime1 = dataBle.startTime1
                     startTime2 = dataBle.startTime2
                     videoPath = null
+                    sessionId = dataBle.sessionId?.toString()
                 }
             }
             CommandMode.COACH -> {
@@ -164,7 +166,7 @@ class VideoRecordFragment : BaseFragment(), IObserverMachine {
                     data =
                         if (dataBle.data.isEmpty()) null else gson.toJson(dataBle.data)
                     dummyId = dataBle.machineId
-                    challengeId = command.getIdType()
+                    challengeId = command.getIdPractice().toInt()
                     mode = dataBle.mode
                     startTime1 = dataBle.startTime1
                     startTime2 = dataBle.startTime2
@@ -245,7 +247,7 @@ class VideoRecordFragment : BaseFragment(), IObserverMachine {
         executeCommand(command)
         when (command.getCommandMode()) {
             CommandMode.CHALLENGE -> {
-                vm.startChallenge(command.getIdType())
+                vm.startChallenge(command.getIdPractice().toInt())
             }
         }
     }

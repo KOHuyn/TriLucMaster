@@ -96,4 +96,5 @@ object ApiConstants {
     const val DATA_JSON = "data_json"
     const val UUID = "uuid"
     const val MACHINE_ID = "machine_id"
+    const val SESSION_ID = "sessionId"
 }

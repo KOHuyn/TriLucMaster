@@ -2,6 +2,8 @@ package com.mobileplus.dummytriluc.data.request
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
+import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 
 data class SubmitPracticeResultRequest(
     @Expose
@@ -31,4 +33,11 @@ data class SubmitPracticeResultRequest(
     @Expose
     @SerializedName("level_value")
     var levelValue: Int? = null,
+    @Expose
+    @SerializedName("sessionId")
+    var sessionId: String? = null,
+    @Expose
+    @SerializedName("dataArr")
+    //ignore when push server
+    var dataArr: List<BluetoothResponse>? = emptyList()
 )

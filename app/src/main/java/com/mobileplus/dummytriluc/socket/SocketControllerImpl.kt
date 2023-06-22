@@ -6,6 +6,7 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter.Listener
 import io.socket.engineio.client.transports.WebSocket
+import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URISyntaxException
 
@@ -85,7 +86,11 @@ class SocketControllerImpl : ISocketController {
     override fun emit(event: String, vararg args: Pair<String, Any>) {
         val data = JSONObject()
         args.forEach { (key, value) ->
-            data.put(key, value)
+            if (value is Collection<*>) {
+                data.put(key, JSONArray(value))
+            } else {
+                data.put(key, value)
+            }
         }
         socket?.emit(event, data)
         Log.i(event,"__________SOCKET-REQUEST__________")

@@ -99,7 +99,7 @@ class HomeViewModel(
     }
 
     private fun pushCacheDataServer(data: String): Disposable {
-        return dataManager.postSubmitMultiPracticeResult(data)
+        return dataManager.postSubmitMultiPracticeResult("",data)
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
                 logErr("$response")

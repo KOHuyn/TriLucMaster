@@ -3,6 +3,7 @@ package com.mobileplus.dummytriluc.ui.video.result
 import com.core.BaseViewModel
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.R
+import com.mobileplus.dummytriluc.bluetooth.request.TransferBluetoothData
 import com.mobileplus.dummytriluc.data.DataManager
 import com.mobileplus.dummytriluc.data.model.DummyResult
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
@@ -14,6 +15,7 @@ import com.mobileplus.dummytriluc.data.response.DetailDraftResponse
 import com.mobileplus.dummytriluc.ui.utils.extensions.*
 import com.utils.SchedulerProvider
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import java.io.File
 
@@ -28,9 +30,14 @@ class VideoResultViewModel(
     val rxDraftResponse: PublishSubject<DataSendDraftResponse> = PublishSubject.create()
     var fullPath: String? = null
 
-    fun submitPracticeResult(video: File, request: SubmitPracticeResultRequest): Disposable {
+    fun submitPracticeResult(video: File, request: SubmitPracticeResultRequest) {
+        val data =
+            TransferBluetoothData.transferDataArrayToDataString(
+                request.dataArr ?: emptyList(),
+                null
+            )?: return
         isLoading.onNext(true)
-        return dataManager.run {
+        dataManager.run {
             if (request.videoPath.isNullOrBlank()) {
                 uploadVideo(video)
                     .flatMap { responseVideo ->
@@ -43,9 +50,9 @@ class VideoResultViewModel(
                             logErr("videoLink:" + request.videoPath)
                         }
                         logErr("jsonData:${gson.toJson(request)}")
-                        postSubmitPracticeResult(request)
+                        postSubmitMultiPracticeResult(request.sessionId ?: "", data)
                     }
-            } else postSubmitPracticeResult(request)
+            } else postSubmitMultiPracticeResult(request.sessionId ?: "", data)
         }
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
@@ -64,7 +71,7 @@ class VideoResultViewModel(
                             videoThumb = null
                             dataVideo = request.data
                         }
-                        val rxId = response.getAsJsonObject(ApiConstants.DATA)
+                        val rxId = response.dataObject()
                             .get(ApiConstants.RESULT_ID).asInt
                         rxPushIdPractice.onNext(Pair(rxId, dummyResult))
                     } catch (e: Exception) {
@@ -78,7 +85,7 @@ class VideoResultViewModel(
                 isLoading.onNext(false)
                 it.logErr()
                 rxMessage.onNext(it.getErrorMsg())
-            })
+            }).addTo(disposable)
     }
 
     fun getDetailDraft(id: Int): Disposable {

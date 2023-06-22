@@ -98,8 +98,8 @@ class AppDataManager constructor(
     override fun postSubmitPracticeResult(request: SubmitPracticeResultRequest): Single<JsonObject> =
         apiHelper.postSubmitPracticeResult(request)
 
-    override fun postSubmitMultiPracticeResult(request: String): Single<JsonObject> =
-        apiHelper.postSubmitMultiPracticeResult(request)
+    override fun postSubmitMultiPracticeResult(sessionId: String,request: String): Single<JsonObject> =
+        apiHelper.postSubmitMultiPracticeResult(sessionId, request)
 
     override fun postSubmitModeFreedomPractice(request: SubmitModeFreedomPractice): Single<JsonObject> =
         apiHelper.postSubmitModeFreedomPractice(request)

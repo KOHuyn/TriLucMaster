@@ -17,10 +17,10 @@ data class MachineChallengeCommand(
     val minPower: Int? = 0,
     val randomDelayTime: Int? = 0,
     val challengeType: Int? = null
-) : IRecordCommand {
+) : IPracticeCommand {
 
-    override fun getIdType(): Int {
-        return challengeId
+    override fun getIdPractice(): Long {
+        return challengeId.toLong()
     }
 
     override fun params(): HashMap<String, Any?> {

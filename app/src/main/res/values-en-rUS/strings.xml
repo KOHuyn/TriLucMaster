@@ -566,4 +566,6 @@
     <string name="update_sound_failed">Update sound failed</string>
     <string name="alert_message_update_firmware">Are you sure you want to update the firmware?</string>
     <string name="alert_message_firmware_up_to_date">The firmware version is currently the latest.</string>
+    <string name="share_achievements">Share achievements</string>
+    <string name="round">Round</string>
 </resources>

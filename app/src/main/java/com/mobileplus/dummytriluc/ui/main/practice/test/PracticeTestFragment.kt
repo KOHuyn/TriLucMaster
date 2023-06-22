@@ -9,19 +9,15 @@ import androidx.lifecycle.lifecycleScope
 import com.core.BaseFragmentZ
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
-import com.mobileplus.dummytriluc.data.response.PracticeAvgResponse
 import com.mobileplus.dummytriluc.databinding.FragmentPracticeTestBinding
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
 import com.mobileplus.dummytriluc.transceiver.command.FinishCommand
 import com.mobileplus.dummytriluc.transceiver.command.ICommand
-import com.mobileplus.dummytriluc.transceiver.command.IMachineCommand
-import com.mobileplus.dummytriluc.transceiver.command.IPracticeCommand
 import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
 import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.dialog.SelectTimePracticeDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.practice.dialog.ConfirmPracticeTestDialog
-import com.mobileplus.dummytriluc.ui.utils.AppConstants
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
 import com.mobileplus.dummytriluc.ui.utils.extensions.fillGradientPrimary
 import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
@@ -80,10 +76,7 @@ class PracticeTestFragment : BaseFragmentZ<FragmentPracticeTestBinding>(), IObse
         }
 
 
-    private val idPractice: Int by argument(ARG_PRACTICE_ID, AppConstants.INTEGER_DEFAULT)
-    private val commandExecute by argument<IMachineCommand>(ARG_COMMAND)
-
-    private var avgResponse: PracticeAvgResponse? = null
+    private val commandExecute by argument<ICommand>(ARG_COMMAND)
 
     fun isDoingPractice(): Boolean = actionMode == ActionMode.END
 
@@ -98,12 +91,9 @@ class PracticeTestFragment : BaseFragmentZ<FragmentPracticeTestBinding>(), IObse
     }
 
     companion object {
-        private const val ARG_PRACTICE_ID = "ARG_PRACTICE_ID"
-
-        fun openFragment(command: IPracticeCommand) {
+        fun openFragment(command: ICommand) {
             val bundle = bundleOf(
                 ARG_COMMAND to command,
-                ARG_PRACTICE_ID to command.getIdPractice()
             )
             postNormal(
                 EventNextFragmentMain(PracticeTestFragment::class.java, bundle, true)
@@ -115,14 +105,9 @@ class PracticeTestFragment : BaseFragmentZ<FragmentPracticeTestBinding>(), IObse
 
     override fun updateUI(savedInstanceState: Bundle?) {
         disposableSubscribe()
-        getAvg()
         handleClick()
+        startPractice()
     }
-
-    private fun getAvg() {
-        testViewModel.getAvgPractice(idPractice)
-    }
-
     private fun handleClick() {
         binding.btnActionPracticeTest.applyClickShrink()
         binding.btnActionPracticeTest.fillGradientPrimary()
@@ -249,11 +234,6 @@ class PracticeTestFragment : BaseFragmentZ<FragmentPracticeTestBinding>(), IObse
     }
 
     private fun disposableSubscribe() {
-        addDispose(testViewModel.rxAvgResponse.subscribe {
-            val (isSuccess, avg) = it
-            avgResponse = avg
-            startPractice()
-        })
         addDispose(
             testViewModel.isLoading.observeOn(AndroidSchedulers.mainThread())
                 .subscribe { if (it) showDialog() else hideDialog() })

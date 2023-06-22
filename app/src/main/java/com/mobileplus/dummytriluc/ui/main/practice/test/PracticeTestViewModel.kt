@@ -78,7 +78,7 @@ class PracticeTestViewModel(
             isSuccessSubmit.onNext(Pair(false, null))
             return
         }
-        dataManager.postSubmitMultiPracticeResult(dataTransform)
+        dataManager.postSubmitMultiPracticeResult("",dataTransform)
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
                 logErr(response.toString())

@@ -11,13 +11,19 @@ import kotlinx.android.synthetic.main.item_level_practice.view.*
 
 class LevelPracticeAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private var itemsTemp: MutableList<LevelPractice> = mutableListOf()
+    private var itemsTemp: MutableList<Int> = mutableListOf()
 
-    var items = mutableListOf<LevelPractice>()
+    var items = mutableListOf<Int>()
         set(value) {
             field = value
+            value.firstOrNull()?.let {
+                roundSelected = it
+                itemsTemp = mutableListOf(it)
+            }
             isShowAllItems = false
         }
+
+    private var roundSelected: Int = -1
 
     private var isShowAllItems = false
         set(value) {
@@ -42,19 +48,19 @@ class LevelPracticeAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             }
         }
 
-    fun getLevelCurrent(): LevelPractice? =
+    fun getLevelCurrent(): Int? =
         if (items.isEmpty()) null else {
             if (itemsTemp.size == 1) {
                 itemsTemp[0]
             } else {
-                itemsTemp.filter { it.isClicked }[0]
+                roundSelected
             }
         }
 
     private var lastPosShowItems = 0
 
     private fun clickLevel(position: Int) {
-        itemsTemp.map { it.isClicked = it.value == itemsTemp[position].value }
+        roundSelected = itemsTemp[position]
         notifyDataSetChanged()
     }
 
@@ -63,13 +69,14 @@ class LevelPracticeAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         with(holder.itemView) {
-            if (itemsTemp[position].isClicked) {
+            if (itemsTemp[position] == roundSelected) {
                 txtNameLevelPractice.setTextColorz(R.color.clr_primary)
             } else {
                 txtNameLevelPractice.setTextColorz(R.color.clr_tab)
             }
             viewLevel.setVisibility(position != 0)
-            txtNameLevelPractice.text = itemsTemp[position].level
+            val round = "${itemsTemp[position]} ${holder.itemView.context.getString(R.string.round).toLowerCase()}"
+            txtNameLevelPractice.text = round
             clickWithDebounce {
                 clickLevel(position)
                 lastPosShowItems = position

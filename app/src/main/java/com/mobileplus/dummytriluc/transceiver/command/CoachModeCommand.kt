@@ -8,9 +8,10 @@ import kotlinx.android.parcel.Parcelize
  * Created by KO Huyn on 23/05/2023.
  */
 @Parcelize
-object CoachModeCommand : IRecordCommand {
-    override fun getIdType(): Int {
-        return AppConstants.INTEGER_DEFAULT
+object CoachModeCommand : IPracticeCommand {
+
+    override fun getIdPractice(): Long {
+        return AppConstants.INTEGER_DEFAULT.toLong()
     }
 
     override fun params(): HashMap<String, Any?> {

@@ -82,7 +82,7 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
             if (machineInfo != null) {
                 when (machineInfo.status) {
                     1 -> {
-                        transceiver.connectToMachine(machineInfo.copy(updateSound = true, statusFirmware = true))
+                        transceiver.connectToMachine(machineInfo)
                         connectedToMachine(machineInfo.machineRoom ?: MACHINE_NAME_DEFAULT)
                     }
 

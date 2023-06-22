@@ -8,13 +8,13 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.WindowManager
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.core.BaseFragmentZ
 import com.google.android.exoplayer2.util.Util
 import com.google.gson.Gson
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mobileplus.dummytriluc.R
-import com.mobileplus.dummytriluc.bluetooth.ActionConnection
 import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 import com.mobileplus.dummytriluc.data.model.ChatType
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
@@ -59,10 +59,10 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
 
     private val practiceDetailViewModel by viewModel<PracticeDetailViewModel>()
     private var dataDetailPracticeResponse: DetailPracticeResponse? = null
-    private var choiceLevel: LevelPractice? = null
+    private var roundNumber: Int = 1
     private val gson by inject<Gson>()
     private var isEmptyPractices = false
-    private val levelAdapter by lazy { LevelPracticeAdapter() }
+    private val roundNumberAdapter by lazy { LevelPracticeAdapter() }
     private val mainTopFragment by lazy { PracticeDetailMainTopFragment() }
     private val mainBottomFragment by lazy { PracticeDetailMainBottomFragment() }
     private val informationTopFragment by lazy { PracticeDetailInfoTopFragment() }
@@ -143,7 +143,12 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
 
     private fun setupView() {
         binding.avatarUserPractice.show((activity as MainActivity).userInfo?.avatarPath)
-        setUpRcv(binding.rcvLevelPractice, levelAdapter)
+        roundNumberAdapter.items = mutableListOf(1, 2, 3, 4, 5)
+        setUpRcv(binding.rcvLevelPractice, roundNumberAdapter)
+        binding.rcvLevelPractice.isGone = listOf(
+            ApiConstants.ID_MODE_LED,
+            ApiConstants.ID_MODE_FREE_PUNCH
+        ).contains(idLessonPractice)
     }
 
     private fun handleClick() {
@@ -164,7 +169,7 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
             }
         }
         binding.btnStartPracticeMain.setOnClickListener {
-            choiceLevel = levelAdapter.getLevelCurrent()
+            roundNumber = roundNumberAdapter.getLevelCurrent() ?: 1
             nextFragmentTestPractice(dataDetailPracticeResponse)
         }
         binding.btnRecordVideoPractice.clickWithDebounce {
@@ -189,8 +194,24 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
 
                 else -> {
                     if (data != null) {
-                        toast(loadStringRes(R.string.feature_developing))
-//                        PracticeTestFragment.openFragmentMode4(data, choiceLevel, gson)
+                        val level = dataDetailPracticeResponse
+                            ?.levelPractice
+                            ?.firstOrNull()
+                            ?.let { it.level to it.value }
+                            ?.let { (level, value) ->
+                                if (level == null || value == null) null
+                                else level to value
+                            }
+                        val command = MachineLessonCommand(
+                            lessonId = listOf(dataDetailPracticeResponse?.id ?: -1),
+                            round = roundNumber,
+                            courseId = null,
+                            isPlayWithVideo = false,
+                            level = level,
+                            avgHit = 20,
+                            avgPower = 50
+                        )
+                        PracticeTestFragment.openFragment(command)
                     } else {
                         toast(loadStringRes(R.string.feature_not_available))
                     }
@@ -242,9 +263,6 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
             questionBottomFragment.adapter.changeStatusChat(idChat, status)
         })
         addDispose(viewModel.rxDetailResponse.subscribe { response ->
-            response.levelPractice?.let { levelAdapter.items = it }
-            binding.rcvLevelPractice.setVisibility(response.levelPractice?.isNotEmpty() == true)
-
             binding.btnSharePractice.setVisibility(response.linkShare != null)
             dataDetailPracticeResponse = response
             //mainTop
@@ -355,12 +373,22 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
             }
         }
         if (dataDetailPracticeResponse != null) {
+            val level = dataDetailPracticeResponse
+                ?.levelPractice
+                ?.firstOrNull()
+                ?.let { it.level to it.value }
+                ?.let { (level, value) ->
+                    if (level == null || value == null) null
+                    else level to value
+                }
             val command = MachineLessonCommand(
-                lessonId = dataDetailPracticeResponse?.id ?: -1,
-                positionData = positionArr,
-                positionDelayData = delayPositionArr,
+                lessonId = listOf(dataDetailPracticeResponse?.id ?: -1),
+                round = 1,
+                isPlayWithVideo = true,
+                level = level,
                 avgHit = 20,
-                avgPower = 50
+                avgPower = 50,
+                courseId = null
             )
             VideoRecordFragment.openFragment(command)
         } else {

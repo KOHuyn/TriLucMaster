@@ -42,6 +42,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 fun ImageView.showFitXY(url: String?) {
     GlideApp.with(DummyTriLucApplication.getInstance())
         .load(url)
@@ -461,4 +462,11 @@ fun logErrFull(tag: String, msg: String) {
             LogUtil.error(msg.substring(i, i + 4000))
         }
     }
+}
+fun View.takeScreenShot(): Bitmap {
+    val view = this
+    val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    view.draw(canvas)
+    return bitmap
 }
