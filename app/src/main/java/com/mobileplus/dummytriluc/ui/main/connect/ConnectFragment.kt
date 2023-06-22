@@ -82,7 +82,7 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
             if (machineInfo != null) {
                 when (machineInfo.status) {
                     1 -> {
-                        transceiver.connectToMachine(machineInfo)
+                        transceiver.connectToMachine(machineInfo.copy(updateSound = true, statusFirmware = true))
                         connectedToMachine(machineInfo.machineRoom ?: MACHINE_NAME_DEFAULT)
                     }
 
@@ -283,7 +283,7 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
         }
         binding.btnUpdateFirmware.clickWithDebounce {
             val needUpdateFirmware = transceiver.getMachineInfo()?.statusFirmware
-            if (needUpdateFirmware == false) {
+            if (needUpdateFirmware == true) {
                 val linkFirmware = transceiver.getMachineInfo()?.linkFirmware
                 if (!linkFirmware.isNullOrBlank()) {
                     YesNoButtonDialog()

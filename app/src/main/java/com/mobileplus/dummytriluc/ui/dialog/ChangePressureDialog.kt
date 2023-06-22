@@ -22,7 +22,8 @@ class ChangePressureDialog : BaseDialogBinding<DialogChangePressureBinding>() {
     }
 
     override fun updateUI(savedInstanceState: Bundle?) {
-        adapter.items = listOf(15, 20, 25, 30)
+        adapter.items =
+            listOf(15 to "15- 45kg", 20 to "20 - 60kg", 25 to "25 - 80kg", 30 to "30 - 120kg")
         binding.rcvChangePressure.adapter = adapter
         binding.rcvChangePressure.layoutManager = LinearLayoutManager(context)
         binding.rcvChangePressure.setHasFixedSize(true)
@@ -36,7 +37,7 @@ class ChangePressureDialog : BaseDialogBinding<DialogChangePressureBinding>() {
     }
 
     class PressureAdapter : RecyclerView.Adapter<BaseViewHolderZ<ItemMusicBinding>>() {
-        var items = listOf<Int>()
+        var items = listOf<Pair<Int, String>>()
             set(value) {
                 field = value
                 notifyDataSetChanged()
@@ -56,9 +57,9 @@ class ChangePressureDialog : BaseDialogBinding<DialogChangePressureBinding>() {
         }
 
         override fun onBindViewHolder(holder: BaseViewHolderZ<ItemMusicBinding>, position: Int) {
-            val item = items[position]
-            holder.binding.tvNameMusic.text = "$item kg"
-            holder.itemView.setOnClickListener { onItemClick(item) }
+            val (kg,title) = items[position]
+            holder.binding.tvNameMusic.text = title
+            holder.itemView.setOnClickListener { onItemClick(kg) }
         }
 
         override fun getItemCount(): Int {
