@@ -13,20 +13,20 @@ import com.core.BaseFragment
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
-import com.mobileplus.dummytriluc.bluetooth.CommandBle
 import com.mobileplus.dummytriluc.data.request.SubmitChallengeRequest
 import com.mobileplus.dummytriluc.data.request.SubmitCoachDraftRequest
 import com.mobileplus.dummytriluc.data.request.SubmitPracticeResultRequest
 import com.mobileplus.dummytriluc.data.response.DataSendDraftResponse
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.command.FinishCommand
+import com.mobileplus.dummytriluc.transceiver.command.ICommand
+import com.mobileplus.dummytriluc.transceiver.command.IRecordCommand
+import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
 import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.main.MainActivity
-import com.mobileplus.dummytriluc.ui.main.challenge.detail.ChallengeDetailFragment
 import com.mobileplus.dummytriluc.ui.main.coach.save_draft.CoachSaveDraftFragment
-import com.mobileplus.dummytriluc.ui.utils.AppConstants
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventPopVideo
-import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
 import com.mobileplus.dummytriluc.ui.video.result.VideoResultActivity
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
@@ -42,29 +42,27 @@ import org.greenrobot.eventbus.Subscribe
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 /**
  * Created by KO Huyn on 12/29/2020.
  */
-class VideoRecordFragment : BaseFragment(),IObserverMachine {
-    override fun getLayoutId(): Int = R.layout.fragment_record_video
-    private val videoRecordViewModel by viewModel<VideoRecordViewModel>()
+class VideoRecordFragment : BaseFragment(), IObserverMachine {
+    companion object {
+        fun openFragment(command: IRecordCommand) {
+            val bundle = Bundle().apply {
+                putParcelable(ARG_COMMAND, command)
+            }
+            postNormal(EventNextFragmentMain(VideoRecordFragment::class.java, bundle, true))
+        }
 
+        private const val ARG_COMMAND = "ARG_COMMAND"
+    }
+    override fun getLayoutId(): Int = R.layout.fragment_record_video
+    private val vm by viewModel<VideoRecordViewModel>()
     //Camera
     private val cameraView: CameraView by lazy { cameraViewRecord }
-
-    //Ble
-    private fun commandRequestBle(command: String) =
-        (requireActivity() as MainActivity).actionWriteBle(command)
-
-    private fun commandLongRequestBle(command: String) =
-        (requireActivity() as MainActivity).actionWriteBle(command)
-
-    //TYPE
-    private var typeRecord: Int = AppConstants.INTEGER_DEFAULT
 
     //PRACTICE
     private val practiceRequest by lazy { SubmitPracticeResultRequest() }
@@ -77,16 +75,6 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
 
     //GSON
     private val gson by inject<Gson>()
-
-    //POSITION
-    private var positionArr: String = ""
-    private var delayPositionArr: String = ""
-
-    //ID truyền vào máy tập theo bài
-    private var idBle: Int = AppConstants.INTEGER_DEFAULT
-
-    private var cmdRequestBleChallenge: ChallengeDetailFragment.RequestBleChallenge? = null
-
     //Rx
     private var isDataAvailable = false
     private var isTakenEndRecord = false
@@ -95,52 +83,7 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
     private var timerRecordDisposable: Disposable? = null
     private val transceiver by lazy { ITransceiverController.getInstance() }
 
-    companion object {
-        private const val KEY_ID_LESSON_ARG_RECORD = "KEY_ID_LESSON_ARG_RECORD"
-        private const val KEY_POSITION_LESSON_ARG_RECORD = "KEY_POSITION_LESSON_ARG_RECORD"
-        private const val KEY_DELAY_LESSON_ARG_RECORD = "KEY_DELAY_LESSON_ARG_RECORD"
-        private const val KEY_DATA_CHALLENGE_ARG_RECORD = "KEY_DATA_CHALLENGE_ARG_RECORD"
-        private const val KEY_DATA_COACH_ARG_RECORD = "KEY_DATA_COACH_ARG_RECORD"
-        private const val TYPE_PRACTICE = 1
-        private const val TYPE_COACH = 2
-        private const val TYPE_CHALLENGE = 3
-
-        fun openFromPractice(idPractice: Int, delayPositionArr: String, positionArr: String) {
-            val bundle = Bundle().apply {
-                putString(
-                    KEY_POSITION_LESSON_ARG_RECORD,
-                    positionArr
-                )
-                putString(
-                    KEY_DELAY_LESSON_ARG_RECORD,
-                    delayPositionArr
-                )
-                putInt(
-                    KEY_ID_LESSON_ARG_RECORD,
-                    idPractice
-                )
-            }
-            postNormal(EventNextFragmentMain(VideoRecordFragment::class.java, bundle, true))
-        }
-
-        fun openFromChallenge(request: ChallengeDetailFragment.RequestBleChallenge, gson: Gson) {
-            val bundle = Bundle().apply {
-                putString(
-                    KEY_DATA_CHALLENGE_ARG_RECORD,
-                    gson.toJson(request)
-                )
-            }
-            postNormal(EventNextFragmentMain(VideoRecordFragment::class.java, bundle, true))
-        }
-
-        fun openFromCoach() {
-            val bundle = Bundle().apply {
-                putString(KEY_DATA_COACH_ARG_RECORD, "")
-            }
-            postNormal(EventNextFragmentMain(VideoRecordFragment::class.java, bundle, true))
-        }
-
-    }
+    private val command by argument<IRecordCommand>(ARG_COMMAND)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -150,11 +93,15 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
     override fun updateUI(savedInstanceState: Bundle?) {
         disposableViewModel()
         checkConnectBle()
-        checkArg()
+        showWarningExerciseRecord?.setVisibility(command.getCommandMode() == CommandMode.LESSON)
         checkPermission()
         configCameraRecord()
         controlClick()
         disposableSubscribe()
+    }
+
+    private fun executeCommand(command: ICommand) {
+        transceiver.send(command)
     }
 
     private fun checkConnectBle() {
@@ -167,18 +114,18 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
         addDispose(rxRequestPostFragment.subscribe {
             if (it.first && it.second) {
                 if (VideoResultActivity.videoResult != null) {
-                    when (typeRecord) {
-                        TYPE_PRACTICE -> {
+                    when (command.getCommandMode()) {
+                        CommandMode.LESSON -> {
                             if (practiceRequest.data != null) {
                                 nextFragmentResult()
                             }
                         }
-                        TYPE_COACH -> {
+                        CommandMode.COACH -> {
                             if (coachRequest.data != null) {
                                 nextFragmentResult()
                             }
                         }
-                        TYPE_CHALLENGE -> {
+                        CommandMode.CHALLENGE -> {
                             if (challengeRequest.data != null) {
                                 nextFragmentResult()
                             }
@@ -190,20 +137,20 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
     }
 
     private fun fillDataFromBle(dataBle: BluetoothResponse) {
-        when (typeRecord) {
-            TYPE_PRACTICE -> {
+        when (command.getCommandMode()) {
+            CommandMode.LESSON -> {
                 practiceRequest.apply {
                     data =
                         if (dataBle.data.isEmpty()) null else gson.toJson(dataBle.data)
                     dummyId = dataBle.machineId
-                    practiceId = idBle
+                    practiceId = command.getIdType()
                     mode = dataBle.mode
                     startTime1 = dataBle.startTime1
                     startTime2 = dataBle.startTime2
                     videoPath = null
                 }
             }
-            TYPE_COACH -> {
+            CommandMode.COACH -> {
                 coachRequest.apply {
                     startTime1 = dataBle.startTime1
                     data =
@@ -212,16 +159,17 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
                     videoPath = null
                 }
             }
-            TYPE_CHALLENGE -> {
+            CommandMode.CHALLENGE -> {
                 challengeRequest.apply {
                     data =
                         if (dataBle.data.isEmpty()) null else gson.toJson(dataBle.data)
                     dummyId = dataBle.machineId
-                    challengeId = idBle
+                    challengeId = command.getIdType()
                     mode = dataBle.mode
                     startTime1 = dataBle.startTime1
                     startTime2 = dataBle.startTime2
                     videoPath = null
+                    sessionId = dataBle.sessionId?.toString()
                 }
             }
         }
@@ -230,46 +178,10 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
 //        commandRequestBle(CommandBle.END)
     }
 
-    private fun checkArg() {
-        if (arguments != null) {
-            when {
-                //PRACTICE
-                requireArguments().containsKey(KEY_POSITION_LESSON_ARG_RECORD)
-                        && requireArguments().containsKey(KEY_ID_LESSON_ARG_RECORD) -> {
-                    typeRecord = TYPE_PRACTICE
-                    positionArr =
-                        argument(KEY_POSITION_LESSON_ARG_RECORD, "").value
-                    delayPositionArr = argument(KEY_DELAY_LESSON_ARG_RECORD, "").value
-                    idBle = argument(KEY_ID_LESSON_ARG_RECORD, -1).value
-                }
-                //COACH
-                requireArguments().containsKey(KEY_DATA_COACH_ARG_RECORD) -> {
-                    typeRecord = TYPE_COACH
-                }
-                //CHALLENGE
-                requireArguments().containsKey(KEY_DATA_CHALLENGE_ARG_RECORD) -> {
-                    typeRecord = TYPE_CHALLENGE
-                    cmdRequestBleChallenge = gson.fromJson(
-                        argument(KEY_DATA_CHALLENGE_ARG_RECORD, "").value,
-                        ChallengeDetailFragment.RequestBleChallenge::class.java
-                    )
-                    positionArr = cmdRequestBleChallenge?.positionLimit ?: "0"
-                    idBle = cmdRequestBleChallenge?.challengeId ?: AppConstants.INTEGER_DEFAULT
-                }
-            }
-            showWarningExerciseRecord?.setVisibility(typeRecord == TYPE_COACH)
-        } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-                onBackPressed()
-            }, 300)
-            toast(loadStringRes(R.string.feature_not_available))
-        }
-    }
-
     private fun nextFragmentResult() {
         isDataAvailable = false
-        when (typeRecord) {
-            TYPE_PRACTICE -> {
+        when (command.getCommandMode()) {
+            CommandMode.LESSON -> {
                 val bundle = Bundle().apply {
                     putString(
                         VideoResultActivity.REQUEST_POST_VIDEO_PRACTICE_ARG,
@@ -279,7 +191,7 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
                 startActivity(VideoResultActivity::class.java, bundle)
                 practiceRequest.data = null
             }
-            TYPE_COACH -> {
+            CommandMode.COACH -> {
                 val bundle = Bundle().apply {
                     putString(
                         VideoResultActivity.REQUEST_POST_VIDEO_COACH_ARG,
@@ -289,7 +201,7 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
                 startActivity(VideoResultActivity::class.java, bundle)
                 coachRequest.data = null
             }
-            TYPE_CHALLENGE -> {
+            CommandMode.CHALLENGE -> {
                 val bundle = Bundle().apply {
                     putString(
                         VideoResultActivity.REQUEST_POST_VIDEO_CHALLENGE_ARG,
@@ -329,48 +241,28 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
     }
 
     private fun commandRecordStart() {
-        val timeL = System.currentTimeMillis() / 1000
-        when (typeRecord) {
-            TYPE_PRACTICE -> {
-                videoRecordViewModel.getAvgPractice(idBle)
-            }
-            TYPE_COACH -> {
-                commandRequestBle(String.format(CommandBle.COACH_MODE, timeL))
-            }
-            TYPE_CHALLENGE -> {
-                videoRecordViewModel.startChallenge(idBle)
-                cmdRequestBleChallenge?.run {
-                    commandRequestBle(
-                        String.format(
-                            CommandBle.CHALLENGE_MODE,
-                            timeL,
-                            challengeId,
-                            hittingType,
-                            hitData,
-                            hitLimit,
-                            timeLimit,
-                            positionLimit ?: "0",
-                            weight,
-                            minPower,
-                            randomDelayTime,
-                        )
-                    )
-                }
+        val command = command
+        executeCommand(command)
+        when (command.getCommandMode()) {
+            CommandMode.CHALLENGE -> {
+                vm.startChallenge(command.getIdType())
             }
         }
     }
 
     private fun commandRecordEnd() {
-//        if (!isDataAvailable) (activity as MainActivity).requestFINISH()
+        if (!isDataAvailable) {
+            executeCommand(FinishCommand)
+        }
         val timeEnd = System.currentTimeMillis() / 1000
-        when (typeRecord) {
-            TYPE_PRACTICE -> {
+        when (command.getCommandMode()) {
+            CommandMode.LESSON -> {
                 practiceRequest.endTime = timeEnd
             }
-            TYPE_COACH -> {
+            CommandMode.COACH -> {
                 coachRequest.endTime = timeEnd
             }
-            TYPE_CHALLENGE -> {
+            CommandMode.CHALLENGE -> {
                 challengeRequest.endTime = timeEnd
             }
         }
@@ -398,22 +290,8 @@ class VideoRecordFragment : BaseFragment(),IObserverMachine {
 
     private fun disposableViewModel() {
         addDispose(
-            videoRecordViewModel.isLoading.observeOn(AndroidSchedulers.mainThread())
+            vm.isLoading.observeOn(AndroidSchedulers.mainThread())
                 .subscribe { if (it) showDialog() else hideDialog() })
-        addDispose(videoRecordViewModel.rxAvgResponse.subscribe {
-            val (isSuccess, avg) = it
-            commandLongRequestBle(
-                String.format(
-                    CommandBle.LESSON_MODE,
-                    System.currentTimeMillis() / 1000,
-                    idBle,
-                    positionArr,
-                    delayPositionArr,
-                    avg?.avgPower ?: 0,
-                    avg?.avgHit ?: 0
-                )
-            )
-        })
     }
 
     private fun controlClick() {

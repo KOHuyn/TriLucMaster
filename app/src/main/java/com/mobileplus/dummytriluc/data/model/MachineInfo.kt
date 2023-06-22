@@ -1,11 +1,14 @@
 package com.mobileplus.dummytriluc.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by KO Huyn on 18/05/2023.
  */
+@Parcelize
 data class MachineInfo(
     @Expose
     @SerializedName("status")
@@ -28,4 +31,4 @@ data class MachineInfo(
     @Expose
     @SerializedName("link_firmware_stm")
     val linkFirmwareStm: String? = null,
-)
+) : Parcelable

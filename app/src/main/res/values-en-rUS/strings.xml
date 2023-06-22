@@ -552,4 +552,18 @@
     <string name="center_punch">Center punch</string>
     <string name="hook_punch">Hook punch</string>
     <string name="connect_old_machine">Do you want to connect to machine %1$s?</string>
+    <string name="choose_music">Choose music</string>
+    <string name="change_pressure">Change pressure</string>
+    <string name="change_pressure_success">Change pressure success</string>
+    <string name="update_firmware">Update firmware</string>
+    <string name="updating_firmware">Firmware updating…</string>
+    <string name="updating_sound">Sound updating…</string>
+    <string name="update_firmware_success">Update firmware success</string>
+    <string name="update_sound_success">Update sound success</string>
+    <string name="updating_pressure">Pressure updating…</string>
+    <string name="change_pressure_failed">Change pressure failed</string>
+    <string name="update_firmware_failed">Update firmware failed</string>
+    <string name="update_sound_failed">Update sound failed</string>
+    <string name="alert_message_update_firmware">Are you sure you want to update the firmware?</string>
+    <string name="alert_message_firmware_up_to_date">The firmware version is currently the latest.</string>
 </resources>

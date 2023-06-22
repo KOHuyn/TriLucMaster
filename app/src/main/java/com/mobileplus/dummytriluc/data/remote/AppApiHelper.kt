@@ -978,4 +978,10 @@ class AppApiHelper : ApiHelper, KoinComponent {
             .addJSONObjectBody(request.toJson())
             .build().getObjectSingle(JsonObject::class.java)
     }
+
+    override fun getListMusic(): Single<JsonObject> {
+        return Rx2AndroidNetworking.get(ApiEndPoint.URL_GET_LIST_MUSIC)
+            .build()
+            .getObjectSingle(JsonObject::class.java)
+    }
 }

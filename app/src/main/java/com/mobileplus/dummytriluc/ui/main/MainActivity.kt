@@ -1,55 +1,60 @@
 package com.mobileplus.dummytriluc.ui.main
 
-import android.content.*
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import com.core.BaseActivity
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.mobileplus.dummytriluc.BuildConfig
 import com.mobileplus.dummytriluc.DummyTriLucApplication
 import com.mobileplus.dummytriluc.R
-import com.mobileplus.dummytriluc.bluetooth.*
 import com.mobileplus.dummytriluc.data.model.NotificationObjService
 import com.mobileplus.dummytriluc.data.model.UserInfo
 import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.service.TriLucNotification
 import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
-import com.mobileplus.dummytriluc.transceiver.TransceiverControllerImpl
-import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.dialog.ConnectBleWithDeviceDialog
 import com.mobileplus.dummytriluc.ui.dialog.NoInternetDialog
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
-import com.mobileplus.dummytriluc.ui.main.challenge.detail.ChallengeDetailFragment
 import com.mobileplus.dummytriluc.ui.main.chat.chatmessage.ChatMessageFragment
 import com.mobileplus.dummytriluc.ui.main.coach.CoachMainFragment
 import com.mobileplus.dummytriluc.ui.main.coach.session.CoachSessionFragment
 import com.mobileplus.dummytriluc.ui.main.connect.ConnectFragment
-import com.mobileplus.dummytriluc.ui.main.practice.detail.PracticeDetailFragment
-import com.mobileplus.dummytriluc.ui.main.practice.dialog.ConfirmPracticeTestDialog
 import com.mobileplus.dummytriluc.ui.main.practice.test.PracticeTestFragment
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
-import com.mobileplus.dummytriluc.ui.utils.eventbus.*
-import com.mobileplus.dummytriluc.ui.utils.extensions.*
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventHandleNotification
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNavigateDeepLink
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventOverlayCameraView
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventReloadRoomChat
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventUnAuthen
+import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.mobileplus.dummytriluc.ui.utils.language.EventChangeLanguage
 import com.mobileplus.dummytriluc.ui.utils.language.LocalManageUtil
 import com.mobileplus.dummytriluc.ui.video.record.VideoRecordFragment
-import com.utils.ext.*
+import com.utils.ext.hide
+import com.utils.ext.isConnectedInternet
+import com.utils.ext.postNormal
+import com.utils.ext.register
+import com.utils.ext.show
+import com.utils.ext.startActivity
+import com.utils.ext.unregister
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.PublishSubject
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.engineio.client.transports.WebSocket
 import kotlinx.android.synthetic.main.activity_main.tvPingServer
 import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.net.URISyntaxException
-import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
 
@@ -63,8 +68,6 @@ class MainActivity : BaseActivity() {
     private val transceiver by lazy { ITransceiverController.getInstance() }
     override fun updateUI(savedInstanceState: Bundle?) {
         saveConfig()
-        listenerBleDataResponse()
-        handleActionConnection()
         userInfo = mainViewModel.user
         openFragment(R.id.mainContainer, MainFragment::class.java, null, true)
         navigateDeepLink(intent?.data)
@@ -107,32 +110,11 @@ class MainActivity : BaseActivity() {
         return false
     }
 
-    private fun listenerBleDataResponse() {
-        addDispose(mainViewModel.rxPostModeFreedomSuccess.subscribe { isSuccess ->
-            if (isSuccess) {
-                postNormal(EventReloadPracticeItem())
-            }
-        })
-    }
-
-    /**
-     * [rxActionConnection]
-     * @author KO Huyn
-     * @return thực thi hành động sau khi kết nối xong
-     */
-    private val rxActionConnection: PublishSubject<ActionConnection> = PublishSubject.create()
-    var actionConnection = ActionConnection.NONE
-        set(value) {
-            field = value
-            logErr("actionConnection:${field.name}")
-        }
-
-    fun showDialogRequestConnect(type: ActionConnection = ActionConnection.NONE) {
+    fun showDialogRequestConnect() {
         if (!isConnectedBle) {
             ConnectBleWithDeviceDialog()
                 .show(supportFragmentManager)
                 .onConnectBleCallback { connect ->
-                    actionConnection = if (connect) type else ActionConnection.NONE
                     if (connect) {
                         ConnectFragment.openFragment()
                     } else {
@@ -140,54 +122,6 @@ class MainActivity : BaseActivity() {
                     }
                 }
         }
-    }
-
-    private fun handleActionConnection() {
-        addDispose(
-            rxActionConnection.debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe { action ->
-                    logErr("rxActionConnection:${action.name}")
-                    when (action) {
-                        ActionConnection.NONE -> {
-                        }
-                        ActionConnection.OPEN_MODE_FREE_FIGHT -> {
-                            PracticeTestFragment.openFragmentFreeFight()
-                        }
-                        ActionConnection.OPEN_MODE_LED -> {
-                            PracticeTestFragment.openFragmentAccordingToLed()
-                        }
-                        ActionConnection.OPEN_MODE_COURSE -> {
-                            if (currentFrag() is PracticeDetailFragment) {
-                                val currFrag = currentFrag() as PracticeDetailFragment
-                                currFrag.openFragmentCourse()
-                            }
-                        }
-                        ActionConnection.OPEN_RECORD_PRACTICE -> {
-                            if (currentFrag() is PracticeDetailFragment) {
-                                val currFrag = currentFrag() as PracticeDetailFragment
-                                currFrag.openFragmentRecord()
-                            }
-                        }
-                        ActionConnection.OPEN_COACH_DRAFT -> {
-                            VideoRecordFragment.openFromCoach()
-                        }
-                        ActionConnection.OPEN_SESSION -> {
-                            if (currentFrag() is CoachSessionFragment) {
-                                val currFrag = currentFrag() as CoachSessionFragment
-                                currFrag.playSession()
-                            }
-                        }
-                        ActionConnection.OPEN_CHALLENGE -> {
-                            if (currentFrag() is ChallengeDetailFragment) {
-                                val currFrag = currentFrag() as ChallengeDetailFragment
-                                currFrag.openFragmentRecord()
-                            }
-                        }
-                        else -> {
-                        }
-                    }
-                    actionConnection = ActionConnection.NONE
-                })
     }
 
 //--------------------------------------------------------------------------|

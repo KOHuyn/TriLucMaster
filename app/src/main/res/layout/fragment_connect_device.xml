@@ -70,6 +70,48 @@
             android:src="@drawable/state_connecting_device"
             app:layout_constraintTop_toBottomOf="@id/tvHeader2" />
 
+        <LinearLayout
+            android:id="@+id/layoutActionUpdateMachine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUpdateFirmware"
+                style="@style/ButtonGradientOrange"
+                android:layout_width="wrap_content"
+                android:background="@color/clr_white_12"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
+                android:minWidth="@dimen/_200sdp"
+                android:paddingStart="@dimen/space_16"
+                android:paddingEnd="@dimen/space_16"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:text="@string/update_firmware"
+                android:textAllCaps="false"
+                app:layout_alignSelf="center" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnChangePressure"
+                style="@style/ButtonGradientOrange"
+                android:layout_width="wrap_content"
+                android:background="@color/clr_white_12"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
+                android:minWidth="@dimen/_200sdp"
+                android:paddingStart="@dimen/space_16"
+                android:paddingEnd="@dimen/space_16"
+                android:text="@string/change_pressure"
+                android:textAllCaps="false"
+                app:layout_alignSelf="center" />
+        </LinearLayout>
+
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConnectBle"
             style="@style/ButtonGradientOrange"

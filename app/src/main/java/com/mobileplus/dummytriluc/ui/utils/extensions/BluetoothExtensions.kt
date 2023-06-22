@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 import com.mobileplus.dummytriluc.databinding.LayoutHumanBinding
@@ -54,7 +55,13 @@ object BlePositionUtils {
 
     fun setCallbackBleDataForce(layoutHuman: View, data: DataBluetooth) {
         with(layoutHuman) {
-            groupHighScore.show()
+            groupPosition.show()
+            listOf(
+                positionBodyBottom,
+                positionBodyLeft,
+                positionBodyCenter,
+                positionBodyRight
+            ).forEach { it.isVisible = false }
             when (data.position) {
                 BodyPosition.HOOK_PUNCH.key -> {
                     positionBodyBottom.setTouchPractice(
@@ -231,6 +238,7 @@ object BlePositionUtils {
 }
 
 private fun TextView.setTouchPractice(force: Float?, onTarget: Int?) {
+    this.isVisible = true
     this.text = force?.toInt().toString()
     if (onTarget != null) {
         if (onTarget == 1) {
@@ -244,6 +252,7 @@ private fun TextView.setTouchPractice(force: Float?, onTarget: Int?) {
     postDelayed({
         this.text = ""
         this.setBackgroundResource(R.drawable.ic_touch_red)
+        this.isVisible = false
     }, 1000)
 }
 

@@ -34,7 +34,6 @@ class MainViewModel(
     val rxCoachType: PublishSubject<Pair<TypeCoach, JsonObject?>> = PublishSubject.create()
     val user = dataManager.getUserInfo()
     val hotline = dataManager.numberHotLine
-    val rxPostModeFreedomSuccess: PublishSubject<Boolean> = PublishSubject.create()
     val rxShowPopupUpdateVersionApp: PublishSubject<Triple<String, Boolean, String?>> =
         PublishSubject.create()
     val rxMachineInfo: PublishSubject<Pair<Boolean, MachineInfo?>> = PublishSubject.create()

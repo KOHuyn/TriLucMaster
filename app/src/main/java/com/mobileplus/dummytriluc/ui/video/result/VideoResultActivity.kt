@@ -133,9 +133,9 @@ class VideoResultActivity : BaseActivity() {
             autoStart = savedInstanceState.getBoolean(KEY_AUTO_PLAY)
             speedParameter = savedInstanceState.getFloat(KEY_SPEED_PARAMETERS)
         }
-//        with(humanVideoResult) {
-//            layoutPositionScore.show()
-//        }
+        with(humanVideoResult) {
+            groupHighScore.show()
+        }
         getArg()
         handleDisposableViewModel(videoResultViewModel)
         btnSendRecordVideoResult.fillGradientPrimary()

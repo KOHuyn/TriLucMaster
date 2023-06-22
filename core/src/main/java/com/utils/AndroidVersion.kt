@@ -109,12 +109,6 @@ object AndroidVersion {
         return result
     }
 
-    fun hasSoftNavBar(context: Context?): Boolean {
-        val hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey()
-        val hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK)
-        return !hasMenuKey && !hasBackKey
-    }
-
     private const val BRIGHTNESS_THRESHOLD = 150
     fun isColorDark(color: Int): Boolean {
         return (30 * Color.red(color) + 59 * Color.green(color) + 11 * Color.blue(color)) / 100 <= BRIGHTNESS_THRESHOLD

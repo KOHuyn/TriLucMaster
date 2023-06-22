@@ -31,6 +31,7 @@ import com.mobileplus.dummytriluc.bluetooth.DataBluetooth
 import com.mobileplus.dummytriluc.data.model.ItemProgressPower
 import com.mobileplus.dummytriluc.data.model.ItemRankingChallenge
 import com.mobileplus.dummytriluc.data.response.DataChallengeDetailResponse
+import com.mobileplus.dummytriluc.transceiver.command.MachineChallengeCommand
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.challenge.detail.adapter.NewJoinAdapter
@@ -413,24 +414,38 @@ class ChallengeDetailFragment : BaseFragment() {
         if ((requireActivity() as MainActivity).isConnectedBle) {
             openFragmentRecord()
         } else {
-            (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_CHALLENGE)
+            (activity as MainActivity).showDialogRequestConnect()
         }
     }
 
     fun openFragmentRecord() {
         postNormal(EventOverlayCameraView(true))
-        val request = RequestBleChallenge(
-            challengeId = idDetailChallenge,
-            hittingType = responseDetail?.getTypeHitting()?.dataBle,
-            hitData = responseDetail?.getHitDataBle(),
-            hitLimit = responseDetail?.hitLimit ?: 0,
-            timeLimit = responseDetail?.timeLimit ?: 0,
-            positionLimit = positionArr ?: "0",
-            weight = responseDetail?.weight ?: 0,
-            minPower = responseDetail?.minPower ?: 0,
-            randomDelayTime = responseDetail?.randomDelayTime ?: 0
-        )
-        VideoRecordFragment.openFromChallenge(request, gson)
+//        val request = RequestBleChallenge(
+//            challengeId = idDetailChallenge,
+//            hittingType = responseDetail?.getTypeHitting()?.dataBle,
+//            hitData = responseDetail?.getHitDataBle(),
+//            hitLimit = responseDetail?.hitLimit ?: 0,
+//            timeLimit = responseDetail?.timeLimit ?: 0,
+//            positionLimit = positionArr ?: "0",
+//            weight = responseDetail?.weight ?: 0,
+//            minPower = responseDetail?.minPower ?: 0,
+//            randomDelayTime = responseDetail?.randomDelayTime ?: 0
+//        )
+        val data = responseDetail
+        if (data != null) {
+            val command = MachineChallengeCommand(
+                challengeId = idDetailChallenge,
+                challengeType = data.getTypeHitting().dataBle,
+                hitData = data.getHitDataBle(),
+                hitLimit = data.hitLimit ?: 0,
+                timeLimit = data.timeLimit ?: 0,
+                positionLimit = positionArr,
+                weight = data.weight ?: 0,
+                minPower = data.minPower ?: 0,
+                randomDelayTime = data.randomDelayTime ?: 0
+            )
+            VideoRecordFragment.openFragment(command)
+        }
     }
 
     data class RequestBleChallenge(

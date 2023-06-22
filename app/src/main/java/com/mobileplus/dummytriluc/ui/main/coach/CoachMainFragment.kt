@@ -19,6 +19,7 @@ import com.mobileplus.dummytriluc.bluetooth.ActionConnection
 import com.mobileplus.dummytriluc.data.model.Page
 import com.mobileplus.dummytriluc.data.response.StatisticalCoachResponse
 import com.mobileplus.dummytriluc.databinding.FragmentCoachMainBinding
+import com.mobileplus.dummytriluc.transceiver.command.CoachModeCommand
 import com.mobileplus.dummytriluc.ui.dialog.MenuOptionsDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.coach.adapter.CoachAdapter
@@ -194,9 +195,9 @@ class CoachMainFragment : BaseFragmentZ<FragmentCoachMainBinding>() {
 
     private fun nextFragmentRecord() {
         if ((requireActivity() as MainActivity).isConnectedBle) {
-            VideoRecordFragment.openFromCoach()
+            VideoRecordFragment.openFragment(CoachModeCommand)
         } else {
-            (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_COACH_DRAFT)
+            (activity as MainActivity).showDialogRequestConnect()
         }
     }
 

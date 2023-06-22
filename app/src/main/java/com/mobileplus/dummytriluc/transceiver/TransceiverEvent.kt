@@ -11,6 +11,8 @@ enum class TransceiverEvent(val eventName: String) {
     CONNECT_ERROR(Socket.EVENT_CONNECT_ERROR),
     NEW_MESSAGE("new_message"),
     PRACTICE("PRACTICE"),
+    SUBSCRIBE("subscribe"),
+    UNSUBSCRIBE("unsubscribe"),
     CONNECT_MACHINE("CONNECT_MACHINE");
 
     companion object {

@@ -28,28 +28,4 @@ class VideoRecordViewModel(
                 it.logErr()
             })
     }
-
-
-    val rxAvgResponse: PublishSubject<Pair<Boolean, PracticeAvgResponse?>> = PublishSubject.create()
-
-    fun getAvgPractice(practiceId: Int) {
-        if (practiceId == AppConstants.INTEGER_DEFAULT) {
-            rxAvgResponse.onNext(false to null)
-            return
-        }
-        dataManager.getPracticeAvg(practiceId)
-            .doOnSubscribe { isLoading.onNext(true) }
-            .doFinally { isLoading.onNext(false) }
-            .compose(schedulerProvider.ioToMainSingleScheduler())
-            .subscribe({ response ->
-                if (response.isSuccess()) {
-                    val avgResponse = gson.fromJsonSafe<PracticeAvgResponse>(response.dataObject())
-                    rxAvgResponse.onNext(true to avgResponse)
-                } else {
-                    rxAvgResponse.onNext(false to null)
-                }
-            }, {
-                rxAvgResponse.onNext(false to null)
-            }).addTo(disposable)
-    }
 }

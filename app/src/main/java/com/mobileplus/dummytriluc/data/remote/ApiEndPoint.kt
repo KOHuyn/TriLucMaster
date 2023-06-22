@@ -165,4 +165,5 @@ object ApiEndPoint {
     const val URL_FORCE_CONNECT_MACHINE = "$BASE_URL/forceConnect"
     const val URL_PRACTICE_GET_DATA_RESULT = "$BASE_URL/practice/getDataResult"
     const val URL_CREATE_TARGET = "$BASE_URL/dummyBadge/create-target"
+    const val URL_GET_LIST_MUSIC = "$BASE_URL/machine/get-list-music"
 }

@@ -6,17 +6,26 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.core.BaseFragmentZ
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.databinding.FragmentConnectDeviceBinding
 import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.command.ChangePressureCommand
+import com.mobileplus.dummytriluc.transceiver.command.UpdateFirmwareCommand
+import com.mobileplus.dummytriluc.transceiver.command.UpdateSoundCommand
+import com.mobileplus.dummytriluc.transceiver.ext.getOrNull
+import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
+import com.mobileplus.dummytriluc.transceiver.mode.SendCommandFrom
+import com.mobileplus.dummytriluc.ui.dialog.ChangePressureDialog
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
 import com.mobileplus.dummytriluc.ui.main.MainViewModel
 import com.mobileplus.dummytriluc.ui.main.setupwifi.EspTouchActivity
 import com.mobileplus.dummytriluc.ui.scanner.ScannerActivity
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
 import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
+import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.utils.ext.clickWithDebounce
 import com.utils.ext.invisible
 import com.utils.ext.postNormal
@@ -111,6 +120,7 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
     private fun handleStateTransceiver() {
         transceiver.onConnectionStateChange(lifecycle) { state ->
             val machineName = vm.machineInfoCache?.machineRoom ?: MACHINE_NAME_DEFAULT
+            binding.layoutActionUpdateMachine.isVisible = state == ConnectionState.CONNECTED
             when (state) {
                 ConnectionState.CONNECTING -> {
                     connectingToMachine(machineName)
@@ -123,6 +133,70 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
                 }
                 ConnectionState.NONE -> {
                     unConnectToMachine()
+                }
+            }
+        }
+        transceiver.onSendCommandStateListener(lifecycle) { state ->
+            logErr(state.toString())
+            val isLoading = state is SendCommandFrom.FromApp
+            when (state.commandMode) {
+                CommandMode.CHANGE_PRESSURE -> {
+                    if (isLoading) showDialogWithMessage(
+                        getString(R.string.updating_pressure),
+                        true
+                    ) else hideDialogWithMessage()
+                }
+
+                CommandMode.UNDEFINE -> {
+                    when (state) {
+                        is SendCommandFrom.FromApp -> {
+                            if (state.command is UpdateSoundCommand) {
+                                showDialogWithMessage(getString(R.string.updating_sound), false)
+                            }
+                        }
+                        is SendCommandFrom.FromMachine -> {
+                            if (state.data.has("update_sound_result")) {
+                                hideDialogWithMessage()
+                            }
+                        }
+                    }
+                }
+                CommandMode.UPDATE_FIRM_WARE -> {
+                    if (isLoading) showDialogWithMessage(
+                        getString(R.string.updating_firmware),
+                        true
+                    ) else hideDialogWithMessage()
+                }
+                else -> Unit
+            }
+            when (state) {
+                is SendCommandFrom.FromApp -> Unit
+
+                is SendCommandFrom.FromMachine -> {
+                    when (state.commandMode) {
+                        CommandMode.CHANGE_PRESSURE -> {
+                            when (state.data.getOrNull<Boolean>("receive_success")) {
+                                true -> toast(getString(R.string.change_pressure_success))
+                                false -> toast(getString(R.string.change_pressure_failed))
+                                null -> Unit
+                            }
+                        }
+                        CommandMode.UPDATE_FIRM_WARE -> {
+                            when (state.data.getOrNull<Boolean>("update_firmware_result")) {
+                                true -> toast(getString(R.string.update_firmware_success))
+                                false -> toast(getString(R.string.update_firmware_failed))
+                                null -> Unit
+                            }
+                        }
+                        CommandMode.UNDEFINE-> {
+                            when (state.data.getOrNull<Boolean>("update_sound_result")) {
+                                true -> toast(getString(R.string.update_sound_success))
+                                false -> toast(getString(R.string.update_sound_failed))
+                                null -> Unit
+                            }
+                        }
+                        else -> Unit
+                    }
                 }
             }
         }
@@ -201,6 +275,27 @@ class ConnectFragment : BaseFragmentZ<FragmentConnectDeviceBinding>() {
         binding.cbDataSecurity.isChecked = vm.isDataSecurity
         binding.cbDataSecurity.setOnCheckedChangeListener { _, isChecked ->
             vm.isDataSecurity = isChecked
+        }
+        binding.btnChangePressure.clickWithDebounce {
+            ChangePressureDialog().setOnPressureSelected { pressure ->
+                transceiver.send(ChangePressureCommand(pressure))
+            }.show(parentFragmentManager, "ChangePressureDialog")
+        }
+        binding.btnUpdateFirmware.clickWithDebounce {
+            val needUpdateFirmware = transceiver.getMachineInfo()?.statusFirmware
+            if (needUpdateFirmware == false) {
+                val linkFirmware = transceiver.getMachineInfo()?.linkFirmware
+                if (!linkFirmware.isNullOrBlank()) {
+                    YesNoButtonDialog()
+                        .setMessage(getString(R.string.alert_message_update_firmware))
+                        .setOnCallbackAcceptButtonListener {
+                            val updateFirmwareCommand = UpdateFirmwareCommand(linkFirmware)
+                            transceiver.send(updateFirmwareCommand)
+                        }.showDialog(parentFragmentManager)
+                }
+            } else {
+                toast(getString(R.string.alert_message_firmware_up_to_date))
+            }
         }
     }
 

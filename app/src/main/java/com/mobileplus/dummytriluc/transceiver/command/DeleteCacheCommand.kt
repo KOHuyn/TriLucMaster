@@ -1,10 +1,18 @@
 package com.mobileplus.dummytriluc.transceiver.command
 
+import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created by KO Huyn on 23/05/2023.
  */
-object DeleteCacheCommand : IPracticeCommand {
+@Parcelize
+object DeleteCacheCommand : IMachineCommand {
     override fun params(): HashMap<String, Any?> {
-        return hashMapOf("mode" to 3)
+        return hashMapOf()
+    }
+
+    override fun getCommandMode(): CommandMode {
+        return CommandMode.END
     }
 }

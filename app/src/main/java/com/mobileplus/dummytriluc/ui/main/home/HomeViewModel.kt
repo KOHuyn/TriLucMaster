@@ -4,12 +4,16 @@ import com.core.BaseViewModel
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.bluetooth.request.BleErrorRequest
 import com.mobileplus.dummytriluc.data.DataManager
+import com.mobileplus.dummytriluc.data.model.ItemMusic
 import com.mobileplus.dummytriluc.data.model.TargetType
 import com.mobileplus.dummytriluc.data.model.TargetUnit
 import com.mobileplus.dummytriluc.data.request.CreateTargetRequest
 import com.mobileplus.dummytriluc.data.response.HomeListResponse
+import com.mobileplus.dummytriluc.data.response.PracticeAvgResponse
+import com.mobileplus.dummytriluc.ui.utils.AppConstants
 import com.mobileplus.dummytriluc.ui.utils.extensions.*
 import com.utils.SchedulerProvider
+import com.utils.ext.toList
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
@@ -144,5 +148,58 @@ class HomeViewModel(
             }, {
                 logErr("deleteJSONErrorCacheByContent fail")
             })
+    }
+
+    private val hashmapAvg = hashMapOf<Int, Pair<Int, Int>>()
+    fun getAvgPractice(practiceId: Int, callback: (avgPower: Int, avgHit: Int) -> Unit) {
+        if (hashmapAvg.contains(practiceId)) {
+            val (power, hit) = hashmapAvg[practiceId]!!
+            callback(power, hit)
+            return
+        }
+        if (practiceId == AppConstants.INTEGER_DEFAULT) {
+            callback(50, 20)
+            return
+        }
+        dataManager.getPracticeAvg(practiceId)
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                if (response.isSuccess()) {
+                    val avgResponse = gson.fromJsonSafe<PracticeAvgResponse>(response.dataObject())
+                    val avgPower = avgResponse?.avgPower
+                    val avgHit = avgResponse?.avgHit
+                    if (avgPower != null && avgHit != null) {
+                        hashmapAvg[practiceId] = avgPower to avgHit
+                    }
+                    callback(avgPower ?: 50, avgHit ?: 20)
+                } else {
+                    callback(50, 20)
+                }
+            }, {
+                callback(50, 20)
+            }).addTo(disposable)
+    }
+
+    var listMusic = emptyList<ItemMusic>()
+    fun getListMusic(callback: (List<ItemMusic>?) -> Unit) {
+        if (listMusic.isNotEmpty()) {
+            callback(listMusic)
+            return
+        }
+        dataManager.getListMusic()
+            .compose(schedulerProvider.ioToMainSingleScheduler())
+            .subscribe({ response ->
+                if (response.isSuccess()) {
+                    val listMusic = gson.toList<ItemMusic>(response.dataArray())
+                    this.listMusic = listMusic
+                    callback(listMusic)
+                } else {
+                    callback(null)
+                    rxMessage.onNext(response.message())
+                }
+            }, {
+                callback(null)
+                rxMessage.onNext(it.getErrorMsg())
+            }).addTo(disposable)
     }
 }

@@ -21,8 +21,14 @@ import com.mobileplus.dummytriluc.data.response.*
 import com.mobileplus.dummytriluc.databinding.FragmentHomeBinding
 import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
-import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
+import com.mobileplus.dummytriluc.transceiver.command.IPracticeCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineFreePunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineLedPunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineMusicCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineRelaxCommand
+import com.mobileplus.dummytriluc.transceiver.mode.RelaxType
 import com.mobileplus.dummytriluc.ui.dialog.ChooseModePracticeDialog
+import com.mobileplus.dummytriluc.ui.dialog.SelectMusicDialog
 import com.mobileplus.dummytriluc.ui.dialog.SetupTargetDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.connect.ConnectFragment
@@ -363,7 +369,6 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         }
         binding.btnOpenNavView.clickWithDebounce { postNormal(EventClickNavBar()) }
         binding.btnConnectBleHome.clickWithDebounce {
-            (activity as? MainActivity)?.actionConnection = ActionConnection.NONE
             ConnectFragment.openFragment()
         }
         binding.swipeToRefreshLayout.run {
@@ -430,27 +435,76 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
 
             }
             ChooseModePracticeDialog.PracticeType.FREE_FIGHT -> {
-                if (transceiver.isConnected()) {
-                    PracticeTestFragment.openFragmentFreeFight()
-                } else {
-                    (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_FREE_FIGHT)
+                val command = MachineFreePunchCommand(-1, -1)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower,avgHit = avgHit))
                 }
             }
 
             ChooseModePracticeDialog.PracticeType.ACCORDING_LED -> {
-                if (transceiver.isConnected()) {
-                    PracticeTestFragment.openFragmentAccordingToLed()
-                } else {
-                    (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_MODE_LED)
+                val command = MachineLedPunchCommand(-1, -1)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
                 }
             }
-            ChooseModePracticeDialog.PracticeType.ACCORDING_MUSIC -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.ACCORDING_MUSIC -> {
+                val command = MachineMusicCommand(50, 20, 544)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    vm.getListMusic { listMusic ->
+                        SelectMusicDialog(listMusic ?: emptyList())
+                            .setOnMusicSelected { music ->
+                                PracticeTestFragment.openFragment(
+                                    command.copy(
+                                        avgPower = avgPower,
+                                        avgHit = avgHit,
+                                        musicId = music.id ?: -1
+                                    )
+                                )
+                            }.show(parentFragmentManager, "")
+                    }
+                }
+            }
             ChooseModePracticeDialog.PracticeType.RELAX -> { handleDeveloping() }
-            ChooseModePracticeDialog.PracticeType.BEAT_WIFE -> { handleDeveloping() }
-            ChooseModePracticeDialog.PracticeType.BEAT_HUSBAND -> { handleDeveloping() }
-            ChooseModePracticeDialog.PracticeType.BEAT_LOVE_ENEMY -> { handleDeveloping() }
-            ChooseModePracticeDialog.PracticeType.BEAT_EX -> { handleDeveloping() }
-            ChooseModePracticeDialog.PracticeType.BEAT_BOSS -> { handleDeveloping() }
+            ChooseModePracticeDialog.PracticeType.BEAT_WIFE -> {
+                val command = MachineRelaxCommand(-1, -1, RelaxType.WIFE)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
+                }
+            }
+            ChooseModePracticeDialog.PracticeType.BEAT_HUSBAND -> {
+                val command = MachineRelaxCommand(-1, -1, RelaxType.HUSBAND)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
+                }
+            }
+            ChooseModePracticeDialog.PracticeType.BEAT_LOVE_ENEMY -> {
+                val command = MachineRelaxCommand(-1, -1, RelaxType.LOVE_ENEMY)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
+                }
+            }
+            ChooseModePracticeDialog.PracticeType.BEAT_EX -> {
+                val command =MachineRelaxCommand(-1, -1, RelaxType.EX)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
+                }
+            }
+            ChooseModePracticeDialog.PracticeType.BEAT_BOSS -> {
+                val command = MachineRelaxCommand(-1, -1, RelaxType.BOSS)
+                checkConnectOrElse(command) { avgPower, avgHit ->
+                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
+                }
+            }
+        }
+    }
+
+    private fun checkConnectOrElse(data: IPracticeCommand, block: (avgPower: Int, avgHit: Int) -> Unit) {
+        if (transceiver.isConnected()) {
+            vm.getAvgPractice(data.getIdPractice().toInt()) { avgPower, avgHit ->
+                block(avgPower, avgHit)
+            }
+        } else {
+            (activity as MainActivity).showDialogRequestConnect()
         }
     }
 

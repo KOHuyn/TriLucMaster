@@ -563,5 +563,19 @@
     <string name="center_punch">Đấm giữa</string>
     <string name="hook_punch">Đấm móc</string>
     <string name="connect_old_machine">Bạn có muốn kết nối tới máy %1$s không?</string>
+    <string name="choose_music">Chọn bài hát</string>
+    <string name="change_pressure">Thay đổi áp suất</string>
+    <string name="change_pressure_success">Thay đổi áp suất thành công</string>
+    <string name="update_firmware">Cập nhật firmware</string>
+    <string name="updating_firmware">Đang cập nhật firmware</string>
+    <string name="updating_sound">Đang cập nhật âm thanh</string>
+    <string name="update_firmware_success">Cập nhật firmware thành công</string>
+    <string name="update_sound_success">Cập nhật âm thanh thành công</string>
+    <string name="updating_pressure">Đang thay đổi áp suất</string>
+    <string name="change_pressure_failed">Thay đổi áp suất thất bại</string>
+    <string name="update_firmware_failed">Cập nhật firmware thất bại</string>
+    <string name="update_sound_failed">Cập nhật âm thanh thất bại</string>
+    <string name="alert_message_update_firmware">Bạn có chắc chắn muốn cập nhật phần mềm không?</string>
+    <string name="alert_message_firmware_up_to_date">Phiên bản phầm mềm hiện đang là mới nhất</string>
 
 </resources>

@@ -233,6 +233,21 @@ abstract class BaseFragmentZ<T : ViewBinding> : Fragment(),
         }
     }
 
+    fun showDialogWithMessage(message: String, isCancelable: Boolean) {
+        activity?.let {
+            if (it is BaseActivity) {
+                it.showDialogLoadDataBle(message, isCancelable)
+            }
+        }
+    }
+    fun hideDialogWithMessage() {
+        activity?.let {
+            if (it is BaseActivity) {
+                it.hideDialogLoadDataBle()
+            }
+        }
+    }
+
     fun hideKeyboard() {
         activity?.let {
             if (it is BaseActivity) {

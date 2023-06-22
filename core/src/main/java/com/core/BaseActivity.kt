@@ -221,12 +221,10 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * Show dialog loading 2
      */
-    private var _msgLoadData: String = ""
     open fun showDialogLoadDataBle(msg: String, isCancelable: Boolean = false) {
         runOnUiThread {
-            if (!loading2.isShowing && _msgLoadData != msg) {
+            if (!loading2.isShowing) {
                 initDialog2(msg, isCancelable)
-                _msgLoadData = msg
                 loading2.show()
             }
         }

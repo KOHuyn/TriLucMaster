@@ -12,9 +12,12 @@ import com.mobileplus.dummytriluc.socket.SocketControllerImpl
 import com.mobileplus.dummytriluc.transceiver.command.ConnectCommand
 import com.mobileplus.dummytriluc.transceiver.command.DisconnectCommand
 import com.mobileplus.dummytriluc.transceiver.command.ICommand
-import com.mobileplus.dummytriluc.transceiver.command.IPracticeCommand
+import com.mobileplus.dummytriluc.transceiver.command.IMachineCommand
+import com.mobileplus.dummytriluc.transceiver.command.UpdateSoundCommand
+import com.mobileplus.dummytriluc.transceiver.ext.getOrNull
+import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
+import com.mobileplus.dummytriluc.transceiver.mode.SendCommandFrom
 import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
-import com.mobileplus.dummytriluc.transceiver.observer.ISubjectMachine
 import com.mobileplus.dummytriluc.ui.utils.extensions.dataArray
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
 import com.utils.ext.toList
@@ -23,8 +26,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.koin.core.KoinComponent
@@ -41,11 +49,13 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
 
     private lateinit var socket: ISocketController
     private val currentState = MutableStateFlow(ConnectionState.NONE)
+    private val commandState = MutableSharedFlow<SendCommandFrom>()
     private val cachedCommand = LinkedList<ICommand>()
     private val transceiverEventState = PublishSubject.create<TransceiverEvent>()
     private val onEventMachineSend: (List<BluetoothResponse>) -> Unit = { notifyObserver(it) }
     private var onPingChange: (ping: Int, rssi: Int) -> Unit = { _, _ -> }
     private val compositeDisposable = CompositeDisposable()
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private val observers = mutableListOf<IObserverMachine>()
 
     override fun startup() {
@@ -73,6 +83,17 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
     ) {
         lifecycle.coroutineScope.launch {
             currentState.collect { listener(it) }
+        }
+    }
+
+    override fun onSendCommandStateListener(
+        lifecycle: Lifecycle,
+        listener: (state: SendCommandFrom) -> Unit
+    ) {
+        lifecycle.coroutineScope.launch {
+            commandState.collect {
+                listener(it)
+            }
         }
     }
 
@@ -110,20 +131,27 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
 
     override fun send(cmd: ICommand) {
         if (isConnected()) {
+            coroutineScope.launch {
+                commandState.emit(SendCommandFrom.FromApp(cmd.getCommandMode(), cmd))
+            }
+            if (cmd.getCommandMode() == CommandMode.UNDEFINE) {
+                return
+            }
             var params = cmd.params()
-            if (cmd is IPracticeCommand){
+            if (cmd is IMachineCommand) {
                 params = cmd.appendDataPractice()
             }
+            params["mode"] = cmd.getCommandMode().mode
             val arg = params.toList()
                 .mapNotNull { (key, value) -> if (value == null) null else key to value }
                 .toTypedArray()
-            socket.emit(cmd.getEventName(), *arg)
+            socket.emit(cmd.getEventName().eventName, *arg)
         } else {
             cachedCommand.add(cmd)
         }
     }
 
-    private fun IPracticeCommand.appendDataPractice(): HashMap<String, Any?> {
+    private fun IMachineCommand.appendDataPractice(): HashMap<String, Any?> {
         val params = params()
         params["machine_id"] = getMachineInfo()?.machineRoom
         params["user_id"] = dataManager.getUserInfo()?.id
@@ -156,6 +184,9 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                     send(ConnectCommand(room))
                     dataManager.isConnectedMachine = true
                     currentState.tryEmit(ConnectionState.CONNECTED)
+                    if (dataManager.machineCodeConnectLasted?.updateSound == true) {
+                        send(UpdateSoundCommand)
+                    }
                 }
             }
 
@@ -173,6 +204,15 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
             TransceiverEvent.NEW_MESSAGE -> {
 
             }
+
+            TransceiverEvent.SUBSCRIBE -> {
+
+            }
+
+            TransceiverEvent.UNSUBSCRIBE -> {
+
+            }
+
             TransceiverEvent.PRACTICE -> {
                 try {
                     if (data != null) {
@@ -180,7 +220,13 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                         val sendTo = jsonPractice.getOrNull<String>("sendTo")
                         if (sendTo != null && sendTo == "APP") {
                             val mode = jsonPractice.getOrNull<Int>("mode")
-                            if (mode == 12) {
+                                ?.let { CommandMode.getOrNull(it) }
+                            if (mode != null) {
+                                coroutineScope.launch {
+                                    commandState.emit(SendCommandFrom.FromMachine(mode, jsonPractice))
+                                }
+                            }
+                            if (mode == CommandMode.DISCONNECT) {
                                 forceDisconnect()
                             }
                             val sessionId = jsonPractice.getOrNull<String>("sessionId")
@@ -190,7 +236,11 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({ response ->
                                         logErr(response.toString())
-                                        val listMachineResponse = gson.toList<BluetoothResponse>(response.dataArray())
+                                        val listMachineResponse =
+                                            gson.toList<BluetoothResponse>(response.dataArray())
+                                        sessionId.toIntOrNull()?.let { idSession ->
+                                            listMachineResponse.forEach { it.sessionId = idSession }
+                                        }
                                         onEventMachineSend(listMachineResponse)
                                     }, {
                                         logErr(it.toString(), it)
@@ -202,23 +252,18 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                     logErr("", e)
                 }
             }
+
             TransceiverEvent.CONNECT_MACHINE -> {
                 if (!data.isNullOrEmpty()) {
                     val json = JSONObject(data)
                     val ping = json.getOrNull<Int>("PING")
                     val rssi = json.getOrNull<Int>("RSSI")
-                    if (ping!= null && rssi != null) {
+                    if (ping != null && rssi != null) {
                         onPingChange(ping, rssi)
                     }
                 }
             }
         }
-    }
-
-    private inline fun <reified T> JSONObject.getOrNull(key: String): T? {
-        return if (this.has(key)) {
-            this.get(key) as? T
-        } else null
     }
 
     companion object {

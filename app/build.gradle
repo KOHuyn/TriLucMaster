@@ -8,14 +8,14 @@ plugins {
 }
 
 def appName = "Trí lực Master"
-def versionMajor = 1
-def versionMinor = 3
-def versionPatch = 4
+def versionMajor = 3
+def versionMinor = 0
+def versionPatch = 0
 
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/KOHuyn/StudioProjects/dummy-tri-luc/keystore/keystorefinal.jks')
+            storeFile file('/Users/KOHuyn/StudioProjects/TriLucMaster/keystore/keystorefinal.jks')
             storePassword '14121517'
             keyAlias 'key1'
             keyPassword '14121517'
@@ -74,8 +74,8 @@ android {
             resValue "string", "app_alias_name", appName
             resValue "string", "server_client_id", "648396044651-na035re1f8km4frvd1lffes8bhtrnrcr.apps.googleusercontent.com"
             dimension "mode"
-            buildConfigField "String", "BASE_URL", "\"http://api.vtech.click\""
-            buildConfigField "String", "SOCKET_URL", "\"http://api.trilucmaster.vn:9000\""
+            buildConfigField "String", "BASE_URL", "\"http://api.trilucmaster.com\""
+            buildConfigField "String", "SOCKET_URL", "\"http://103.124.93.182:3001\""
         }
     }
 

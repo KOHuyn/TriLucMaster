@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/FontAnTon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_tab"
+            android:gravity="center"
+            android:padding="@dimen/space_8"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:text="@string/change_pressure"
+            android:textColor="@color/white" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clr_background">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvChangePressure"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:background="@color/clr_tab"
+                android:minHeight="@dimen/_200sdp"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/space_8"
+                android:paddingEnd="@dimen/space_8" />
+        </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

@@ -33,4 +33,7 @@ data class SubmitChallengeRequest(
     @Expose
     @SerializedName("data")
     var data: String? = null,
+    @Expose
+    @SerializedName("sessionId")
+    var sessionId: String? = null,
 )

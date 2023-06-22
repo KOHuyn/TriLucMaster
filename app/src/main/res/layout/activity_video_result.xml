@@ -91,9 +91,11 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:padding="@dimen/space_48"
             android:layout_gravity="center"
+            android:background="@color/clr_tab"
             android:layout_weight="2"
             android:visibility="visible">
 

@@ -72,7 +72,7 @@
     <string name="error_undocumented_scan_throttle">Android 7+ không cho phép quét nhiều hơn.</string>
     <string name="error_undocumented_scan_throttle_retry">Thử lại sau %d giây</string>
     <string name="error_bluetooth_cannot_start">Không thể bắt đầu quét</string>
-    <string name="error_bluetooth_device_not_found">Không tìm thấy thiết bị nào quanh đây.\nVui lòng kiểm tra lại kết nối Bluetooth.\n\nReset thiết bị hoặc bluetooth nếu hệ thống không tìm được bluetooth</string>
+    <string name="error_bluetooth_device_not_found">Không tìm thấy thiết bị nào quanh đây.\nVui lòng kiểm tra lại kết nối.\n\nReset thiết bị nếu hệ thống không tìm được</string>
     <string name="error_bluetooth_restart">Bluetooth hệ thống không khả dụng \nRestart bluetooth hoặc thiết bị</string>
     <string name="error_unknown_error">Lỗi không xác định</string>
     <string name="error_unknown_position_data_ble">Vị trí không xác định</string>
@@ -80,11 +80,11 @@
     <string name="error_no_message">Không tìm thấy tin nhắn do =%d.Thêm vào một thiết bị khác.</string>
     <string name="connect_with_device">Kết nối với thiết bị</string>
     <string name="turn_on_your_bluetooth">Bật Bluetooth của bạn</string>
-    <string name="connecting_ble_with_exercise_machine">Đang kết nối Bluetooth với máy tập</string>
-    <string name="connected_ble_with_exercise_machine">Đã kết nối Bluetooth với máy tập</string>
-    <string name="disconnecting_ble_with_exercise_machine">Đang ngắt kết nối Bluetooth với máy tập</string>
-    <string name="disconnected_ble_with_exercise_machine">Đã ngắt kết nối Bluetooth với máy tập</string>
-    <string name="bluetooth_is_not_connected_to_the_exercise_machine">Chưa kết nối Bluetooth với máy tập</string>
+    <string name="connecting_ble_with_exercise_machine">Đang kết nối với máy tập</string>
+    <string name="connected_ble_with_exercise_machine">Đã kết nối với máy tập</string>
+    <string name="disconnecting_ble_with_exercise_machine">Đang ngắt kết nối với máy tập</string>
+    <string name="disconnected_ble_with_exercise_machine">Đã ngắt kết nối với máy tập</string>
+    <string name="bluetooth_is_not_connected_to_the_exercise_machine">Chưa kết nối với máy tập</string>
     <string name="connect">Kết nối</string>
     <string name="connected">Đã kết nối</string>
     <string name="ble_connected_with">Đã kết nối với %s</string>
@@ -164,7 +164,7 @@
     <string name="error_require_select_gender">Vui lòng chọn giới tính của bạn</string>
     <string name="you_are_not_connected_to_the_device">Bạn chưa kết nối với thiết bị</string>
     <string name="skip">Bỏ qua</string>
-    <string name="you_are_not_connected_to_bluetooth_to_use_this_feature">Bạn chưa kết nối với Bluetooth để sử dụng tính năng này</string>
+    <string name="you_are_not_connected_to_bluetooth_to_use_this_feature">Bạn chưa kết nối với máy tập để sử dụng tính năng này</string>
     <string name="save_exercise">Lưu bài</string>
     <string name="accuracy">Độ chính xác</string>
     <string name="no_data">Chưa có dữ liệu</string>
@@ -479,7 +479,7 @@
     <string name="practice_free_punch">LUYỆN TẬP ĐẤM TỰ DO</string>
     <string name="practice_according_to_led">LUYỆN TẬP ĐẤM THEO LED</string>
     <string name="agree">Đồng ý</string>
-    <string name="error_ble_restart">Oops.Hiện không thể khám phá TriLucMaster.Vui lòng khởi động lại bluetooth hoặc thiết bị.</string>
+    <string name="error_ble_restart">Oops.Hiện không thể khám phá TriLucMaster.Vui lòng khởi động lại thiết bị.</string>
     <string name="upload_practice_success">Tải nội dung tập luyện thành công.Dữ liệu sẽ được hiện lên trong chốc lát.</string>
     <string name="please_try_again">Oops.Vui lòng thử lại.\n Rất xin lỗi về sự bất tiện này</string>
     <string name="you_are_not_practing">Bạn chưa tập luyện</string>
@@ -506,13 +506,13 @@
     <string name="according_to_course">Đánh theo giáo trình</string>
     <string name="according_to_course_raw">According to course</string>
     <string name="require_term_of_service">Bạn chưa chấp nhận điều khoản dịch vụ</string>
-    <string name="require_gps_is_not_enable">Bạn chưa bật vị trí để quét thiết bị Bluetooth</string>
+    <string name="require_gps_is_not_enable">Bạn chưa bật vị trí để quét thiết bị</string>
     <string name="open_setting">Mở cài đặt</string>
     <string name="fight_free_led">Đánh tự do-theo led</string>
     <string name="unknown">Chưa biết</string>
     <string name="wait_a_moment">Bạn chờ chút,dữ liệu đang trả về</string>
     <string name="you_have_not_been_assigned_any_assignments">Bạn chưa được giao bài nào</string>
-    <string name="warning_disconnect_ble_when_change_language">Thay đổi ngôn ngữ sẽ ngắt kết nối bluetooth với máy tập.\nBạn hãy kết nối lại sau khi đã đổi ngôn ngữ xong nhé</string>
+    <string name="warning_disconnect_ble_when_change_language">Thay đổi ngôn ngữ sẽ ngắt kết nối với máy tập.\nBạn hãy kết nối lại sau khi đã đổi ngôn ngữ xong nhé</string>
     <string name="you_have_not_finished_the_exercise_yet">Bạn chưa kết thúc bài tập</string>
     <string name="you_have_not_finished_the_session_yet">Bạn chưa kết thúc phiên tập</string>
     <string name="do_you_want_cancel_request_from_disciple">Bạn có muốn từ chối đệ tử này không?</string>
@@ -561,4 +561,18 @@
     <string name="center_punch">Đấm giữa</string>
     <string name="hook_punch">Đấm móc</string>
     <string name="connect_old_machine">Bạn có muốn kết nối tới máy %1$s không?</string>
+    <string name="choose_music">Chọn bài hát</string>
+    <string name="change_pressure">Thay đổi áp suất</string>
+    <string name="change_pressure_success">Thay đổi áp suất thành công</string>
+    <string name="update_firmware">Cập nhật firmware</string>
+    <string name="updating_firmware">Đang cập nhật firmware</string>
+    <string name="updating_sound">Đang cập nhật âm thanh</string>
+    <string name="update_firmware_success">Cập nhật firmware thành công</string>
+    <string name="update_sound_success">Cập nhật âm thanh thành công</string>
+    <string name="updating_pressure">Đang thay đổi áp suất</string>
+    <string name="change_pressure_failed">Thay đổi áp suất thất bại</string>
+    <string name="update_firmware_failed">Cập nhật firmware thất bại</string>
+    <string name="update_sound_failed">Cập nhật âm thanh thất bại</string>
+    <string name="alert_message_update_firmware">Bạn có chắc chắn muốn cập nhật phần mềm không?</string>
+    <string name="alert_message_firmware_up_to_date">Phiên bản phầm mềm hiện đang là mới nhất</string>
 </resources>

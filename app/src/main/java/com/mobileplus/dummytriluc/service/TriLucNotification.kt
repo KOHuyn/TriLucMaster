@@ -86,7 +86,7 @@ class TriLucNotification constructor(private val context: Context) : KoinCompone
             context,
             notifi.id,
             intent,
-            PendingIntent.FLAG_ONE_SHOT
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE
         )
         builder.setContentIntent(pIntent)
 

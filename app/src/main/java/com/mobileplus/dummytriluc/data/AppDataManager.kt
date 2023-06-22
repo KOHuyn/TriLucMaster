@@ -352,6 +352,10 @@ class AppDataManager constructor(
         return apiHelper.createTarget(request)
     }
 
+    override fun getListMusic(): Single<JsonObject> {
+        return apiHelper.getListMusic()
+    }
+
     override fun loginSocial(body: SocialLoginRequest): Single<JsonObject> =
         apiHelper.loginSocial(body)
 

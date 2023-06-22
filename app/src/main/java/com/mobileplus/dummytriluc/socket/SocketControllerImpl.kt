@@ -1,6 +1,7 @@
 package com.mobileplus.dummytriluc.socket
 
 import android.util.Log
+import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter.Listener
@@ -47,8 +48,10 @@ class SocketControllerImpl : ISocketController {
         if (eventCached.contains(event)) return
         val listener = Listener { args: Array<out Any>? ->
             val data = args?.firstOrNull()?.toString()
-            Log.i(event, "__________SOCKET-RESPONSE__________")
-            Log.i(event, "event:$event -> $data")
+            if (event != TransceiverEvent.CONNECT_MACHINE.eventName) {
+                Log.i(event, "__________SOCKET-RESPONSE__________")
+                Log.i(event, "event:$event -> $data")
+            }
             eventListener?.onEventListener(event, args?.firstOrNull()?.toString())
         }
         val socketOn = socket?.on(event, listener)

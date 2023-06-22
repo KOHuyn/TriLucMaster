@@ -22,6 +22,9 @@ import com.mobileplus.dummytriluc.data.request.ChatSendRequest
 import com.mobileplus.dummytriluc.data.response.DetailPracticeResponse
 import com.mobileplus.dummytriluc.data.response.LevelPractice
 import com.mobileplus.dummytriluc.databinding.FragmentPracticeDetailBinding
+import com.mobileplus.dummytriluc.transceiver.command.MachineFreePunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineLedPunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineLessonCommand
 import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.practice.adapter.WrapPagerAdapter
 import com.mobileplus.dummytriluc.ui.main.practice.detail.adapter.LevelPracticeAdapter
@@ -173,37 +176,38 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
         if ((requireActivity() as MainActivity).isConnectedBle) {
             when (idLessonPractice) {
                 ApiConstants.ID_MODE_FREE_PUNCH -> {
-                    PracticeTestFragment.openFragmentFreeFight()
+                    practiceDetailViewModel.getAvgPractice(idLessonPractice) { avgPower, avgHit ->
+                        PracticeTestFragment.openFragment(MachineFreePunchCommand(avgPower, avgHit))
+                    }
                 }
+
                 ApiConstants.ID_MODE_LED -> {
-                    PracticeTestFragment.openFragmentAccordingToLed()
+                    practiceDetailViewModel.getAvgPractice(idLessonPractice) { avgPower, avgHit ->
+                        PracticeTestFragment.openFragment(MachineLedPunchCommand(avgPower, avgHit))
+                    }
                 }
+
                 else -> {
                     if (data != null) {
-                        PracticeTestFragment.openFragmentMode4(data, choiceLevel, gson)
+                        toast(loadStringRes(R.string.feature_developing))
+//                        PracticeTestFragment.openFragmentMode4(data, choiceLevel, gson)
                     } else {
                         toast(loadStringRes(R.string.feature_not_available))
                     }
                 }
             }
         } else {
-            (activity as MainActivity).showDialogRequestConnect(
-                when (idLessonPractice) {
-                    1 -> ActionConnection.OPEN_MODE_FREE_FIGHT
-                    2 -> ActionConnection.OPEN_MODE_LED
-                    else -> ActionConnection.OPEN_MODE_COURSE
-                }
-            )
+            (activity as MainActivity).showDialogRequestConnect()
         }
     }
 
     fun openFragmentCourse() {
         dataDetailPracticeResponse?.let {
-            PracticeTestFragment.openFragmentMode4(
-                it,
-                choiceLevel,
-                gson
-            )
+//            PracticeTestFragment.openFragmentMode4(
+//                it,
+//                choiceLevel,
+//                gson
+//            )
         } ?: toast(loadStringRes(R.string.error_unknown_error))
     }
 
@@ -286,10 +290,12 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
                 0 -> {
                     informationTopFragment.stopVideo()
                 }
+
                 1 -> {
                     informationTopFragment.restartVideo()
                     informationTopFragment.initView()
                 }
+
                 2 -> {
                     informationTopFragment.stopVideo()
                     questionBottomFragment.initView()
@@ -324,7 +330,7 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
         if ((requireActivity() as MainActivity).isConnectedBle) {
             openFragmentRecord()
         } else {
-            (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_RECORD_PRACTICE)
+            (activity as MainActivity).showDialogRequestConnect()
         }
     }
 
@@ -349,11 +355,14 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
             }
         }
         if (dataDetailPracticeResponse != null) {
-            VideoRecordFragment.openFromPractice(
-                dataDetailPracticeResponse!!.id ?: -1,
-                delayPositionArr,
-                positionArr
+            val command = MachineLessonCommand(
+                lessonId = dataDetailPracticeResponse?.id ?: -1,
+                positionData = positionArr,
+                positionDelayData = delayPositionArr,
+                avgHit = 20,
+                avgPower = 50
             )
+            VideoRecordFragment.openFragment(command)
         } else {
             toast(loadStringRes(R.string.feature_not_available))
         }

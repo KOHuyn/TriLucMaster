@@ -339,7 +339,7 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
                     if ((activity as MainActivity).isConnectedBle) {
                         playSession()
                     } else {
-                        (activity as MainActivity).showDialogRequestConnect(ActionConnection.OPEN_SESSION)
+                        (activity as MainActivity).showDialogRequestConnect()
                     }
                 }
                 STATE_PLAY.PAUSE -> {

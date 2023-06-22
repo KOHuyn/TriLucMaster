@@ -4,6 +4,8 @@ import androidx.lifecycle.Lifecycle
 import com.google.gson.JsonObject
 import com.mobileplus.dummytriluc.data.model.MachineInfo
 import com.mobileplus.dummytriluc.transceiver.command.ICommand
+import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
+import com.mobileplus.dummytriluc.transceiver.mode.SendCommandFrom
 import com.mobileplus.dummytriluc.transceiver.observer.ISubjectMachine
 
 /**
@@ -16,6 +18,7 @@ interface ITransceiverController : ISubjectMachine {
     fun send(cmd: ICommand)
     fun onTransceiverEventStateListener(listener: (event: TransceiverEvent) -> Unit)
     fun onConnectionStateChange(lifecycle: Lifecycle, listener: (state: ConnectionState) -> Unit)
+    fun onSendCommandStateListener(lifecycle: Lifecycle, listener: (state: SendCommandFrom) -> Unit)
     fun connectToMachine(machineInfo: MachineInfo)
     fun getMachineInfo(): MachineInfo?
 

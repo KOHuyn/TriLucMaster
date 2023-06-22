@@ -5,4 +5,22 @@
     android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/clr_background" />
+    android:background="@color/clr_background">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPingServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/space_12"
+        android:layout_gravity="end"
+        android:alpha="0.5"
+        android:drawableStart="@drawable/ic_wifi_connect"
+        android:drawablePadding="@dimen/space_4"
+        android:textSize="@dimen/text_12"
+        android:layout_marginEnd="@dimen/space_48"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="102" />
+</FrameLayout>
