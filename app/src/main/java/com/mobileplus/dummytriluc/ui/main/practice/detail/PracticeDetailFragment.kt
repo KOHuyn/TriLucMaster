@@ -21,6 +21,7 @@ import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.data.request.ChatSendRequest
 import com.mobileplus.dummytriluc.data.response.DetailPracticeResponse
 import com.mobileplus.dummytriluc.data.response.LevelPractice
+import com.mobileplus.dummytriluc.data.response.MediaPractice
 import com.mobileplus.dummytriluc.databinding.FragmentPracticeDetailBinding
 import com.mobileplus.dummytriluc.transceiver.command.MachineFreePunchCommand
 import com.mobileplus.dummytriluc.transceiver.command.MachineLedPunchCommand
@@ -35,6 +36,8 @@ import com.mobileplus.dummytriluc.ui.main.practice.detail.main.PracticeDetailMai
 import com.mobileplus.dummytriluc.ui.main.practice.detail.question.PracticeDetailQuestionBottomFragment
 import com.mobileplus.dummytriluc.ui.main.practice.detail.question.PracticeDetailQuestionTopFragment
 import com.mobileplus.dummytriluc.ui.main.practice.test.PracticeTestFragment
+import com.mobileplus.dummytriluc.ui.main.practice.test.dialog.SelectMethodPracticeDialog
+import com.mobileplus.dummytriluc.ui.main.practice.video.PracticeWithVideoFragment
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventReloadPracticeItem
@@ -202,8 +205,22 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
                                 if (level == null || value == null) null
                                 else level to value
                             }
+                        val dataIdLesson =
+                            dataDetailPracticeResponse?.let { detail ->
+                                val id = detail.id
+                                val path = detail.videoPath ?: detail.media?.find {
+                                    it.mediaPath != null && it.type == MediaPractice.TYPE_VIDEO
+                                }?.let { it.mediaPath ?: it.mediaPathOrigin }
+                                id to path
+                            }.let {
+                                val id = it?.first ?: -1
+                                val path = it?.second
+                                listOf(
+                                    MachineLessonCommand.LessonWithVideoPath(lessonId = id, videoPath = path)
+                                )
+                            }
                         val command = MachineLessonCommand(
-                            lessonId = listOf(dataDetailPracticeResponse?.id ?: -1),
+                            lessonId = dataIdLesson,
                             round = roundNumber,
                             courseId = null,
                             isPlayWithVideo = false,
@@ -211,7 +228,14 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
                             avgHit = 20,
                             avgPower = 50
                         )
-                        PracticeTestFragment.openFragment(command)
+                        SelectMethodPracticeDialog()
+                            .onPracticeNormal {
+                                PracticeTestFragment.openFragment(command.copy(isPlayWithVideo = false))
+                            }
+                            .onPracticeWithVideo {
+                                PracticeWithVideoFragment.openFragment(command.copy(isPlayWithVideo = true))
+                            }
+                            .show(parentFragmentManager, "")
                     } else {
                         toast(loadStringRes(R.string.feature_not_available))
                     }
@@ -220,16 +244,6 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
         } else {
             (activity as MainActivity).showDialogRequestConnect()
         }
-    }
-
-    fun openFragmentCourse() {
-        dataDetailPracticeResponse?.let {
-//            PracticeTestFragment.openFragmentMode4(
-//                it,
-//                choiceLevel,
-//                gson
-//            )
-        } ?: toast(loadStringRes(R.string.error_unknown_error))
     }
 
 
@@ -381,8 +395,22 @@ class PracticeDetailFragment : BaseFragmentZ<FragmentPracticeDetailBinding>() {
                     if (level == null || value == null) null
                     else level to value
                 }
+            val dataIdLesson =
+                dataDetailPracticeResponse?.let { detail ->
+                    val id = detail.id
+                    val path = detail.videoPath ?: detail.media?.find {
+                        it.mediaPath != null && it.type == MediaPractice.TYPE_VIDEO
+                    }?.let { it.mediaPath ?: it.mediaPathOrigin }
+                    id to path
+                }.let {
+                    val id = it?.first ?: -1
+                    val path = it?.second
+                    listOf(
+                        MachineLessonCommand.LessonWithVideoPath(lessonId = id, videoPath = path)
+                    )
+                }
             val command = MachineLessonCommand(
-                lessonId = listOf(dataDetailPracticeResponse?.id ?: -1),
+                lessonId = dataIdLesson,
                 round = 1,
                 isPlayWithVideo = true,
                 level = level,

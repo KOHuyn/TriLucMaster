@@ -1,6 +1,6 @@
 package com.mobileplus.dummytriluc.transceiver.command
 
-import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
+import android.os.Parcelable
 import com.mobileplus.dummytriluc.transceiver.mode.CommandMode
 import kotlinx.android.parcel.Parcelize
 import org.json.JSONObject
@@ -10,20 +10,23 @@ import org.json.JSONObject
  */
 @Parcelize
 data class MachineLessonCommand(
-    val lessonId: List<Int>,
+    val lessonId: List<LessonWithVideoPath>,
     val courseId: Int?,
     val isPlayWithVideo: Boolean,
     val round: Int,
     val level: Pair<String, Int>?,
     val avgHit: Int,
-    val avgPower: Int
+    val avgPower: Int,
 ) : IPracticeCommand {
+
+    @Parcelize
+    data class LessonWithVideoPath(val lessonId: Int, val videoPath: String?) : Parcelable
     override fun getIdPractice(): Long {
-        return lessonId.firstOrNull()?.toLong() ?: -1
+        return lessonId.firstOrNull()?.lessonId?.toLong() ?: -1
     }
     override fun params(): HashMap<String, Any?> {
         val params = hashMapOf<String, Any?>()
-        params["lession_id"] = lessonId
+        params["lession_id"] = lessonId.map { it.lessonId }
         params["round"] = round
         params["level"] = level?.let {
             JSONObject().apply {

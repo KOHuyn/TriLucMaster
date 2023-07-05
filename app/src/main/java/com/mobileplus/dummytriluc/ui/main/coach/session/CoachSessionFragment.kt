@@ -108,15 +108,6 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
         }
     }
 
-    private fun actionWrite(command: String): Boolean {
-        return if (activity is MainActivity) {
-            (activity as MainActivity).actionWriteBle(command)
-        } else {
-            toast(loadStringRes(R.string.feature_not_available))
-            false
-        }
-    }
-
     private val adapterViewPager by lazy {
         ViewPagerAdapter(
             childFragmentManager, listOf(fragExercise, fragPractitioner, fragResult),

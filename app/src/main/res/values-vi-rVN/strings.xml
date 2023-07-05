@@ -577,4 +577,6 @@
     <string name="alert_message_firmware_up_to_date">Phiên bản phầm mềm hiện đang là mới nhất</string>
     <string name="share_achievements">Chia sẻ thành tích</string>
     <string name="round">Lượt</string>
+    <string name="practice_with_video">Tập cùng video</string>
+    <string name="practice_normal">Tập thông thường</string>
 </resources>

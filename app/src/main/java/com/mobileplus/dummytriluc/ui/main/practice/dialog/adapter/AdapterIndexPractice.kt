@@ -244,6 +244,10 @@ data class ItemIndexPractice(
         }
 
     fun getIcon(): Int = when (position) {
+        BodyPosition.RIGHT_PUNCH.key-> R.drawable.ic_hip_right
+        BodyPosition.LEFT_PUNCH.key-> R.drawable.ic_hip_left
+        BodyPosition.HOOK_PUNCH.key-> R.drawable.ic_hip_bottom
+        BodyPosition.CENTER_PUNCH.key-> R.drawable.ic_hip_center
         BlePosition.FACE.key -> R.drawable.ic_head_center
         BlePosition.LEFT_CHEEK.key -> R.drawable.ic_head_left
         BlePosition.RIGHT_CHEEK.key -> R.drawable.ic_head_right

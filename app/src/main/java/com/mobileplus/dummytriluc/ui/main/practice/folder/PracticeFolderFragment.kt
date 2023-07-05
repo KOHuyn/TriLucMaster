@@ -3,16 +3,27 @@ package com.mobileplus.dummytriluc.ui.main.practice.folder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import com.core.BaseFragmentZ
 import com.mobileplus.dummytriluc.R
 import com.mobileplus.dummytriluc.data.model.Page
+import com.mobileplus.dummytriluc.data.remote.ApiConstants
 import com.mobileplus.dummytriluc.data.response.DetailPracticeFolderResponse
+import com.mobileplus.dummytriluc.data.response.MediaPractice
 import com.mobileplus.dummytriluc.databinding.FragmentPracticeMasterBinding
+import com.mobileplus.dummytriluc.transceiver.command.MachineFreePunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineLedPunchCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineLessonCommand
 import com.mobileplus.dummytriluc.ui.dialog.ReceiveMasterDialog
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
+import com.mobileplus.dummytriluc.ui.main.MainActivity
 import com.mobileplus.dummytriluc.ui.main.practice.detail.PracticeDetailFragment
+import com.mobileplus.dummytriluc.ui.main.practice.detail.adapter.LevelPracticeAdapter
 import com.mobileplus.dummytriluc.ui.main.practice.folder.adapter.PracticeFolderAdapter
+import com.mobileplus.dummytriluc.ui.main.practice.test.PracticeTestFragment
+import com.mobileplus.dummytriluc.ui.main.practice.test.dialog.SelectMethodPracticeDialog
+import com.mobileplus.dummytriluc.ui.main.practice.video.PracticeWithVideoFragment
 import com.mobileplus.dummytriluc.ui.main.user.UserInfoFragment
 import com.mobileplus.dummytriluc.ui.utils.MarginItemDecoration
 import com.mobileplus.dummytriluc.ui.utils.StatusReceiveMaster
@@ -28,6 +39,8 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
     override fun getLayoutBinding(): FragmentPracticeMasterBinding =
         FragmentPracticeMasterBinding.inflate(layoutInflater)
 
+    private val roundNumberAdapter by lazy { LevelPracticeAdapter() }
+    private var roundNumber: Int = 1
     private val practiceFolderViewModel by viewModel<PracticeFolderViewModel>()
     private var responseDetailFolder: DetailPracticeFolderResponse? = null
     private val page: Page by lazy { Page() }
@@ -41,13 +54,16 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
                     btnReceiveMaster.setBackgroundResource(R.drawable.gradient_orange)
                     btnReceiveMaster.text = getText(R.string.receive_master)
                 }
+
                 StatusReceiveMaster.STATUS_BLOCK -> {
                     btnReceiveMaster.hide()
                 }
+
                 StatusReceiveMaster.STATUS_COMPLETE -> {
                     btnReceiveMaster.setBackgroundResource(R.color.clr_tab)
                     btnReceiveMaster.text = getText(R.string.unreceive_master)
                 }
+
                 StatusReceiveMaster.STATUS_REQUEST -> {
                     btnReceiveMaster.text = loadStringRes(R.string.wait_for_confirmation)
                     btnReceiveMaster.setBackgroundResource(R.color.clr_tab)
@@ -82,6 +98,9 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
                 resources.getDimension(R.dimen.space_8).toInt()
             )
         )
+        roundNumberAdapter.items = mutableListOf(1, 2, 3, 4, 5)
+        setUpRcv(binding.rcvLevelPractice, roundNumberAdapter)
+        binding.rcvLevelPractice.show()
 
         binding.nestedScrollPracticeFolder.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -107,14 +126,19 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
                 binding.txtDescriptionPracticeMaster.maxLines = 4
             } else {
                 buttonView.text = loadStringRes(R.string.collapse)
-                binding. txtDescriptionPracticeMaster.maxLines = Int.MAX_VALUE
+                binding.txtDescriptionPracticeMaster.maxLines = Int.MAX_VALUE
             }
+        }
+        binding.btnStartPracticeMain.setOnClickListener {
+            roundNumber = roundNumberAdapter.getLevelCurrent() ?: 1
+            openFragmentPractice()
         }
         adapter.onClickFolder = PracticeFolderAdapter.OnClickFolder { item, type ->
             when (type) {
                 PracticeFolderAdapter.TYPE_SINGLE -> {
                     item.id?.let { PracticeDetailFragment.openFragment(it) }
                 }
+
                 PracticeFolderAdapter.TYPE_MULTI -> {
                     item.id?.let { Companion.openFragment(it) }
                 }
@@ -127,6 +151,7 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
                     null, StatusReceiveMaster.STATUS_REJECT -> {
                         receiveMaster(idMaster)
                     }
+
                     StatusReceiveMaster.STATUS_COMPLETE, StatusReceiveMaster.STATUS_REQUEST -> {
                         YesNoButtonDialog()
                             .setTitle(getString(R.string.unreceive_master))
@@ -153,24 +178,64 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
         }
     }
 
+    private fun openFragmentPractice() {
+        if ((requireActivity() as MainActivity).isConnectedBle) {
+            val data = responseDetailFolder
+            if (data != null) {
+                val level = data.level
+                    ?.let { it.title to it.id }
+                    ?.let { (level, value) ->
+                        level to value
+                    }
+                val dataIdLesson = adapter.items.map {
+                    MachineLessonCommand.LessonWithVideoPath(
+                        lessonId = it.id ?: -1,
+                        videoPath = it.videoPathReal
+                    )
+                }
+                val command = MachineLessonCommand(
+                    lessonId = dataIdLesson,
+                    round = roundNumber,
+                    courseId = data.id,
+                    isPlayWithVideo = false,
+                    level = level,
+                    avgHit = 20,
+                    avgPower = 50
+                )
+                SelectMethodPracticeDialog()
+                    .onPracticeNormal {
+                        PracticeTestFragment.openFragment(command.copy(isPlayWithVideo = false))
+                    }
+                    .onPracticeWithVideo {
+                        PracticeWithVideoFragment.openFragment(command.copy(isPlayWithVideo = true))
+                    }
+                    .show(parentFragmentManager, "")
+            } else {
+                toast(loadStringRes(R.string.feature_not_available))
+            }
+        } else {
+            (activity as MainActivity).showDialogRequestConnect()
+        }
+    }
+
     private fun disposableViewModel() {
         practiceFolderViewModel.run {
             addDispose(isLoading.subscribe { if (it) showDialog() else hideDialog() })
             addDispose(rxMessage.subscribe { toast(it) })
             addDispose(rxDetailResponse.subscribe { detail ->
                 btnReceiveMaster.setVisibility(dataManager.getUserInfo()?.id != detail.userCreated?.id)
-                binding. nestedScrollPracticeFolder.show()
+                binding.nestedScrollPracticeFolder.show()
                 responseDetailFolder = detail
-                binding. txtLabelFolder.setTextNotNull(detail.title)
+                binding.txtLabelFolder.setTextNotNull(detail.title)
                 detail.userCreated?.let { user ->
-                   binding. imgAvatarPracticeMaster.show(user.avatarPath)
-                   binding. txtNamePracticeMaster.setTextNotNull(user.fullName)
+                    binding.imgAvatarPracticeMaster.show(user.avatarPath)
+                    binding.txtNamePracticeMaster.setTextNotNull(user.fullName)
                     statusReceiveMaster = user.statusReceiveMaster
                 }
-               binding.txtLevelPracticeMasterPractice.setTextNotNull(detail.getLevelFolder())
-               binding.txtNameSubjectMasterPractice.setTextNotNull(detail.getSubjectFolder())
-               binding.txtDateCreatedMasterPractice.setTextNotNull(detail.getCreatedAtFolder())
-               binding.imgDescriptionPracticeMaster.show(detail.imagePath)
+                binding.txtLevelPracticeMasterPractice.setTextNotNull(detail.getLevelFolder())
+                binding.txtNameSubjectMasterPractice.setTextNotNull(detail.getSubjectFolder())
+                binding.txtDateCreatedMasterPractice.setTextNotNull(detail.getCreatedAtFolder())
+                binding.imgDescriptionPracticeMaster.show(detail.imagePath)
                 detail.content?.let {
                     binding.txtDescriptionPracticeMaster.setHtmlWithImage(
                         it,
@@ -181,8 +246,8 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
                     binding.cbViewMoreContentPracticeMaster?.setVisibility(binding.txtDescriptionPracticeMaster.lineCount >= 4)
                 }, 500)
                 setVisibleViewWhen(
-                  binding.  lnMasterPractice,
-                  binding.  titleMasterFolder
+                    binding.lnMasterPractice,
+                    binding.titleMasterFolder
                 ) { detail?.userCreated != null }
             })
             addDispose(rxItemsInFolder.subscribe {
@@ -198,10 +263,10 @@ class PracticeFolderFragment : BaseFragmentZ<FragmentPracticeMasterBinding>() {
                 } else {
                     adapter.items.addAll(items)
                 }
-                binding.  rcvPracticeFolder.requestLayout()
+                binding.rcvPracticeFolder.requestLayout()
             })
             addDispose(rxLoadMore.subscribe {
-                binding. loadMoreFolder.setVisibility(it)
+                binding.loadMoreFolder.setVisibility(it)
             })
             addDispose(rxStatusReceiveMaster.subscribe {
                 statusReceiveMaster = if (it) StatusReceiveMaster.STATUS_REQUEST

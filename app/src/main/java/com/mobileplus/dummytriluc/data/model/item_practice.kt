@@ -145,7 +145,7 @@ data class ItemPracticeFolder(
     @SerializedName("image_path")
     val imgPath: String? = null,
     @Expose
-    @SerializedName("video_path_real")
+    @SerializedName("video_practice")
     val videoPathReal: String? = null,
     @Expose
     @SerializedName("content")

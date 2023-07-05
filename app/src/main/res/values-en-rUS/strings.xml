@@ -568,4 +568,6 @@
     <string name="alert_message_firmware_up_to_date">The firmware version is currently the latest.</string>
     <string name="share_achievements">Share achievements</string>
     <string name="round">Round</string>
+    <string name="practice_with_video">Practice with video</string>
+    <string name="practice_normal">Practice</string>
 </resources>

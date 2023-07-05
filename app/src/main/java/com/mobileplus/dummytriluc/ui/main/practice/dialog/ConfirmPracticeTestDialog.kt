@@ -38,7 +38,7 @@ class ConfirmPracticeTestDialog(private val dataArr: List<BluetoothResponse>) : 
         }
     private var dataSample: List<DataBluetooth> = listOf()
     private var arrTitleCourse: MutableList<Pair<Int?, String?>>? = null
-    private var isModeCourse = true
+    private var isModeCourse = false
     private var levelPractice: LevelPractice? = null
         set(value) {
             field = value
