@@ -186,4 +186,8 @@ class VideoResultViewModel(
                 rxMessage.onNext(it.getErrorMsg())
             })
     }
+
+    fun downloadVideoUrl(fileDestination: File, url: String,success:(File)-> Unit) {
+
+    }
 }

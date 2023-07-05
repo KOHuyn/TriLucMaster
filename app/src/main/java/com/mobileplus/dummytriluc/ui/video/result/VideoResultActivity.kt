@@ -7,6 +7,9 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.core.BaseActivity
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -27,6 +30,7 @@ import com.mobileplus.dummytriluc.ui.dialog.SaveDraftSuccessDialog
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
 import com.mobileplus.dummytriluc.ui.utils.ExoUtils
+import com.mobileplus.dummytriluc.ui.utils.downloadAndShareVideo
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventPopVideo
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventPostVideoSuccess
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventSendVideoPractice
@@ -45,6 +49,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_video_result.*
 import kotlinx.android.synthetic.main.exo_playback_control_view.view.*
 import kotlinx.android.synthetic.main.layout_human.view.*
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.*
@@ -90,7 +95,7 @@ class VideoResultActivity : BaseActivity() {
     private var durationDisposable: Disposable? = null
     private val isListenerDurationChange: Boolean
         get() = durationDisposable != null
-
+    private var linkVideo: String? = null
     companion object {
         var videoResult: VideoResult? = null
 
@@ -140,6 +145,7 @@ class VideoResultActivity : BaseActivity() {
         handleDisposableViewModel(videoResultViewModel)
         btnSendRecordVideoResult.fillGradientPrimary()
         controlButton()
+        btnShareVideoRecordResult.isGone = linkVideo.isNullOrBlank()
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -287,7 +293,10 @@ class VideoResultActivity : BaseActivity() {
                                 gson.toList<DataBluetooth>(dataPractice.data)
                             setupDataBluetoothFromMachine(dataBle, dataPractice.startTime2)
                         }
-                        dataPractice.videoPath?.let { uriVideo = Uri.parse(it) }
+                        dataPractice.videoPath?.let {
+                            uriVideo = Uri.parse(it)
+                            linkVideo = it
+                        }
                     } catch (e: Exception) {
                         e.logErr()
                     }
@@ -297,6 +306,16 @@ class VideoResultActivity : BaseActivity() {
     }
 
     private fun controlButton() {
+        btnShareVideoRecordResult.clickWithDebounce {
+            val linkVideo = linkVideo
+            if (!linkVideo.isNullOrBlank()) {
+                lifecycleScope.launch {
+                    showDialogLoadDataBle("Đang chuẩn bị video để chia sẻ")
+                    downloadAndShareVideo(this@VideoResultActivity, linkVideo)
+                    hideDialogLoadDataBle()
+                }
+            }
+        }
         repeatVideoResult.clickWithDebounce {
             replayVideo()
         }

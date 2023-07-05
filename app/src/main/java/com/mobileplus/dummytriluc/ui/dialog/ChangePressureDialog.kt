@@ -23,7 +23,7 @@ class ChangePressureDialog : BaseDialogBinding<DialogChangePressureBinding>() {
 
     override fun updateUI(savedInstanceState: Bundle?) {
         adapter.items =
-            listOf(15 to "15- 45kg", 20 to "20 - 60kg", 25 to "25 - 80kg", 30 to "30 - 120kg")
+            listOf(15 to "15- 45kg", 20 to "20 - 65kg", 25 to "25 - 90kg", 30 to "30 - 150kg")
         binding.rcvChangePressure.adapter = adapter
         binding.rcvChangePressure.layoutManager = LinearLayoutManager(context)
         binding.rcvChangePressure.setHasFixedSize(true)
