@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="facebook_app_id" translatable="false">373468313744238</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb373468313744238</string>
+    <string name="facebook_app_id" translatable="false">249736200867963</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb249736200867963</string>
+    <string name="facebook_client_token" translatable="false">b33e09c7d3e77b20a2482c4ef0302cc4</string>
     <string name="home">Trang chủ</string>
     <string name="practice">Luyện tập</string>
     <string name="challenge">Thách đấu</string>

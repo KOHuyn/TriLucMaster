@@ -1,6 +1,5 @@
 package com.mobileplus.dummytriluc.ui.main.practice.detail
 
-import bolts.Bolts
 import com.core.BaseViewModel
 import com.google.gson.Gson
 import com.google.gson.annotations.Expose

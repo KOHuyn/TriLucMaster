@@ -231,7 +231,7 @@ class LoginFragment : BaseFragmentZ<FragmentLoginBinding>() {
             )
             LoginManager.getInstance().registerCallback(facebookCallback,
                 object : FacebookCallback<LoginResult> {
-                    override fun onSuccess(result: LoginResult?) {
+                    override fun onSuccess(result: LoginResult) {
                         if (result != null) {
                             socialRequest.apply {
                                 socialToken = result.accessToken.token
@@ -259,8 +259,8 @@ class LoginFragment : BaseFragmentZ<FragmentLoginBinding>() {
                         toast(loadStringRes(R.string.login_with_facebook_has_been_canceled))
                     }
 
-                    override fun onError(error: FacebookException?) {
-                        error?.logErr()
+                    override fun onError(error: FacebookException) {
+                        error.logErr()
                     }
                 })
         }

@@ -146,7 +146,7 @@ dependencies {
     //exoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.10.4'
     //Facebook SDK
-    implementation 'com.facebook.android:facebook-login:[8,9)'
+    implementation 'com.facebook.android:facebook-login:12.3.0'
 
     //Firebase SDK
     implementation 'com.google.firebase:firebase-analytics-ktx'
