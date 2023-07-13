@@ -1,18 +1,13 @@
 package com.mobileplus.dummytriluc.ui.main.coach.session
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.lifecycle.lifecycleScope
 import com.core.BaseFragmentZ
 import com.core.OnItemClick
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.R
-import com.mobileplus.dummytriluc.bluetooth.ActionConnection
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
-import com.mobileplus.dummytriluc.bluetooth.request.BleSessionRequest
 import com.mobileplus.dummytriluc.data.model.ItemCoachPractice
 import com.mobileplus.dummytriluc.data.model.ItemDisciple
 import com.mobileplus.dummytriluc.data.request.session.CoachSessionCreateRequest
@@ -20,11 +15,14 @@ import com.mobileplus.dummytriluc.data.response.session.CoachSessionOldResponse
 import com.mobileplus.dummytriluc.data.response.session.DataCoachSessionCreatedResponse
 import com.mobileplus.dummytriluc.databinding.FragmentCoachSessionBinding
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.command.MachineSessionActionCommand
+import com.mobileplus.dummytriluc.transceiver.command.MachineSessionCommand
+import com.mobileplus.dummytriluc.transceiver.command.SessionAction
 import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.dialog.YesNoButtonDialog
 import com.mobileplus.dummytriluc.ui.main.MainActivity
-import com.mobileplus.dummytriluc.ui.main.coach.session.exercise.CoachSessionExerciseFragment
 import com.mobileplus.dummytriluc.ui.main.coach.session.callback.OnValueChangeListener
+import com.mobileplus.dummytriluc.ui.main.coach.session.exercise.CoachSessionExerciseFragment
 import com.mobileplus.dummytriluc.ui.main.coach.session.practitioner.CoachSessionPractitionerFragment
 import com.mobileplus.dummytriluc.ui.main.coach.session.result.CoachSessionResultFragment
 import com.mobileplus.dummytriluc.ui.utils.AppConstants
@@ -32,18 +30,23 @@ import com.mobileplus.dummytriluc.ui.utils.DateTimeUtil
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
 import com.mobileplus.dummytriluc.ui.utils.extensions.loadStringRes
 import com.mobileplus.dummytriluc.ui.utils.extensions.logErr
-import com.mobileplus.dummytriluc.ui.utils.extensions.replaceViToEn
 import com.utils.applyClickShrink
-import com.utils.ext.*
+import com.utils.ext.argument
+import com.utils.ext.clickWithDebounce
+import com.utils.ext.hide
+import com.utils.ext.invisible
+import com.utils.ext.onPageSelected
+import com.utils.ext.postNormal
+import com.utils.ext.setVisibility
+import com.utils.ext.show
 import com.widget.ViewPagerAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.*
+import java.util.Calendar
 
 /**
  * Created by KOHuyn on 4/21/2021
@@ -215,34 +218,8 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
 
     private fun playPractice(data: DataCoachSessionCreatedResponse) {
         fragResult.setTimeStartHeader(System.currentTimeMillis() / 1000)
-        val requestBle by lazy { BleSessionRequest() }
-
-        requestBle.id = data.id
-        requestBle.arrDisciple =
-            fragPractitioner.adapter.items.map {
-                BleSessionRequest.BleArrDisciple(
-                    it.studentId,
-                    (it.fullName ?: "---").cutName().replaceViToEn()
-                )
-            }.toMutableList()
-        requestBle.userCount = fragPractitioner.adapter.itemCount
-        requestBle.lessonCount = fragExercise.adapter.itemCount
-        requestBle.lessonData = data.practiceDetail.map {
-            val mode = when (it.id) {
-                1 -> 2
-                2 -> 3
-                else -> 4
-            }
-            BleSessionRequest.BleLessonDataOfSession(
-                mode,
-                it.id,
-                if (mode != 4) 1 else it.round,
-                if (mode != 4) ((it.round ?: 1) * 30) else null,
-                it.transformToArrPosString(gson),
-            )
-        }.toMutableList()
-        actionLongWrite(gson.toJson(requestBle))
-        logErr(gson.toJson(requestBle))
+        val command = MachineSessionCommand(idSession = data.id?.toLong() ?: -1)
+        transceiver.send(command)
     }
 
     private fun parseItemsForThreeScreen(data: CoachSessionOldResponse) {
@@ -334,11 +311,11 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
                     }
                 }
                 STATE_PLAY.PAUSE -> {
-                    actionLongWrite(BleSessionRequest.ActionChange.PAUSE.writeBle())
+                    transceiver.send(MachineSessionActionCommand(SessionAction.Pause))
                     statePlay = STATE_PLAY.RESUME
                 }
                 STATE_PLAY.RESUME -> {
-                    actionLongWrite(BleSessionRequest.ActionChange.RESUME.writeBle())
+                    transceiver.send(MachineSessionActionCommand(SessionAction.Resume))
                     statePlay = STATE_PLAY.PAUSE
                 }
                 else -> {
@@ -353,16 +330,16 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
                 .setTextCancel(getString(R.string.no))
                 .setDismissWhenClick(true)
                 .setOnCallbackAcceptButtonListener {
-                    actionLongWrite(BleSessionRequest.ActionChange.END.writeBle())
+                    transceiver.send(MachineSessionActionCommand(SessionAction.End))
                     statePlay = STATE_PLAY.REPLAY
                 }
                 .showDialog(parentFragmentManager)
         }
         binding.btnPlayPrevSessionCoach.clickWithDebounce {
-            actionLongWrite(BleSessionRequest.ActionChange.PREV.writeBle())
+            transceiver.send(MachineSessionActionCommand(SessionAction.Previous))
         }
         binding.btnPlayNextSessionCoach.clickWithDebounce {
-            actionLongWrite(BleSessionRequest.ActionChange.NEXT.writeBle())
+            transceiver.send(MachineSessionActionCommand(SessionAction.Next))
         }
 
 
@@ -374,7 +351,7 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
                 }
                 statePlay = STATE_PLAY.RELOAD
                 logErr("REFRESH")
-                actionLongWrite(BleSessionRequest.ActionChange.RELOAD.writeBle())
+                transceiver.send(MachineSessionActionCommand(SessionAction.Reload))
             } else {
                 toast(getString(R.string.you_need_to_press_pause_to_be_able_to_use_this_mechanism))
             }
@@ -394,7 +371,11 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
                     .setTextCancel(getString(R.string.no))
                     .setDismissWhenClick(true)
                     .setOnCallbackAcceptButtonListener {
-                        actionLongWrite("""{"action":6,"user_id":${item.studentId}}""")
+                        transceiver.send(
+                            MachineSessionActionCommand(
+                                SessionAction.ChooseUser(item.studentId)
+                            )
+                        )
                         toast(
                             String.format(
                                 getString(R.string.was_pioneered_in_the_episode),
