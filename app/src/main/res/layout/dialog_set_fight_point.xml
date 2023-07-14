@@ -40,7 +40,7 @@
                 android:gravity="center">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHeadLeft"
+                    android:id="@+id/btnPosLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foregroundGravity="center"
@@ -48,7 +48,7 @@
                     android:src="@drawable/ic_head_left" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHeadCenter"
+                    android:id="@+id/btnPosCenter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
@@ -58,7 +58,7 @@
                     android:src="@drawable/ic_head_center" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHeadRight"
+                    android:id="@+id/btnPosRight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foregroundGravity="center"
@@ -66,28 +66,7 @@
                     android:src="@drawable/ic_head_right" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosChestLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_chest_left" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosChestRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_chest_right" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -95,58 +74,13 @@
                 android:gravity="center">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHipLeft"
+                    android:id="@+id/btnPosBottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_hip_left" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHipCenter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_hip_center" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHipBottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_hip_bottom" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosHipRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_hip_right" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosLegLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_leg_left" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btnPosLegRight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_leg_right" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

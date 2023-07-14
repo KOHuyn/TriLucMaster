@@ -240,12 +240,16 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/clr_tab"
+        android:padding="@dimen/_40sdp"
         android:layout_gravity="center">
 
         <include
             android:id="@+id/humanVideoResult"
-            layout="@layout/layout_human_video" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/layout_human" />
     </FrameLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

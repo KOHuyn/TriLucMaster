@@ -53,7 +53,6 @@ import com.mobileplus.dummytriluc.ui.widget.SpeedyLinearLayoutManager
 import com.utils.ext.*
 import kotlinx.android.synthetic.main.exo_playback_control_view.view.*
 import kotlinx.android.synthetic.main.item_video_details.*
-import kotlinx.android.synthetic.main.layout_human_video.*
 import org.greenrobot.eventbus.Subscribe
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -290,14 +289,16 @@ class EditVideoFragment : BaseFragmentZ<FragmentEditVideoBinding>() {
                     val startTimeFloat = startTime2.toFloat()
                     val miniSecond: Float =
                         round((timeFloat!! - startTimeFloat) / 100) / 10
-
-                    listDataVideoTimeLine[(miniSecond * 10).toInt()] =
-                        SaveExerciseRequest.DataVideoTimeLine(
-                            item.force,
-                            item.onTarget,
-                            item.position,
-                            timeFloat
-                        )
+                    val index = (miniSecond * 10).toInt()
+                    if (index in 0 until  listDataVideoTimeLine.size) {
+                        listDataVideoTimeLine[index] =
+                            SaveExerciseRequest.DataVideoTimeLine(
+                                item.force,
+                                item.onTarget,
+                                item.position,
+                                timeFloat
+                            )
+                    }
                 }
 
                 if (listDataVideoTimeLine.isNotEmpty()) {
@@ -527,7 +528,6 @@ class EditVideoFragment : BaseFragmentZ<FragmentEditVideoBinding>() {
     }
 
     private fun generateView() {
-        gridActivePower.show()
         setupRcv()
     }
 
@@ -577,35 +577,15 @@ class EditVideoFragment : BaseFragmentZ<FragmentEditVideoBinding>() {
             val valuePower: Int = item?.force?.roundToInt() ?: 0
             tvCurrentPower?.text = if (valuePower == 0) "" else valuePower.toString()
         }, 150)
-        if (item != null) {
-            when (item.position) {
-                BlePosition.LEFT_CHEEK.key -> humanHeadLeft.show()
-                BlePosition.FACE.key -> humanHeadCenter.show()
-                BlePosition.RIGHT_CHEEK.key -> humanHeadRight.show()
-                BlePosition.RIGHT_CHEST.key -> humanChestRight.show()
-                BlePosition.LEFT_CHEST.key -> humanChestLeft.show()
-                BlePosition.LEFT_ABDOMEN.key -> humanHipLeft.show()
-                BlePosition.ABDOMEN_UP.key -> humanHipCenter.show()
-                BlePosition.ABDOMEN.key -> humanHipBottom.show()
-                BlePosition.RIGHT_ABDOMEN.key -> humanHipRight.show()
-                BlePosition.LEFT_LEG.key -> humanHipBottom1.show()
-                BlePosition.RIGHT_LEG.key -> humanHipBottom2.show()
-            }
-        } else {
-            setInvisible(
-                humanHeadLeft,
-                humanHeadCenter,
-                humanHeadRight,
-                humanChestRight,
-                humanChestLeft,
-                humanHipLeft,
-                humanHipCenter,
-                humanHipBottom,
-                humanHipRight,
-                humanHipBottom1,
-                humanHipBottom2
+        BlePositionUtils.setCallbackBleDataForce(
+            binding.layoutItemVideoDetail.humanVideoResult.root,
+            DataBluetooth(
+                force = item?.force,
+                onTarget = item?.onTarget,
+                position = item?.position,
+                time = item?.time?.toLong()
             )
-        }
+        )
     }
 
     private fun setInvisible(vararg arrView: View?) {

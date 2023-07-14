@@ -60,7 +60,9 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_video_selected_draft_editor" />
 
-            <include layout="@layout/item_video_details" />
+            <include
+                android:id="@+id/layoutItemVideoDetail"
+                layout="@layout/item_video_details" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

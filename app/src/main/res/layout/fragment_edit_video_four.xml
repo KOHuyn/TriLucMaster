@@ -47,37 +47,37 @@
             android:paddingEnd="@dimen/space_16"
             android:paddingBottom="@dimen/space_4">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/labelVideoNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/video_number_label"
-                android:textAppearance="@style/FontAnTon"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_16"
-                android:visibility="visible" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/labelVideoNumber"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/video_number_label"-->
+<!--                android:textAppearance="@style/FontAnTon"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="@dimen/text_16"-->
+<!--                android:visibility="visible" />-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/spinnerNumberLevel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_8"
-                android:background="@color/clr_light_grey"
-                android:drawableEnd="@drawable/ic_arrow_down"
-                android:hint="@string/video_number_label"
-                android:padding="@dimen/space_4"
-                android:textColor="@color/clr_tab"
-                android:textSize="@dimen/text_14" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/spinnerNumberLevel"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="@dimen/space_8"-->
+<!--                android:background="@color/clr_light_grey"-->
+<!--                android:drawableEnd="@drawable/ic_arrow_down"-->
+<!--                android:hint="@string/video_number_label"-->
+<!--                android:padding="@dimen/space_4"-->
+<!--                android:textColor="@color/clr_tab"-->
+<!--                android:textSize="@dimen/text_14" />-->
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/sliderNumberPickerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="vertical">
+<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                android:id="@+id/sliderNumberPickerContainer"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="top"-->
+<!--                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                android:orientation="vertical">-->
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
 
             <include layout="@layout/item_video_details" />
         </LinearLayout>

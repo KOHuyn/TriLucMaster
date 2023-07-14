@@ -80,12 +80,12 @@ class EditVideoStepFourFragment : BaseFragmentZ<FragmentEditVideoFourBinding>() 
     }
 
     private fun setupView() {
-        if (isUpdateExercise) {
-            request.moreInformation.levelPractice?.let {
-                binding.spinnerNumberLevel.text = it.size.toString()
-                generateSlider(if (it.size <= 1) 1 else it.size)
-            }
-        }
+//        if (isUpdateExercise) {
+//            request.moreInformation.levelPractice?.let {
+//                binding.spinnerNumberLevel.text = it.size.toString()
+//                generateSlider(if (it.size <= 1) 1 else it.size)
+//            }
+//        }
     }
 
     private fun disposeViewModel() {
@@ -104,8 +104,8 @@ class EditVideoStepFourFragment : BaseFragmentZ<FragmentEditVideoFourBinding>() 
     private fun fillData() {
         btnClearTimeLine.invisible()
         playerVideoEditExercise.hide()
-        binding.spinnerNumberLevel.text = 3.toString()
-        generateSlider(3)
+//        binding.spinnerNumberLevel.text = 3.toString()
+//        generateSlider(3)
         val totalTimeLine =
             if (request.endTime != 0L && request.startTime1 != 0L)
                 ((request.endTime ?: 0L) - (request.startTime1 ?: 0L)).toInt() * 10
@@ -124,22 +124,28 @@ class EditVideoStepFourFragment : BaseFragmentZ<FragmentEditVideoFourBinding>() 
         }
 
         binding.btnNextToStepFour.clickWithDebounce {
-            if (arrLevelValue.isEmpty()) {
-                toast(getString(R.string.you_have_not_selected_a_level))
+            request.levelPractice = "100"
+            if (isUpdateExercise) {
+                viewModel.updatePractice(request)
             } else {
-                request.levelPractice = arrLevelValue.toList().joinToString(",")
-                if (isUpdateExercise) {
-                    viewModel.updatePractice(request)
-                } else {
-                    viewModel.savePractice(request)
-                }
+                viewModel.savePractice(request)
             }
+//            if (arrLevelValue.isEmpty()) {
+//                toast(getString(R.string.you_have_not_selected_a_level))
+//            } else {
+//                request.levelPractice = arrLevelValue.toList().joinToString(",")
+//                if (isUpdateExercise) {
+//                    viewModel.updatePractice(request)
+//                } else {
+//                    viewModel.savePractice(request)
+//                }
+//            }
         }
 
         clickPlayTimeLine()
         clickZoomIn()
         clickZoomOut()
-        clickLevel()
+//        clickLevel()
     }
 
     private fun arrLevel(): MutableList<CustomSpinner.SpinnerItem> {
@@ -150,51 +156,51 @@ class EditVideoStepFourFragment : BaseFragmentZ<FragmentEditVideoFourBinding>() 
         return items
     }
 
-    private fun generateSlider(@IntRange(from = 1, to = 5) numberLevel: Int) {
-        binding.sliderNumberPickerContainer.removeAllViews()
-        arrLevelValue.clear()
-        for (levelId in 1..numberLevel) {
-            arrLevelValue.add(50)
-            val seekBarSlide = ViewSeekBar(requireContext())
-            seekBarSlide.maxProgress = 7
-            seekBarSlide.max = 120
-            seekBarSlide.min = 50
-            val progress =
-                when (levelId) {
-                    1 -> 0
-                    2 -> 3
-                    3 -> 6
-                    else -> 2
-                }
+//    private fun generateSlider(@IntRange(from = 1, to = 5) numberLevel: Int) {
+//        binding.sliderNumberPickerContainer.removeAllViews()
+//        arrLevelValue.clear()
+//        for (levelId in 1..numberLevel) {
+//            arrLevelValue.add(50)
+//            val seekBarSlide = ViewSeekBar(requireContext())
+//            seekBarSlide.maxProgress = 7
+//            seekBarSlide.max = 120
+//            seekBarSlide.min = 50
+//            val progress =
+//                when (levelId) {
+//                    1 -> 0
+//                    2 -> 3
+//                    3 -> 6
+//                    else -> 2
+//                }
+//
+//            seekBarSlide.generate(50,
+//                120,
+//                7,
+//                progress,
+//                getString(R.string.value_level, levelId),
+//                object : ViewSeekBar.OnUpdateValue {
+//                    override fun onUpdate(progress: Int) {
+//                        arrLevelValue[levelId - 1] = progress
+//                    }
+//                }
+//            )
+//            binding.sliderNumberPickerContainer.addView(seekBarSlide)
+//        }
+//    }
 
-            seekBarSlide.generate(50,
-                120,
-                7,
-                progress,
-                getString(R.string.value_level, levelId),
-                object : ViewSeekBar.OnUpdateValue {
-                    override fun onUpdate(progress: Int) {
-                        arrLevelValue[levelId - 1] = progress
-                    }
-                }
-            )
-            binding.sliderNumberPickerContainer.addView(seekBarSlide)
-        }
-    }
-
-    private fun clickLevel() {
-        binding.spinnerNumberLevel.clickWithDebounce {
-            CustomSpinner(it, requireContext())
-                .setTextSize(resources.getDimension(R.dimen.text_14))
-                .setTextColor(R.color.clr_tab)
-                .setBackGroundSpinner(Color.WHITE)
-                .setDataSource(arrLevel())
-                .build()
-                .setOnSelectedItemCallback { item ->
-                    generateSlider(item.name.toInt())
-                }
-        }
-    }
+//    private fun clickLevel() {
+//        binding.spinnerNumberLevel.clickWithDebounce {
+//            CustomSpinner(it, requireContext())
+//                .setTextSize(resources.getDimension(R.dimen.text_14))
+//                .setTextColor(R.color.clr_tab)
+//                .setBackGroundSpinner(Color.WHITE)
+//                .setDataSource(arrLevel())
+//                .build()
+//                .setOnSelectedItemCallback { item ->
+//                    generateSlider(item.name.toInt())
+//                }
+//        }
+//    }
 
     private fun clickPlayTimeLine() {
         btnPlayTimeLine.clickWithDebounce {
