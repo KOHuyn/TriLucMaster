@@ -336,7 +336,6 @@
                                 android:layout_gravity="center"
                                 android:padding="@dimen/_6sdp"
                                 android:layout_marginStart="@dimen/space_8"
-                                android:layout_marginEnd="@dimen/space_4"
                                 app:srcCompat="@drawable/ic_edit" />
                         </LinearLayout>
 

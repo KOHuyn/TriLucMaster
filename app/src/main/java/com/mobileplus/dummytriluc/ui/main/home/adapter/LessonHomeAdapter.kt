@@ -2,6 +2,7 @@ package com.mobileplus.dummytriluc.ui.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.core.BaseViewHolderZ
 import com.mobileplus.dummytriluc.R
@@ -46,6 +47,7 @@ class LessonHomeAdapter : RecyclerView.Adapter<BaseViewHolderZ<ItemLessonBinding
             } else {
                 binding.txtValueCal.text = item.sumCalories
             }
+            binding.viewCal.isVisible = false
         }
     }
 }

@@ -102,14 +102,6 @@ class CoachSessionFragment : BaseFragmentZ<FragmentCoachSessionBinding>(), IObse
         super.onDestroy()
         transceiver.removeObserver(this)
     }
-    private fun actionLongWrite(command: String): Boolean {
-        return if (activity is MainActivity) {
-            (activity as MainActivity).actionWriteBle(command.plus("~"))
-        } else {
-            toast(loadStringRes(R.string.feature_not_available))
-            false
-        }
-    }
 
     private val adapterViewPager by lazy {
         ViewPagerAdapter(

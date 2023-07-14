@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.core.BaseFragmentZ
+import com.google.android.exoplayer2.util.Util
 import com.mobileplus.dummytriluc.bluetooth.BluetoothResponse
 import com.mobileplus.dummytriluc.databinding.FragmentPracticeWithVideoBinding
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
@@ -16,6 +17,7 @@ import com.mobileplus.dummytriluc.transceiver.mode.SendCommandFrom
 import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.main.practice.dialog.ConfirmPracticeTestDialog
 import com.mobileplus.dummytriluc.ui.utils.eventbus.EventNextFragmentMain
+import com.mobileplus.dummytriluc.ui.utils.eventbus.EventReloadPracticeItem
 import com.utils.ext.argument
 import com.utils.ext.hide
 import com.utils.ext.postNormal
@@ -97,12 +99,34 @@ class PracticeWithVideoFragment : BaseFragmentZ<FragmentPracticeWithVideoBinding
     override fun onStart() {
         super.onStart()
         prepareVideo()
+        if (Util.SDK_INT > 23) {
+            fragmentVideo.restartVideo()
+        }
         transceiver.registerObserver(this)
     }
 
     override fun onStop() {
         super.onStop()
         transceiver.removeObserver(this)
+        if (Util.SDK_INT > 23) fragmentVideo.stopVideo()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (Util.SDK_INT <= 23) {
+            fragmentVideo.stopVideo()
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        if (Util.SDK_INT <= 23) {
+            fragmentVideo.restartVideo()
+        }
+    }
+
+    override fun onDestroy() {
+        fragmentVideo.releasePlayer()
+        super.onDestroy()
     }
 
     override fun onEventMachineSendData(data: List<BluetoothResponse>) {
@@ -111,6 +135,8 @@ class PracticeWithVideoFragment : BaseFragmentZ<FragmentPracticeWithVideoBinding
             .setCancelable(false)
             .setShowButtonPlayAgain(false)
             .build(parentFragmentManager)
+        postNormal(EventReloadPracticeItem())
+        stopCounter()
     }
 
     fun setupViewPager() {
@@ -127,6 +153,10 @@ class PracticeWithVideoFragment : BaseFragmentZ<FragmentPracticeWithVideoBinding
         }
 
         binding.tvBack.setOnClickListener {
+            onBackPressed()
+        }
+
+        binding.btnBackPracticeTest.setOnClickListener {
             onBackPressed()
         }
     }

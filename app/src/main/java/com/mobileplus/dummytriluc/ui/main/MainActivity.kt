@@ -3,11 +3,14 @@ package com.mobileplus.dummytriluc.ui.main
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
+import androidx.core.content.ContextCompat
 import com.core.BaseActivity
 import com.google.gson.Gson
 import com.mobileplus.dummytriluc.BuildConfig
@@ -42,6 +45,7 @@ import com.utils.ext.hide
 import com.utils.ext.isConnectedInternet
 import com.utils.ext.postNormal
 import com.utils.ext.register
+import com.utils.ext.setDrawableStart
 import com.utils.ext.show
 import com.utils.ext.startActivity
 import com.utils.ext.unregister
@@ -75,6 +79,12 @@ class MainActivity : BaseActivity() {
         transceiver.onPingChange { ping, rssi ->
             runOnUiThread {
                 tvPingServer.text = "$ping"
+                when (ping) {
+                    in 1..50 -> R.drawable.ic_wifi_good
+                    in 51..180 -> R.drawable.ic_wifi_medium
+                    !in 1..180 -> R.drawable.ic_wifi_bad
+                    else -> R.drawable.ic_wifi_not_connect
+                }.let { tvPingServer.setDrawableStart(it) }
             }
         }
         transceiver.onConnectionStateChange(lifecycle) { state ->
@@ -100,15 +110,6 @@ class MainActivity : BaseActivity() {
      */
     val isConnectedBle: Boolean
         get() = transceiver.isConnected()
-
-    /**
-     * @param [command] câu lệnh truyền xuống máy tập
-     * @author KO Huyn
-     */
-    fun actionWriteBle(command: String): Boolean {
-//        transceiver.send(command)
-        return false
-    }
 
     fun showDialogRequestConnect() {
         if (!isConnectedBle) {
@@ -177,6 +178,10 @@ class MainActivity : BaseActivity() {
         super.onBackPressed()
     }
 
+    override fun onDestroy() {
+        transceiver.disconnect()
+        super.onDestroy()
+    }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         val currFrag = currentFrag()
