@@ -161,12 +161,6 @@ class ChooseModePracticeDialog : BaseDialog() {
             labelRawRes = R.string.relax_exercise_raw,
             type = PracticeType.RELAX
         )
-        val beatWife = LeafPracticeMode(
-            drawableRes = R.drawable.img_thumb_free_fight,
-            labelRes = R.string.beat_wife,
-            labelRawRes = R.string.beat_wife_raw,
-            type = PracticeType.BEAT_WIFE
-        )
         val beatHusband = LeafPracticeMode(
             drawableRes = R.drawable.img_thumb_free_fight,
             labelRes = R.string.beat_husband,
@@ -195,7 +189,6 @@ class ChooseModePracticeDialog : BaseDialog() {
         forFunExercise.add(freeFight)
         forFunExercise.add(accordingLed)
         forFunExercise.add(accordingMusic)
-        relaxExercise.add(beatWife)
         relaxExercise.add(beatHusband)
         relaxExercise.add(beatLoveEnemy)
         relaxExercise.add(beatEx)
@@ -205,7 +198,7 @@ class ChooseModePracticeDialog : BaseDialog() {
     }
 
     enum class PracticeType {
-        COURSE, FOR_FUN, FREE_FIGHT, ACCORDING_LED, ACCORDING_MUSIC, RELAX, BEAT_WIFE, BEAT_HUSBAND, BEAT_LOVE_ENEMY, BEAT_EX, BEAT_BOSS
+        COURSE, FOR_FUN, FREE_FIGHT, ACCORDING_LED, ACCORDING_MUSIC, RELAX, BEAT_HUSBAND, BEAT_LOVE_ENEMY, BEAT_EX, BEAT_BOSS
     }
 
 }

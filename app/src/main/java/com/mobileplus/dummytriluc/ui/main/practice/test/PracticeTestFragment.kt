@@ -253,7 +253,6 @@ class PracticeTestFragment : BaseFragmentZ<FragmentPracticeTestBinding>(), IObse
                 CommandMode.FREE_FIGHT -> R.string.free_fight
                 CommandMode.ACCORDING_LED -> R.string.according_to_led
                 CommandMode.PLAY_WITH_MUSIC -> R.string.according_to_music
-                CommandMode.RELAX_WIFE -> R.string.beat_wife
                 CommandMode.RELAX_HUSBAND -> R.string.beat_husband
                 CommandMode.RELAX_LOVE_ENEMY -> R.string.beat_love_enemy
                 CommandMode.RELAX_EX -> R.string.beat_ex

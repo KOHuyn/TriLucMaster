@@ -465,12 +465,6 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
                 }
             }
             ChooseModePracticeDialog.PracticeType.RELAX -> { handleDeveloping() }
-            ChooseModePracticeDialog.PracticeType.BEAT_WIFE -> {
-                val command = MachineRelaxCommand(-1, -1, RelaxType.WIFE)
-                checkConnectOrElse(command) { avgPower, avgHit ->
-                    PracticeTestFragment.openFragment(command.copy(avgPower = avgPower, avgHit = avgHit))
-                }
-            }
             ChooseModePracticeDialog.PracticeType.BEAT_HUSBAND -> {
                 val command = MachineRelaxCommand(-1, -1, RelaxType.HUSBAND)
                 checkConnectOrElse(command) { avgPower, avgHit ->
