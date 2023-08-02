@@ -490,14 +490,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_weight="1" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginEnd="@dimen/space_4"
-                                app:srcCompat="@drawable/ic_statistics" />
-
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/ivEditCalories"
                                 android:layout_width="wrap_content"
@@ -619,14 +611,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_weight="1" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginEnd="@dimen/space_4"
-                                app:srcCompat="@drawable/ic_statistics" />
-
+                            
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/ivEditPracticeTime"
                                 android:layout_width="wrap_content"

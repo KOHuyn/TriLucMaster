@@ -25,10 +25,17 @@ class DiscipleListViewModel(
     val rxDisciples: PublishSubject<Pair<List<ItemDisciple>, Page?>> = PublishSubject.create()
     val rxDeleteDiscipleSuccess: PublishSubject<Boolean> = PublishSubject.create()
 
-    fun moveMemberToGroups(arrClassID: List<Int>, memberID: Int): Disposable {
+    fun moveMemberToGroups(
+        arrClassID: List<Int>,
+        memberID: Int,
+        onSuccess: () -> Unit
+    ): Disposable {
         return dataManager.addMemberInGroup(arrClassID, memberID)
             .compose(schedulerProvider.ioToMainSingleScheduler())
             .subscribe({ response ->
+                if (response.isSuccess()) {
+                    onSuccess()
+                }
                 rxMessage.onNext(response.message())
             }, {
                 it.logErr()

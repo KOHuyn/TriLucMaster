@@ -91,7 +91,11 @@ class DiscipleListFragment : BaseFragmentZ<FragmentDiscipleListBinding>() {
                     AddToGroupDialog(TYPE_ADD)
                 dialog.idGroupIsAdded = item.groupJoined?.map { it.id } ?: emptyList()
                 dialog.listener = AddToGroupDialog.AddToGroupDialogListener { arrClass ->
-                    item.studentId?.let { discipleListViewModel.moveMemberToGroups(arrClass, it) }
+                    item.studentId?.let {
+                        discipleListViewModel.moveMemberToGroups(arrClass, it) {
+                            discipleListViewModel.getListDisciple()
+                        }
+                    }
                 }
                 dialog.show(parentFragmentManager, dialog.tag)
             }

@@ -63,16 +63,16 @@ class CoachRegisterFragment : BaseFragment() {
         val email = edtInputEmailCoach.text.toString()
         val phone = edtInputYourPhoneCoach.text.toString()
 
-//        edtInputYourPhoneCoach.showKeyBoardWhenError(phone.isBlank()) {
-//            toast(loadStringRes(R.string.error_empty_phone))
-//        }
-//        edtInputEmailCoach.showKeyBoardWhenError(email.isBlank()) {
-//            toast(loadStringRes(R.string.error_empty_email))
-//        }
+        edtInputYourPhoneCoach.showKeyBoardWhenError(phone.isBlank()) {
+            toast(loadStringRes(R.string.error_empty_phone))
+        }
+        edtInputEmailCoach.showKeyBoardWhenError(email.isBlank()) {
+            toast(loadStringRes(R.string.error_empty_email))
+        }
         edtInputFullNameCoach.showKeyBoardWhenError(fullName.isBlank()) {
             toast(loadStringRes(R.string.error_empty_fullname))
         }
-//        if (fullName.isBlank() || email.isBlank() || phone.isBlank()) return false
+        if (fullName.isBlank() || email.isBlank() || phone.isBlank()) return false
         if (fullName.isBlank())  return false
 
         edtInputEmailCoach.showKeyBoardWhenError(

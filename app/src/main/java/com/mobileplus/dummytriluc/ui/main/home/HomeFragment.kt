@@ -21,12 +21,14 @@ import com.mobileplus.dummytriluc.data.response.*
 import com.mobileplus.dummytriluc.databinding.FragmentHomeBinding
 import com.mobileplus.dummytriluc.transceiver.ConnectionState
 import com.mobileplus.dummytriluc.transceiver.ITransceiverController
+import com.mobileplus.dummytriluc.transceiver.TransceiverEvent
 import com.mobileplus.dummytriluc.transceiver.command.IPracticeCommand
 import com.mobileplus.dummytriluc.transceiver.command.MachineFreePunchCommand
 import com.mobileplus.dummytriluc.transceiver.command.MachineLedPunchCommand
 import com.mobileplus.dummytriluc.transceiver.command.MachineMusicCommand
 import com.mobileplus.dummytriluc.transceiver.command.MachineRelaxCommand
 import com.mobileplus.dummytriluc.transceiver.mode.RelaxType
+import com.mobileplus.dummytriluc.transceiver.observer.IObserverMachine
 import com.mobileplus.dummytriluc.ui.dialog.ChooseModePracticeDialog
 import com.mobileplus.dummytriluc.ui.dialog.SelectMusicDialog
 import com.mobileplus.dummytriluc.ui.dialog.SetupTargetDialog
@@ -53,7 +55,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
-class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
+class HomeFragment : BaseFragmentZ<FragmentHomeBinding>(), IObserverMachine {
     override fun getLayoutBinding(): FragmentHomeBinding =
         FragmentHomeBinding.inflate(layoutInflater)
 
@@ -74,6 +76,10 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
         controllerClick()
         setUpRcv(binding.rcvChartPowerHome, powerChartAdapter)
         setUpRcv(binding.rcvLessonYesterday, lessonAdapter)
+    }
+
+    override fun onEventMachineSendData(data: List<BluetoothResponse>) {
+        vm.getHomeList()
     }
 
     private fun dataOnWeek(dataChart: MutableList<ItemChart> = mutableListOf()) {
@@ -539,11 +545,13 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>() {
     override fun onStart() {
         super.onStart()
         register(this)
+        transceiver.registerObserver(this)
     }
 
     override fun onStop() {
         super.onStop()
         unregister(this)
+        transceiver.removeObserver(this)
     }
 
     @Subscribe

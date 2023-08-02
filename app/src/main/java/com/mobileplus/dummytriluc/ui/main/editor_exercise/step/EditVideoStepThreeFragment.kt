@@ -173,7 +173,7 @@ class EditVideoStepThreeFragment : BaseFragmentZ<FragmentEditVideoThreeBinding>(
             }
         }
         if (errorMsg.isNotEmpty()) {
-            toast(errorMsg.joinToString("\n"))
+            errorMsg.firstOrNull()?.let { toast(it) }
         }
         return errorMsg.isEmpty()
     }

@@ -92,7 +92,7 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
             hideKeyboard()
             false
         }
-        binding.scrollViewCreateCourse?.setOnTouchListener { v, event ->
+        binding.scrollViewCreateCourse.setOnTouchListener { v, event ->
             val x = event.x.toInt()
             val y = event.y.toInt()
             if (event.action == MotionEvent.ACTION_DOWN) {
@@ -125,8 +125,8 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
     }
 
     private fun handleClick() {
-       binding. btnBackCoachCreateCourse.clickWithDebounce { onBackPressed() }
-       binding. spSubjectCreateCourse.clickWithDebounce {
+        binding.btnBackCoachCreateCourse.clickWithDebounce { onBackPressed() }
+        binding.spSubjectCreateCourse.clickWithDebounce {
             if (subjectArr.isEmpty()) {
                 vm.getSubjectArr()
             } else {
@@ -134,7 +134,7 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
             }
         }
 
-        binding. spStatusCreateCourse.clickWithDebounce {
+        binding.spStatusCreateCourse.clickWithDebounce {
             CustomSpinner(it, requireContext())
                 .setTextSize(resources.getDimension(R.dimen.text_14))
                 .setTextColor(R.color.clr_tab)
@@ -145,12 +145,12 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
                     request.status = item.id.toInt()
                 }
         }
-        binding. btnUploadPhotoNewCourse.setOnClickListener {
+        binding.btnUploadPhotoNewCourse.setOnClickListener {
             PickerImageUtils.createSingleImageGallery(this)
                 .forResult(PictureConfig.CHOOSE_REQUEST)
         }
 
-        binding. btnAddExerciseCourseNewCoach.clickWithDebounce {
+        binding.btnAddExerciseCourseNewCoach.clickWithDebounce {
             CoachCreateCourseDialog()
                 .setIdsSelected(adapterExercise.items.mapNotNull { it.id })
                 .apply {
@@ -182,9 +182,9 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
     private fun viewModelCallback() {
         vm.run {
             addDispose(rxDetailCourseResponse.subscribe { data ->
-               binding.edtNameCourse.setValue(data.title ?: "")
-               binding.spSubjectCreateCourse.text = data.subject?.title ?: ""
-               binding.spStatusCreateCourse.text = arrActiveStatus().first().name
+                binding.edtNameCourse.setValue(data.title ?: "")
+                binding.spSubjectCreateCourse.text = data.subject?.title ?: ""
+                binding.spStatusCreateCourse.text = arrActiveStatus().first().name
                 binding.edtIntroduceCreateCourse.setValue(data.content ?: "")
                 binding.btnUploadPhotoNewCourse.show(data.imagePath)
                 request.subjectId = data.subject?.id
@@ -239,7 +239,7 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
             request.content = introduce
             request.practiceIds = adapterExercise.items.mapNotNull { it.id }
         } else {
-            toast(msgError.joinToString("\n"))
+            msgError.firstOrNull()?.let { toast(it) }
         }
         return msgError.isEmpty()
     }
@@ -281,6 +281,7 @@ class CoachCreateCourseFragment : BaseFragmentZ<FragmentCoachCreateCourseBinding
                         binding.btnUploadPhotoNewCourse.show(pathUrlImage)
                     }
                 }
+
                 else -> {
                 }
             }

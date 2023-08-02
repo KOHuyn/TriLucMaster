@@ -74,7 +74,7 @@ class EditVideoStepTwoFragment : BaseFragmentZ<FragmentEditVideoSecondBinding>()
             hideKeyboard()
             false
         }
-        binding.nestedScrollEditVideoStep2?.setOnTouchListener { v, event ->
+        binding.nestedScrollEditVideoStep2.setOnTouchListener { v, event ->
             val x = event.x.toInt()
             val y = event.y.toInt()
             if (event.action == MotionEvent.ACTION_DOWN) {
@@ -124,7 +124,7 @@ class EditVideoStepTwoFragment : BaseFragmentZ<FragmentEditVideoSecondBinding>()
             errorMsg.add(getString(R.string.require_note))
         }
         if (errorMsg.isNotEmpty()) {
-            toast(errorMsg.joinToString("\n"))
+            errorMsg.firstOrNull()?.let { toast(it) }
         } else {
             request.title = title
             request.content = content
