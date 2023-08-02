@@ -1,15 +1,19 @@
 package com.mobileplus.dummytriluc.ui.main
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.core.BaseActivity
 import com.google.gson.Gson
@@ -71,6 +75,7 @@ class MainActivity : BaseActivity() {
     private val gson by inject<Gson>()
     private val transceiver by lazy { ITransceiverController.getInstance() }
     override fun updateUI(savedInstanceState: Bundle?) {
+        askNotificationPermission()
         saveConfig()
         userInfo = mainViewModel.user
         openFragment(R.id.mainContainer, MainFragment::class.java, null, true)
@@ -284,6 +289,30 @@ class MainActivity : BaseActivity() {
                     )
                 )
             }, 500)
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Can post notifications.
+        } else {
+            // Inform user that that your app will not show notifications.
+        }
+    }
+
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // Can post notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 

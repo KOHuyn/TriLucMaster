@@ -10,7 +10,7 @@ plugins {
 def appName = "Trí lực Master"
 def versionMajor = 3
 def versionMinor = 0
-def versionPatch = 2
+def versionPatch = 3
 
 android {
     signingConfigs {
@@ -149,16 +149,16 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:12.3.0'
 
     //Firebase SDK
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-messaging-directboot'
 
     //Google Auth
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
-    implementation 'com.google.firebase:firebase-auth'
-    implementation platform('com.google.firebase:firebase-bom:26.2.0')
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
 //    socket
     implementation('io.socket:socket.io-client:1.0.1')
             { exclude group: 'org.json', module: 'json' }
