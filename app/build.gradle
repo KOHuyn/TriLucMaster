@@ -9,8 +9,8 @@ plugins {
 
 def appName = "Trí lực Master"
 def versionMajor = 3
-def versionMinor = 0
-def versionPatch = 3
+def versionMinor = 2
+def versionPatch = 0
 
 android {
     signingConfigs {
@@ -74,7 +74,7 @@ android {
             resValue "string", "app_alias_name", appName
             resValue "string", "server_client_id", "648396044651-na035re1f8km4frvd1lffes8bhtrnrcr.apps.googleusercontent.com"
             dimension "mode"
-            buildConfigField "String", "BASE_URL", "\"http://api.trilucmaster.com\""
+            buildConfigField "String", "BASE_URL", "\"https://api.trilucmaster.com\""
             buildConfigField "String", "SOCKET_URL", "\"http://103.124.93.182:3001\""
         }
     }

@@ -1,5 +1,7 @@
 package com.mobileplus.dummytriluc.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -346,13 +348,13 @@ class MainFragment : BaseFragmentZ<FragmentMainBinding>() {
                 LeftMenuAdapter.LeftMenu.CHANGE_PASSWORD
             )
         )
-//        itemsLeftMenu.add(
-//            LeftMenuAdapter.ItemLeftMenu(
-//                R.drawable.ic_information,
-//                loadStringRes(R.string.information),
-//                LeftMenuAdapter.LeftMenu.INFORMATION
-//            )
-//        )
+        itemsLeftMenu.add(
+            LeftMenuAdapter.ItemLeftMenu(
+                R.drawable.ic_information,
+                getString(R.string.privacy_policy),
+                LeftMenuAdapter.LeftMenu.PRIVACY_POLICY
+            )
+        )
 
 //        itemsLeftMenu.add(
 //            LeftMenuAdapter.ItemLeftMenu(
@@ -385,11 +387,24 @@ class MainFragment : BaseFragmentZ<FragmentMainBinding>() {
                 LeftMenuAdapter.LeftMenu.INFORMATION -> {
 //                    CoachSaveDraftFragment.openFragment(149)
                 }
+                LeftMenuAdapter.LeftMenu.PRIVACY_POLICY -> {
+                    openLink("https://api.trilucmaster.com/privacypolicyapp.html")
+                }
                 else -> {
                 }
             }
             Handler(Looper.getMainLooper()).postDelayed({ closeDrawer() }, 100)
         }
+    }
+
+    private fun openLink(link: String) {
+        var url = link
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://$url"
+        }
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
     override fun onStart() {

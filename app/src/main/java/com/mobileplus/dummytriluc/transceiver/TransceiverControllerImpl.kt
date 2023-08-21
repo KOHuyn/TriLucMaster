@@ -230,7 +230,8 @@ class TransceiverControllerImpl private constructor() : ITransceiverController, 
                                 forceDisconnect()
                             }
                             val sessionId = jsonPractice.getOrNull<String>("sessionId")
-                            if (sessionId != null && sessionId != getMachineInfo()?.machineRoom) {
+                            val isEnd = jsonPractice.getOrNull<Boolean>("is_end") ?: true
+                            if (sessionId != null && sessionId != getMachineInfo()?.machineRoom && isEnd) {
                                 dataManager.getDataPracticeResult(sessionId)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())

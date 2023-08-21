@@ -55,7 +55,7 @@ class LeftMenuAdapter : RecyclerView.Adapter<BaseViewHolderZ<ItemMenuLeftBinding
         fun clickItemLeftMenu(type: LeftMenu)
     }
 
-    enum class LeftMenu { FRIEND, MESSAGE, MY_GROUP, ASSIGNMENTS, EDIT_VIDEO, COACH_MODE, CHANGE_PASSWORD, INFORMATION, DEVELOP_BLE }
+    enum class LeftMenu { FRIEND, MESSAGE, MY_GROUP, ASSIGNMENTS, EDIT_VIDEO, COACH_MODE, CHANGE_PASSWORD, INFORMATION, PRIVACY_POLICY ,DEVELOP_BLE }
 
 
 }

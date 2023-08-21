@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
  * Created by KO Huyn on 22/06/2023.
  */
 @Parcelize
-object UpdateSoundCommand :ICommand {
+object UpdateSoundCommand :IMachineCommand {
     override fun getEventName(): TransceiverEvent {
         return TransceiverEvent.PRACTICE
     }

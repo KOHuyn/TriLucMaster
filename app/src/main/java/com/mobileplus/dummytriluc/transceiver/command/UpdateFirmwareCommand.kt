@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
  * Created by KO Huyn on 22/06/2023.
  */
 @Parcelize
-data class UpdateFirmwareCommand(val linkFirmware: String) : ICommand {
+data class UpdateFirmwareCommand(val linkFirmware: String) : IMachineCommand {
     override fun getEventName(): TransceiverEvent {
         return TransceiverEvent.PRACTICE
     }

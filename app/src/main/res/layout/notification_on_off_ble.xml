@@ -41,6 +41,7 @@
             android:textSize="@dimen/text_12"
             android:textStyle="bold"
             tools:text="@string/connect" />
+
         <TextView
             android:id="@+id/btnConnectingBleService"
             android:layout_width="wrap_content"
