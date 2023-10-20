@@ -388,7 +388,7 @@ class HomeFragment : BaseFragmentZ<FragmentHomeBinding>(), IObserverMachine {
                 .apply {
                     dataHomeResponse?.punch?.let {punch ->
                         TargetType.getType(punch.timeType)?.let { setTargetType(it) }
-                        punch.goal?.let { setTargetPoint(it) }
+                        punch.getGoalNumber()?.let { setTargetPoint(it) }
                     }
                 }.setOnResultListener { targetUnit, targetTime, targetPoint ->
                     updateTarget(targetUnit, targetTime, targetPoint)

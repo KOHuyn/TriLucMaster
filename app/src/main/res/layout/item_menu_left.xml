@@ -30,5 +30,5 @@
         android:layout_marginStart="@dimen/space_8"
         android:layout_weight="1"
         android:text="@string/friend"
-        android:textSize="@dimen/text_18" />
+        android:textSize="@dimen/text_16" />
 </LinearLayout>

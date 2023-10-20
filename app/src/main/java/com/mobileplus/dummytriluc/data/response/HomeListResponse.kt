@@ -109,7 +109,7 @@ private fun Number.formatter(): String {
 data class Punch(
     @SerializedName("GOAL")
     @Expose
-    val goal: Int? = null,
+    val goal: List<GoalItem>? = null,
     @SerializedName("TIME_TYPE")
     @Expose
     val timeType: String? = null,
@@ -118,10 +118,26 @@ data class Punch(
     val totalPunch: Int? = null
 ) {
     fun getProgress() =
-        if (totalPunch != null && goal != null && goal != 0) (totalPunch.toFloat() * 100 / goal.toFloat()).roundToInt() else 0
+        if (totalPunch != null && getGoalNumber() != null && getGoalNumber() != 0) (totalPunch.toFloat() * 100 / goalZ.toFloat()).roundToInt() else 0
 
     val totalZ: String get() = totalPunch?.formatter() ?: "-"
-    val goalZ: String get() = goal?.formatter() ?: "-"
+    val goalZ: String get() = goal?.sumBy { it.score ?: 0 }?.formatter() ?: "-"
+
+    fun getGoalNumber(): Int? {
+        return goal?.sumBy { it.score ?: 0 }
+    }
+
+    data class GoalItem(
+        @SerializedName("title")
+        @Expose
+        val title: String? = null,
+        @SerializedName("score")
+        @Expose
+        val score: Int? = null,
+        @SerializedName("color")
+        @Expose
+        val color: String? = null,
+    )
 }
 data class GoalInfo(
     @SerializedName("GOAL")
