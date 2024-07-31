@@ -25,7 +25,7 @@ android {
     buildToolsVersion android_version
 
     defaultConfig {
-        applicationId "com.mobileplus.trilucmaster"
+        applicationId "com.vtechco.trilucmaster"
         minSdkVersion min_sdk_version
         targetSdkVersion target_version
         versionCode versionMajor * 1000000 + versionMinor * 1000 + versionPatch * 100
@@ -65,7 +65,6 @@ android {
             resValue "string", "app_alias_name", "DEV.${appName}"
             resValue "string", "server_client_id", "646915433566-e4bk5s2asgi3gcc0tp77tcq7po9ljlof.apps.googleusercontent.com"
             dimension "mode"
-            applicationIdSuffix ".dev"
             buildConfigField "String", "BASE_URL", "\"http://api.vtech.click\""
             buildConfigField "String", "SOCKET_URL", "\"http://103.159.51.113:3001\""
         }

@@ -15,27 +15,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "648396044651-4q49u6n23ihjr730uh47etsvod68m43c.apps.googleusercontent.com",
+          "client_id": "648396044651-45ovfdhhi006uk6nvl1erl8ss0kkqqif.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mobileplus.trilucmaster",
-            "certificate_hash": "ba7e4c4bbaf4cabfa6e95137acec95f6a10ab4ed"
+            "certificate_hash": "be8c944e0eccf19802f797774acd1052438263f9"
           }
         },
         {
-          "client_id": "648396044651-j7ndghe6bm9cjg32jb14000qm19k3e1a.apps.googleusercontent.com",
+          "client_id": "648396044651-kogn1n9olfp7pjo4u2su12lqtd2228hc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mobileplus.trilucmaster",
-            "certificate_hash": "45e1eec028d0774767912f3e62fe7de65c271bf7"
+            "certificate_hash": "96e04d3e56d8f0b1182aca993367aba82f515eab"
           }
         },
         {
-          "client_id": "648396044651-ncvgtcbgsli8g53fh4eo8oppbbu6n3ep.apps.googleusercontent.com",
+          "client_id": "648396044651-oicvepepki8k7vufq68m4494lb164br3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mobileplus.trilucmaster",
-            "certificate_hash": "6b2e6a51466136b92a215b6334f0bccfc59f0884"
+            "certificate_hash": "94e8a4ee48d6f43a554b7da312787f8884a8fa05"
           }
         },
         {
@@ -68,12 +68,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:648396044651:android:f02d36023096eb6b86f42e",
+        "mobilesdk_app_id": "1:648396044651:android:0cb23e5af7133f6686f42e",
         "android_client_info": {
-          "package_name": "com.mobileplus.trilucmaster.dev"
+          "package_name": "com.vtechco.trilucmaster"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "648396044651-h59gdn54o9d4fovlp65ps33hvdfvlblb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vtechco.trilucmaster",
+            "certificate_hash": "be8c944e0eccf19802f797774acd1052438263f9"
+          }
+        },
         {
           "client_id": "648396044651-s0v7du0ga3114jn51elad90m03e7gd96.apps.googleusercontent.com",
           "client_type": 3
